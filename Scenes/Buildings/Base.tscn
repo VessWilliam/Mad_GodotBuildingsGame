@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dbtx8ccudg732"]
+
+[ext_resource type="PackedScene" uid="uid://cl8fclajmmwtt" path="res://Scenes/Component/BulidingComponent.tscn" id="1_rhcgv"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_42m0n"]
+size = Vector2(64, 64)
+
+[node name="Base" type="Node2D" unique_id=1654910469]
+y_sort_enabled = true
+
+[node name="BulidingComponent" parent="." unique_id=1264297234 instance=ExtResource("1_rhcgv")]
+buildingResourcePath = "uid://cyw5na5kav6ev"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1719000909]
+position = Vector2(32, 32)
+texture = SubResource("PlaceholderTexture2D_42m0n")
+centered = false
+offset = Vector2(-32, -32)

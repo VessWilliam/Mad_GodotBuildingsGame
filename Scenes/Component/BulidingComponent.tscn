@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cl8fclajmmwtt"]
+
+[ext_resource type="Script" uid="uid://b8r5oesu86y26" path="res://Scripts/Component/BulidingComponent.cs" id="1_h78mw"]
+
+[node name="BulidingComponent" type="Node2D" unique_id=1264297234]
+script = ExtResource("1_h78mw")

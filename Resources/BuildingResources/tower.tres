@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BuildingResource" format=3 uid="uid://baxwxwlvmgjs8"]
+
+[ext_resource type="Script" uid="uid://bp73do5yfy2mb" path="res://Scripts/Resources/BuildingResource.cs" id="1_sxgs3"]
+[ext_resource type="PackedScene" uid="uid://cm06gtnqksfq3" path="res://Scenes/Buildings/Tower.tscn" id="1_ta031"]
+[ext_resource type="PackedScene" uid="uid://c6icp0c0slx13" path="res://Scenes/Buildings/Sprites/SpriteTower.tscn" id="2_dr4xf"]
+
+[resource]
+script = ExtResource("1_sxgs3")
+DisplayName = "Tower"
+ResourceCost = 4
+BuildingRadius = 3
+BuildingScene = ExtResource("1_ta031")
+SpriteScene = ExtResource("2_dr4xf")
+metadata/_custom_type_script = "uid://bp73do5yfy2mb"

@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://dsyfe8gk40n5c"]
+
+[ext_resource type="Script" uid="uid://dfp1302rsooyi" path="res://Scripts/BaseLevel.cs" id="1_08eeq"]
+[ext_resource type="PackedScene" uid="uid://cta1e2xvo3t8" path="res://Scenes/Manager/GridManager.tscn" id="2_o8m62"]
+[ext_resource type="PackedScene" uid="uid://c5lbwqxdkc6jc" path="res://Scenes/Manager/BuildingManager.tscn" id="3_g8yfn"]
+[ext_resource type="PackedScene" uid="uid://del8yud3h8ywd" path="res://Scenes/Buildings/BuildingGhost.tscn" id="4_ng2bb"]
+[ext_resource type="TileSet" uid="uid://wu8i71278jye" path="res://Resources/tiles.tres" id="5_p0ep7"]
+[ext_resource type="PackedScene" uid="uid://dbtx8ccudg732" path="res://Scenes/Buildings/Base.tscn" id="6_tluoy"]
+[ext_resource type="PackedScene" uid="uid://5ui0maqtwn5g" path="res://Scenes/GoldMines/GoldMine.tscn" id="7_7yqph"]
+[ext_resource type="TileSet" uid="uid://bt2wsixes6uv4" path="res://Resources/highlight_tileset.tres" id="8_ntcj0"]
+[ext_resource type="PackedScene" uid="uid://d0cwvebpa76t7" path="res://Scenes/UI/GameUI.tscn" id="9_l4pdk"]
+
+[node name="BaseLevel" type="Node" unique_id=547361296]
+script = ExtResource("1_08eeq")
+
+[node name="GridManager" parent="." unique_id=1117861085 node_paths=PackedStringArray("highlightTilemapLayer", "terrainTilemapLayer") instance=ExtResource("2_o8m62")]
+highlightTilemapLayer = NodePath("../HighlightTileMapLayer")
+terrainTilemapLayer = NodePath("../YSortRoot/TerrianTileMapLayer")
+
+[node name="BuildingManager" parent="." unique_id=363034371 node_paths=PackedStringArray("gridManager", "ySortRoot", "gameUI") instance=ExtResource("3_g8yfn")]
+gridManager = NodePath("../GridManager")
+ySortRoot = NodePath("../YSortRoot")
+gameUI = NodePath("../GameUI")
+buidingGhostScene = ExtResource("4_ng2bb")
+
+[node name="YSortRoot" type="Node2D" parent="." unique_id=902121781]
+y_sort_enabled = true
+
+[node name="TerrianTileMapLayer" type="TileMapLayer" parent="YSortRoot" unique_id=1123116985]
+y_sort_enabled = true
+tile_set = ExtResource("5_p0ep7")
+
+[node name="Base" parent="YSortRoot" unique_id=1654910469 instance=ExtResource("6_tluoy")]
+
+[node name="GoldMine" parent="YSortRoot" unique_id=2085166556 instance=ExtResource("7_7yqph")]
+unique_name_in_owner = true
+
+[node name="HighlightTileMapLayer" type="TileMapLayer" parent="." unique_id=2075785210]
+modulate = Color(1, 1, 1, 0.45882353)
+tile_set = ExtResource("8_ntcj0")
+
+[node name="GameUI" parent="." unique_id=264214732 instance=ExtResource("9_l4pdk")]
