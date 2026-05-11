@@ -30,6 +30,10 @@ y_sort_enabled = true
 y_sort_enabled = true
 tile_set = ExtResource("5_qx3j0")
 
+[node name="WaterWaveLayer" type="TileMapLayer" parent="YSortRoot/TerrianTileMapLayer" unique_id=144446309]
+y_sort_enabled = true
+tile_set = ExtResource("5_qx3j0")
+
 [node name="Base" parent="YSortRoot" unique_id=1654910469 instance=ExtResource("6_ah6f1")]
 
 [node name="GoldMine" parent="YSortRoot" unique_id=2085166556 instance=ExtResource("7_6f0v8")]
