@@ -1,19 +1,28 @@
 using Game.Manager;
 using Game.Gold;
 using Godot;
+using Game.Camera;
 
-namespace Game;
+namespace Game.Level;
 
-public partial class Main : Node
+public partial class BaseLevel : Node
 {
     private GridManager gridManager;
 
     private GoldMine goldMine;
 
+    private GameCamera gameCamera;
+
+    private TileMapLayer terrainTileMapLayer;
+
     public override void _Ready()
     {
         gridManager = GetNode<GridManager>("GridManager");
         goldMine = GetNode<GoldMine>("%GoldMine");
+        gameCamera = GetNode<GameCamera>("GameCamera");
+        terrainTileMapLayer = GetNode<TileMapLayer>("%TerrianTileMapLayer");
+
+        gameCamera.SetBoundingRect(terrainTileMapLayer.GetUsedRect());
 
         gridManager.GridStateUpdate += OnGridStateUpdated;
     }
@@ -27,6 +36,5 @@ public partial class Main : Node
             goldMine.SetActive();
             GD.Print("Win");
         }
-
     }
 }

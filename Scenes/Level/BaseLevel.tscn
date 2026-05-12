@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dfp1302rsooyi" path="res://Scripts/Level/BaseLevel.cs" id="1_2ve4c"]
 [ext_resource type="PackedScene" uid="uid://cta1e2xvo3t8" path="res://Scenes/Manager/GridManager.tscn" id="2_xerb2"]
 [ext_resource type="PackedScene" uid="uid://c5lbwqxdkc6jc" path="res://Scenes/Manager/BuildingManager.tscn" id="3_toevt"]
+[ext_resource type="PackedScene" uid="uid://dq7osa665ufuo" path="res://Scenes/Camera/GameCamera.tscn" id="3_xerb2"]
 [ext_resource type="PackedScene" uid="uid://del8yud3h8ywd" path="res://Scenes/Buildings/BuildingGhost.tscn" id="4_jsyjl"]
 [ext_resource type="TileSet" uid="uid://wu8i71278jye" path="res://Resources/tiles.tres" id="5_qx3j0"]
 [ext_resource type="PackedScene" uid="uid://dbtx8ccudg732" path="res://Scenes/Buildings/Base.tscn" id="6_ah6f1"]
@@ -17,6 +18,8 @@ script = ExtResource("1_2ve4c")
 highlightTilemapLayer = NodePath("../HighlightTileMapLayer")
 terrainTilemapLayer = NodePath("../YSortRoot/TerrianTileMapLayer")
 
+[node name="GameCamera" parent="." unique_id=1755277265 instance=ExtResource("3_xerb2")]
+
 [node name="BuildingManager" parent="." unique_id=363034371 node_paths=PackedStringArray("gridManager", "ySortRoot", "gameUI") instance=ExtResource("3_toevt")]
 gridManager = NodePath("../GridManager")
 ySortRoot = NodePath("../YSortRoot")
@@ -27,6 +30,7 @@ buidingGhostScene = ExtResource("4_jsyjl")
 y_sort_enabled = true
 
 [node name="TerrianTileMapLayer" type="TileMapLayer" parent="YSortRoot" unique_id=1123116985]
+unique_name_in_owner = true
 y_sort_enabled = true
 tile_set = ExtResource("5_qx3j0")
 
