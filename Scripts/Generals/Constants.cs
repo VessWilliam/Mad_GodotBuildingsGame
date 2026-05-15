@@ -11,5 +11,7 @@ public class Constants
 
     public const string IS_WOOD ="is_wood";
 
+    public const string IS_IGNORE ="is_ignore";
+
     public const string CANCEL = "cancel";
 }

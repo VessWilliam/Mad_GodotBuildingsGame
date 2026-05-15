@@ -18,13 +18,15 @@ script = ExtResource("1_2ve4c")
 highlightTilemapLayer = NodePath("../HighlightTileMapLayer")
 terrainTilemapLayer = NodePath("../YSortRoot/TerrianTileMapLayer")
 
-[node name="GameCamera" parent="." unique_id=1755277265 instance=ExtResource("3_xerb2")]
-
 [node name="BuildingManager" parent="." unique_id=363034371 node_paths=PackedStringArray("gridManager", "ySortRoot", "gameUI") instance=ExtResource("3_toevt")]
 gridManager = NodePath("../GridManager")
 ySortRoot = NodePath("../YSortRoot")
 gameUI = NodePath("../GameUI")
 buidingGhostScene = ExtResource("4_jsyjl")
+
+[node name="GameUI" parent="." unique_id=264214732 instance=ExtResource("9_mqopy")]
+
+[node name="GameCamera" parent="." unique_id=1755277265 instance=ExtResource("3_xerb2")]
 
 [node name="YSortRoot" type="Node2D" parent="." unique_id=902121781]
 y_sort_enabled = true
@@ -46,5 +48,3 @@ unique_name_in_owner = true
 [node name="HighlightTileMapLayer" type="TileMapLayer" parent="." unique_id=2075785210]
 modulate = Color(1, 1, 1, 0.45882353)
 tile_set = ExtResource("8_jma8p")
-
-[node name="GameUI" parent="." unique_id=264214732 instance=ExtResource("9_mqopy")]

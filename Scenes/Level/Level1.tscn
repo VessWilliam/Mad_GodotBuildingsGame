@@ -5,7 +5,10 @@
 
 [node name="Level1" unique_id=547361296 instance=ExtResource("1_g1stx")]
 
-[node name="YSortRoot" parent="." index="3" unique_id=902121781]
+[node name="BuildingManager" parent="." index="1" unique_id=363034371]
+statingResourceCount = 6
+
+[node name="YSortRoot" parent="." index="4" unique_id=902121781]
 position = Vector2(1, 0)
 
 [node name="TerrianTileMapLayer" parent="YSortRoot" index="0" unique_id=1123116985]
@@ -49,6 +52,7 @@ tile_map_data = PackedByteArray("AAAJAAUAAQAAAAAAAAAIAAUAAQAAAAAAAAAMAAYAAQAAAAA
 tile_set = ExtResource("2_8ux1l")
 
 [node name="Base" parent="YSortRoot" index="1" unique_id=1654910469]
+unique_name_in_owner = true
 position = Vector2(384, 256)
 
 [node name="GoldMine" parent="YSortRoot" index="2" unique_id=2085166556]

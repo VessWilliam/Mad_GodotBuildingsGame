@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("1_sxgs3")
 DisplayName = "Tower"
+Dimensions = Vector2i(2, 2)
 ResourceCost = 4
 BuildingRadius = 3
 BuildingScene = ExtResource("1_ta031")

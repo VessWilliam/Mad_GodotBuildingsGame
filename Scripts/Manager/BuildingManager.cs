@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Game.Buildings;
 using Game.Component;
@@ -10,6 +11,9 @@ namespace Game.Manager;
 
 public partial class BuildingManager : Node
 {
+    [Export]
+    private int statingResourceCount = 4;
+
     [Export]
     private GridManager gridManager;
 
@@ -26,14 +30,20 @@ public partial class BuildingManager : Node
     public readonly StringName ACTION_RIGHT_CLICK = Constants.RIGHT_CLICK;
     public readonly StringName ACTION_CANCEL = Constants.CANCEL;
 
-    private Vector2I hoverGridCell;
+    private Rect2I hoverGridArea = new(Vector2I.Zero, Vector2I.One);
+
+    private BuildingGhost buidingGhost;
     private int currentResourceCount;
-    private int statingResourceCount = 4;
+
     private int currentUsedResourceCount;
     private BuildingResource toPlaceBuildResource;
-    private BuildingGhost buidingGhost;
 
-    private int AvailableResourceCount => statingResourceCount + currentResourceCount - currentUsedResourceCount;
+    private int AvailableResourceCount =>
+         statingResourceCount +
+         currentResourceCount -
+         currentUsedResourceCount;
+
+
     private StateEnum currentState = StateEnum.Normal;
 
     public override void _EnterTree()
@@ -63,7 +73,7 @@ public partial class BuildingManager : Node
                 if (
                  toPlaceBuildResource is not null &&
                  evt.IsActionPressed(ACTION_LEFT_CLICK) &&
-                 IsAbleToBuildAtTile(hoverGridCell))
+                 IsAbleToBuildAtArea(hoverGridArea))
                     PlaceBuildingAtHovered();
 
                 break;
@@ -72,13 +82,13 @@ public partial class BuildingManager : Node
 
     public override void _Process(double delta)
     {
-        var gridPos = gridManager.GetMouseGridCellPosition();
+        var mouseGridPos = gridManager.GetMouseGridCellPosition();
+        var rootCell =  hoverGridArea.Position;
 
-
-        if (hoverGridCell != gridPos)
+        if (rootCell != mouseGridPos)
         {
-            hoverGridCell = gridPos;
-            UpdateHoveredGridCell();
+            hoverGridArea.Position = mouseGridPos;
+            UpdateHoveredGridArea();
         }
 
         switch (currentState)
@@ -86,7 +96,7 @@ public partial class BuildingManager : Node
             case StateEnum.Normal:
                 break;
             case StateEnum.PlacingBuilding:
-                buidingGhost.GlobalPosition = gridPos * 64;
+                buidingGhost.GlobalPosition = mouseGridPos * 64;
                 break;
 
         }
@@ -99,14 +109,14 @@ public partial class BuildingManager : Node
 
         gridManager.HighlightBuildArea();
 
-        if (!IsAbleToBuildAtTile(hoverGridCell))
+        if (!IsAbleToBuildAtArea(hoverGridArea))
         {
             buidingGhost.SetInvalid();
             return;
         }
 
-        gridManager.HighlightExpandBuildArea(hoverGridCell, toPlaceBuildResource.BuildingRadius);
-        gridManager.HighlightResourceArea(hoverGridCell, toPlaceBuildResource.ResourceRadius);
+        gridManager.HighlightExpandBuildArea(hoverGridArea, toPlaceBuildResource.BuildingRadius);
+        gridManager.HighlightResourceArea(hoverGridArea, toPlaceBuildResource.ResourceRadius);
         buidingGhost.SetValid();
     }
 
@@ -114,7 +124,7 @@ public partial class BuildingManager : Node
     {
         var building = toPlaceBuildResource.BuildingScene.Instantiate<Node2D>();
 
-        building.GlobalPosition = hoverGridCell * 64;
+        building.GlobalPosition = hoverGridArea.Position * 64;
 
         ySortRoot.AddChild(building);
 
@@ -122,19 +132,20 @@ public partial class BuildingManager : Node
 
         ChangeState(StateEnum.Normal);
 
-        //GD.Print($"Available Resource Count: {AvailableResourceCount}");
+        GD.Print($"Available Resource Count: {AvailableResourceCount}");
     }
 
     private void DestroyBuildingAtHovered()
     {
+        var rootCell = hoverGridArea.Position;
 
         var building = GetTree()
         .GetNodesInGroup(nameof(BulidingComponent))
         .Cast<BulidingComponent>()
-        .FirstOrDefault(b => Equals(b.GetGridCellPosition(), hoverGridCell));
+        .FirstOrDefault(b => b.GetGridCellPosition() == rootCell);
 
         if (building is null) return;
-        
+
         currentUsedResourceCount -= building.BuildingResource.ResourceCost;
 
         building.Destroy();
@@ -153,7 +164,7 @@ public partial class BuildingManager : Node
     }
 
 
-    private void UpdateHoveredGridCell()
+    private void UpdateHoveredGridArea()
     {
         switch (currentState)
         {
@@ -192,17 +203,34 @@ public partial class BuildingManager : Node
     }
 
 
-    private bool IsAbleToBuildAtTile(Vector2I tilePos)
-    {
-        return gridManager.IsTilePositionBuildable(tilePos) &&
-        AvailableResourceCount >= toPlaceBuildResource.ResourceCost;
+    private bool IsAbleToBuildAtArea(Rect2I tileArea)
+    {   
+        var tileInArea = GetPositionInTileArea(tileArea);
+        var allTileBuildable = tileInArea.All(gridManager.IsTilePositionBuildable);
+        return allTileBuildable && AvailableResourceCount >= toPlaceBuildResource.ResourceCost;
     }
+
+    private List<Vector2I> GetPositionInTileArea(Rect2I tileArea)
+    {
+        var result = new List<Vector2I>();
+
+        for (int x = tileArea.Position.X; x < tileArea.End.X; x++)
+        {
+            for (int y = tileArea.Position.Y; y < tileArea.End.Y; y++)
+            {
+                result.Add(new(x, y));
+            }
+        }
+
+        return result;
+    }
+
 
     private void OnBuildingResourceSelected(BuildingResource resource)
     {
 
         ChangeState(StateEnum.PlacingBuilding);
-
+        hoverGridArea.Size = resource.Dimensions;
         var buildiingSprite = resource.SpriteScene.Instantiate<Node2D>();
         buidingGhost.AddChild(buildiingSprite);
 
@@ -210,6 +238,12 @@ public partial class BuildingManager : Node
         UpdateGridDisplay();
     }
 
-    private void OnResourceTileUpdated(int resourceCount) => currentResourceCount = resourceCount;
+    private void OnResourceTileUpdated(int resourceCount)
+    {
+        currentResourceCount = resourceCount;
+        GD.Print($"Resource tile updated: {resourceCount}");
+        GD.Print($"Available: {AvailableResourceCount}");
+    }
+
 
 }

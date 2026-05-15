@@ -15,14 +15,18 @@ public partial class BaseLevel : Node
 
     private TileMapLayer terrainTileMapLayer;
 
+    private Node2D baseBuilding;
+
     public override void _Ready()
     {
         gridManager = GetNode<GridManager>("GridManager");
         goldMine = GetNode<GoldMine>("%GoldMine");
         gameCamera = GetNode<GameCamera>("GameCamera");
         terrainTileMapLayer = GetNode<TileMapLayer>("%TerrianTileMapLayer");
+        baseBuilding = GetNode<Node2D>("%Base");
 
         gameCamera.SetBoundingRect(terrainTileMapLayer.GetUsedRect());
+        gameCamera.SetCenter(baseBuilding.GlobalPosition);
 
         gridManager.GridStateUpdate += OnGridStateUpdated;
     }

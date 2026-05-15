@@ -4,7 +4,7 @@ using Godot;
 
 namespace Game.UI;
 
-public partial class GameUI : MarginContainer
+public partial class GameUI : CanvasLayer
 {
 
     [Signal]
@@ -17,7 +17,7 @@ public partial class GameUI : MarginContainer
 
     public override void _Ready()
     {
-        hBoxContainer = GetNode<HBoxContainer>("HBoxContainer");
+        hBoxContainer = GetNode<HBoxContainer>("MarginContainer/HBoxContainer");
 
         CreateBuildingButtons();
 

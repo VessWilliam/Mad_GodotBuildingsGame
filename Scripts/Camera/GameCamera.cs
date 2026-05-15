@@ -6,7 +6,7 @@ namespace Game.Camera;
 
 public partial class GameCamera : Camera2D
 {
-    private const int TILE_SIZE = 64;   
+    private const int TILE_SIZE = 64;
     private const float PAN_SPEED = 500;
 
     private readonly StringName ACTION_PAN_LEFT = "pan_left";
@@ -23,7 +23,7 @@ public partial class GameCamera : Camera2D
         ACTION_PAN_RIGHT,
         ACTION_PAN_UP,
         ACTION_PAN_DOWN);
-    
+
         GlobalPosition += movementVector * PAN_SPEED * (float)delta;
 
     }
@@ -37,5 +37,10 @@ public partial class GameCamera : Camera2D
         LimitTop = rect.Position.Y * TILE_SIZE;
 
         LimitBottom = rect.End.Y * TILE_SIZE;
+    }
+
+    public void SetCenter(Vector2 position)
+    {
+        GlobalPosition = position;
     }
 }
