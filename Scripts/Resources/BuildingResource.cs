@@ -6,23 +6,26 @@ namespace Game.Resources;
 public partial class BuildingResource : Resource
 {
     [Export]
-    public string DisplayName { get; private set; }
+    public string DisplayName { get; private set; } = string.Empty;
+
+    [Export]
+    public bool IsDeletable { get; private set; } = true;
 
     [Export]
     public Vector2I Dimensions { get; private set; } = Vector2I.One;
 
     [Export]
-    public int ResourceCost { get; private set; }
+    public int ResourceCost { get; private set; } = 0;
 
     [Export]
-    public int BuildingRadius { get; private set; }
+    public int BuildingRadius { get; private set; } = 0;
 
     [Export]
-    public int ResourceRadius { get; private set; }
+    public int ResourceRadius { get; private set; } = 0;
 
     [Export]
-    public PackedScene BuildingScene { get; private set; }
+    public PackedScene BuildingScene { get; private set; } = null!;
 
     [Export]
-    public PackedScene SpriteScene { get; private set; }
+    public PackedScene SpriteScene { get; private set; } = null!;
 }

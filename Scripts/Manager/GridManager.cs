@@ -69,7 +69,7 @@ public partial class GridManager : Node
 
     public void HighlightExpandBuildArea(Rect2I tileArea, int radius)
     {
-       
+
         var validTiles = GetValidTilesInRadius(tileArea, radius).ToHashSet();
 
         var expandedTiles = validTiles.Except(validBuildableArea).Except(occupiedBuild);
@@ -135,10 +135,9 @@ public partial class GridManager : Node
      BulidingComponent buildingComponent,
      bool emitSignal = true)
     {
-        occupiedBuild.UnionWith(buildingComponent.GetOccupiedCellList());
 
+        occupiedBuild.UnionWith(buildingComponent.GetOccupiedCellPosition());
         var rootCell = buildingComponent.GetGridCellPosition();
-
         int radius = buildingComponent.BuildingResource.BuildingRadius;
         var tileArea = new Rect2I(rootCell, buildingComponent.BuildingResource.Dimensions);
         var validTiles = GetValidTilesInRadius(tileArea, radius);
@@ -147,10 +146,7 @@ public partial class GridManager : Node
 
         validBuildableArea.ExceptWith(occupiedBuild);
 
-        if (emitSignal)
-        {
-            EmitSignal(SignalName.GridStateUpdate);
-        }
+        if (emitSignal) EmitSignal(SignalName.GridStateUpdate);
     }
 
     private void RecalculateBuildArea(BulidingComponent excludeComponent)
@@ -187,7 +183,7 @@ public partial class GridManager : Node
 
         for (int x = tileArea.Position.X - radius; x < tileArea.End.X + radius; x++)
         {
-            for (int y = tileArea.Position.Y - radius; y <= tileArea.End.Y + radius; y++)
+            for (int y = tileArea.Position.Y - radius; y < tileArea.End.Y + radius; y++)
             {
                 var tilePos = new Vector2I(x, y);
 

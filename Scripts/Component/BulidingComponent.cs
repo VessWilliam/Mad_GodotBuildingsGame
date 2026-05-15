@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Game.Autoload;
 using Game.Resources;
 using Godot;
@@ -8,9 +9,11 @@ namespace Game.Component;
 public partial class BulidingComponent : Node2D
 {
     [Export(PropertyHint.File, "*.tscn")]
-    public string buildingResourcePath;
+    private string buildingResourcePath;
 
-    public BuildingResource BuildingResource;
+    private HashSet<Vector2I> occupiedTiles = new();
+
+    public BuildingResource BuildingResource { get; private set; }
 
     public override void _Ready()
     {
@@ -21,32 +24,19 @@ public partial class BulidingComponent : Node2D
         }
 
         AddToGroup(nameof(BulidingComponent));
-        Callable.From(() => GameEvents.EmitBuildingPlaced(this)).CallDeferred();
+        Callable.From(init).CallDeferred();
     }
 
     public Vector2I GetGridCellPosition()
     {
-        var globalPos = (GlobalPosition / 64).Floor();
+        Vector2 globalPos = (GlobalPosition / 64).Floor();
 
         return new((int)globalPos.X, (int)globalPos.Y);
     }
 
-    public List<Vector2I> GetOccupiedCellList()
-    {
-        var result = new List<Vector2I>();
-        var gridPos = GetGridCellPosition();
-        var dimension = BuildingResource.Dimensions;
+    public HashSet<Vector2I> GetOccupiedCellPosition() => occupiedTiles.ToHashSet();
 
-        for (int x = 0; x < gridPos.X + dimension.X; x++) 
-        {
-            for (int y = 0; y < gridPos.Y + dimension.Y; y++) 
-            {
-                result.Add(new(x, y));
-            }
-        }
-
-        return result;  
-    }
+    public bool IsBuildArea(Vector2I tilePos) => occupiedTiles.Contains(tilePos);
 
     public void Destroy()
     {
@@ -54,4 +44,21 @@ public partial class BulidingComponent : Node2D
         Owner.QueueFree();
     }
 
+    private void init()
+    {
+        CalculateOccupiedCellPosition();
+        GameEvents.EmitBuildingPlaced(this);
+    }
+
+    private void CalculateOccupiedCellPosition()
+    {
+        Vector2I gridPos = GetGridCellPosition();
+        Vector2I dimension = BuildingResource.Dimensions;
+
+        for (int x = gridPos.X; x < gridPos.X + dimension.X; x++)
+        {
+            for (int y = gridPos.Y; y < gridPos.Y + dimension.Y; y++)
+                occupiedTiles.Add(new(x, y));
+        }
+    }
 }

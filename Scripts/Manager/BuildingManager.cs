@@ -83,7 +83,7 @@ public partial class BuildingManager : Node
     public override void _Process(double delta)
     {
         var mouseGridPos = gridManager.GetMouseGridCellPosition();
-        var rootCell =  hoverGridArea.Position;
+        var rootCell = hoverGridArea.Position;
 
         if (rootCell != mouseGridPos)
         {
@@ -142,7 +142,7 @@ public partial class BuildingManager : Node
         var building = GetTree()
         .GetNodesInGroup(nameof(BulidingComponent))
         .Cast<BulidingComponent>()
-        .FirstOrDefault(b => b.GetGridCellPosition() == rootCell);
+        .FirstOrDefault(b => b.BuildingResource.IsDeletable && b.IsBuildArea(rootCell));
 
         if (building is null) return;
 
@@ -204,7 +204,7 @@ public partial class BuildingManager : Node
 
 
     private bool IsAbleToBuildAtArea(Rect2I tileArea)
-    {   
+    {
         var tileInArea = GetPositionInTileArea(tileArea);
         var allTileBuildable = tileInArea.All(gridManager.IsTilePositionBuildable);
         return allTileBuildable && AvailableResourceCount >= toPlaceBuildResource.ResourceCost;
