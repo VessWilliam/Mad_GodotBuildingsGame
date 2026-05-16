@@ -60,6 +60,7 @@ Scripts/
  Bulidings/BuildingGhost.cs
  Camera/GameCamera.cs
  Component/BulidingComponent.cs
+ Extentions/Rect2IExtensions.cs
  Generals/
   Constants.cs
   StateEnum.cs
@@ -70,6 +71,7 @@ Scripts/
   GridManager.cs
  Resources/BuildingResource.cs
  UI/GameUI.cs
+ Utils/ElevationLayer.cs
 
 [metadataReferences]
 <DOTNET>/packs/Microsoft.NETCore.App.Ref/8.0.26/ref/net8.0/

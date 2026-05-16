@@ -205,26 +205,9 @@ public partial class BuildingManager : Node
 
     private bool IsAbleToBuildAtArea(Rect2I tileArea)
     {
-        var tileInArea = GetPositionInTileArea(tileArea);
-        var allTileBuildable = tileInArea.All(gridManager.IsTilePositionBuildable);
+        var allTileBuildable = gridManager.IsTileAreaBuildable(tileArea);
         return allTileBuildable && AvailableResourceCount >= toPlaceBuildResource.ResourceCost;
     }
-
-    private List<Vector2I> GetPositionInTileArea(Rect2I tileArea)
-    {
-        var result = new List<Vector2I>();
-
-        for (int x = tileArea.Position.X; x < tileArea.End.X; x++)
-        {
-            for (int y = tileArea.Position.Y; y < tileArea.End.Y; y++)
-            {
-                result.Add(new(x, y));
-            }
-        }
-
-        return result;
-    }
-
 
     private void OnBuildingResourceSelected(BuildingResource resource)
     {
