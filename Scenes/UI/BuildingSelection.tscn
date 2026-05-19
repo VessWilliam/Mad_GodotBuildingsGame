@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://gj34ktbnujad"]
+
+[ext_resource type="Script" uid="uid://c15xb8qnm6xdt" path="res://Scripts/UI/BuildSelection.cs" id="1_ug24m"]
+[ext_resource type="Texture2D" uid="uid://busy77l5fxj6m" path="res://Assets/UI/wood_icon.png" id="2_7n67g"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ds6dh"]
+atlas = ExtResource("2_7n67g")
+region = Rect2(39.54, 74, 32.985, 28)
+margin = Rect2(0.98, 0, 1.84, 0)
+
+[node name="BuildSelection" type="PanelContainer" unique_id=1516168022]
+offset_right = 135.0
+offset_bottom = 148.0
+theme_type_variation = &"PanelContainerBtn"
+script = ExtResource("1_ug24m")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=884325697]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer" unique_id=2083372878]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer/VBoxContainer" unique_id=800003458]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.884375, 0.41303316, 0.10778319, 1)
+theme_override_colors/font_shadow_color = Color(0.040624976, 0.040414143, 0.040244117, 1)
+theme_override_colors/font_outline_color = Color(0.28125, 0.050976556, 0.050976556, 1)
+theme_override_constants/line_spacing = 8
+theme_override_constants/paragraph_spacing = 1
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 11
+theme_override_font_sizes/font_size = 45
+text = "Village"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/VBoxContainer" unique_id=1707053407]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1729371105]
+layout_mode = 2
+texture = SubResource("AtlasTexture_ds6dh")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="CostLabel" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1524265193]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88235295, 0.4117647, 0.105882354, 1)
+theme_override_colors/font_shadow_color = Color(0.040624976, 0.040551975, 0.040498022, 1)
+theme_override_colors/font_outline_color = Color(0.050000012, 0.049531262, 0.04890626, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 28
+text = "4"
+
+[node name="DescLabel" type="Label" parent="VBoxContainer/VBoxContainer" unique_id=1811608658]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88235295, 0.4117647, 0.105882354, 1)
+theme_override_colors/font_shadow_color = Color(0.040624976, 0.040551975, 0.040498022, 1)
+theme_override_colors/font_outline_color = Color(0.050000012, 0.049531262, 0.04890626, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+text = "Gathers Wood "
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=2004269570]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8784314, 0.40784314, 0.105882354, 1)
+theme_override_colors/font_outline_color = Color(0.050980393, 0.050980393, 0.047058824, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 25
+text = "Select "

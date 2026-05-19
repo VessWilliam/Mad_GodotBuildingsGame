@@ -24,7 +24,7 @@ public partial class BulidingComponent : Node2D
         }
 
         AddToGroup(nameof(BulidingComponent));
-        Callable.From(init).CallDeferred();
+        init();
     }
 
     public Vector2I GetGridCellPosition()

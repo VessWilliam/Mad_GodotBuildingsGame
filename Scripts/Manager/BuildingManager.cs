@@ -11,6 +11,9 @@ namespace Game.Manager;
 
 public partial class BuildingManager : Node
 {
+    [Signal]
+    public delegate void AvailableResourceCountChangedEventHandler(int resourceCount);
+
     [Export]
     private int statingResourceCount = 4;
 
@@ -45,6 +48,12 @@ public partial class BuildingManager : Node
 
 
     private StateEnum currentState = StateEnum.Normal;
+
+
+    public override void _Ready()
+    {
+       Callable.From(() => EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount)).CallDeferred();
+    }
 
     public override void _EnterTree()
     {
@@ -133,6 +142,7 @@ public partial class BuildingManager : Node
         ChangeState(StateEnum.Normal);
 
         GD.Print($"Available Resource Count: {AvailableResourceCount}");
+        EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
     }
 
     private void DestroyBuildingAtHovered()
@@ -151,6 +161,7 @@ public partial class BuildingManager : Node
         building.Destroy();
 
         GD.Print($"Available Resource Count: {AvailableResourceCount}");
+        EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
 
     }
 
@@ -224,6 +235,7 @@ public partial class BuildingManager : Node
     private void OnResourceTileUpdated(int resourceCount)
     {
         currentResourceCount = resourceCount;
+        EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
         GD.Print($"Resource tile updated: {resourceCount}");
         GD.Print($"Available: {AvailableResourceCount}");
     }

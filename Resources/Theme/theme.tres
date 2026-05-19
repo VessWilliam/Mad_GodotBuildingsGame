@@ -1,0 +1,99 @@
+[gd_resource type="Theme" format=3 uid="uid://d2oqwsvt54vpm"]
+
+[ext_resource type="Texture2D" uid="uid://cgl7xiu7ed3u3" path="res://Assets/UI/button_red_slides.png" id="1_0wq6w"]
+[ext_resource type="Texture2D" uid="uid://bn87jbhmvgkay" path="res://Assets/UI/banner_vertical.png" id="1_6qf2j"]
+[ext_resource type="Texture2D" uid="uid://cmf3tnn0gw7mt" path="res://Assets/UI/button_hover_slides.png" id="1_cufqf"]
+[ext_resource type="Texture2D" uid="uid://c37xd8y5rfm2o" path="res://Assets/UI/button_red_slides_pressed.png" id="2_q285b"]
+[ext_resource type="Texture2D" uid="uid://b0iptdqaahmlw" path="res://Assets/UI/carved_slides.png" id="2_tfuwb"]
+[ext_resource type="FontFile" uid="uid://cu178yd64jnwl" path="res://Assets/Font/SandyForest.ttf" id="3_hnmaj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q285b"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_q285b"]
+texture = ExtResource("1_cufqf")
+texture_margin_left = 28.0
+texture_margin_top = 10.0
+texture_margin_right = 24.0
+texture_margin_bottom = 29.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(4.145, -0.245, 185.35, 195)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7gcoc"]
+content_margin_bottom = 16.0
+texture = ExtResource("2_q285b")
+texture_margin_left = 28.0
+texture_margin_top = 10.0
+texture_margin_right = 24.0
+texture_margin_bottom = 29.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(4.145, -0.245, 185.35, 195)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rj056"]
+texture = ExtResource("1_0wq6w")
+texture_margin_left = 28.0
+texture_margin_top = 10.0
+texture_margin_right = 24.0
+texture_margin_bottom = 29.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(4.145, -0.245, 185.35, 195)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5ndlu"]
+content_margin_bottom = 16.0
+texture = ExtResource("2_q285b")
+texture_margin_left = 28.0
+texture_margin_top = 10.0
+texture_margin_right = 24.0
+texture_margin_bottom = 29.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 2
+region_rect = Rect2(4.145, -0.245, 185.35, 195)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_intyv"]
+content_margin_left = 23.0
+content_margin_top = 16.0
+content_margin_right = 23.0
+content_margin_bottom = 36.0
+texture = ExtResource("1_6qf2j")
+texture_margin_left = 32.0
+texture_margin_top = 40.0
+texture_margin_right = 32.0
+texture_margin_bottom = 40.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 2
+region_rect = Rect2(32, 24, 128, 144)
+modulate_color = Color(0.6625, 0.6128125, 0.6128125, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4284l"]
+content_margin_left = 10.0
+content_margin_top = 2.0
+content_margin_right = 10.0
+content_margin_bottom = 2.0
+texture = ExtResource("2_tfuwb")
+texture_margin_left = 24.0
+texture_margin_right = 24.0
+expand_margin_bottom = 28.0
+region_rect = Rect2(0, 0, 192, 275)
+
+[resource]
+default_font = ExtResource("3_hnmaj")
+default_font_size = 16
+Button/colors/font_color = Color(0.8784314, 0.40784314, 0.105882354, 1)
+Button/colors/font_focus_color = Color(1, 0.9995711, 0.996875, 1)
+Button/colors/font_hover_color = Color(1, 0.9990196, 0.99375, 1)
+Button/colors/font_hover_pressed_color = Color(0.050000012, 0.048750013, 0.048750013, 1)
+Button/colors/font_outline_color = Color(0.28235295, 0.050980393, 0.050980393, 1)
+Button/colors/font_pressed_color = Color(0.012499988, 0.012460926, 0.012460926, 1)
+Button/constants/outline_size = 4
+Button/font_sizes/font_size = 25
+Button/styles/focus = SubResource("StyleBoxEmpty_q285b")
+Button/styles/hover = SubResource("StyleBoxTexture_q285b")
+Button/styles/hover_pressed = SubResource("StyleBoxTexture_7gcoc")
+Button/styles/normal = SubResource("StyleBoxTexture_rj056")
+Button/styles/pressed = SubResource("StyleBoxTexture_5ndlu")
+PanelContainerBackground/base_type = &"PanelContainer"
+PanelContainerBackground/styles/panel = SubResource("StyleBoxTexture_intyv")
+PanelContainerBtn/base_type = &"PanelContainer"
+PanelContainerBtn/styles/panel = SubResource("StyleBoxTexture_4284l")

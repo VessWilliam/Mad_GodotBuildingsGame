@@ -1,41 +1,46 @@
+using Game.Manager;
 using Game.Resources;
 using Godot;
-
-
 namespace Game.UI;
 
 public partial class GameUI : CanvasLayer
 {
-
     [Signal]
     public delegate void BuildingResourceSelectedEventHandler(BuildingResource resource);
 
     [Export]
+    private BuildingManager buildingManager;
+
+    [Export]
     private BuildingResource[] resource;
 
-    private HBoxContainer hBoxContainer;
+    [Export]
+    private PackedScene buildSelectionScene;
 
+    private VBoxContainer buildSelectionContainer;
+    private Label resourceLabel;
+    
     public override void _Ready()
     {
-        hBoxContainer = GetNode<HBoxContainer>("MarginContainer/HBoxContainer");
+        buildSelectionContainer = GetNode<VBoxContainer>("%BuildSelectionContainer");
 
-        CreateBuildingButtons();
+        resourceLabel = GetNode<Label>("%ResourceLabel");
 
-
+        buildingManager.AvailableResourceCountChanged += (availableResourceCount) => resourceLabel.Text = availableResourceCount.ToString();
+        CreateBuildingSelection();
     }
 
-    private void CreateBuildingButtons()
+    public void HideUI() => Visible = false;
+    
+    private void CreateBuildingSelection()
     {
         foreach (var item in resource)
         {
-            var button = new Button();
-            button.Text = $"Place {item.DisplayName}";
-            hBoxContainer.AddChild(button);
+            var buildselection = buildSelectionScene.Instantiate<BuildSelection>();
+            buildSelectionContainer.AddChild(buildselection);
+            buildselection.SetBuildResource(item);
 
-            button.Pressed += () => EmitSignal(SignalName.BuildingResourceSelected, item);
+            buildselection.SelectButtonPressed += () => EmitSignal(SignalName.BuildingResourceSelected, item);
         }
     }
-
-
-
 }

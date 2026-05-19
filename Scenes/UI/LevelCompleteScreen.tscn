@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://7lenyltnli2n"]
+
+[ext_resource type="Script" uid="uid://dxsgpandpld56" path="res://Scripts/UI/LevelCompleteScreen.cs" id="1_5uplf"]
+[ext_resource type="Texture2D" uid="uid://eeuy5r0f6ox5" path="res://Assets/UI/ribbon_red_slides.png" id="1_b5jrc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5uplf"]
+content_margin_left = 44.0
+content_margin_top = 0.0
+content_margin_right = 44.0
+content_margin_bottom = 35.0
+texture = ExtResource("1_b5jrc")
+texture_margin_left = 64.0
+texture_margin_right = 65.0
+texture_margin_bottom = 3.0
+axis_stretch_horizontal = 1
+region_rect = Rect2(0, 0, 192, 61)
+
+[node name="LevelCompleteScreen" type="CanvasLayer" unique_id=136646867]
+script = ExtResource("1_5uplf")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=128963879]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1010532775]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = -64
+
+[node name="RibbonContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=1296187821]
+custom_minimum_size = Vector2(256, 61)
+layout_mode = 2
+localize_numeral_system = false
+theme_override_styles/panel = SubResource("StyleBoxTexture_5uplf")
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/RibbonContainer" unique_id=308011352]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+size_flags_stretch_ratio = 0.0
+theme_override_colors/font_color = Color(0.8784314, 0.40784314, 0.105882354, 1)
+theme_override_colors/font_shadow_color = Color(0.3529412, 0.09411765, 0.05882353, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_constants/shadow_outline_size = 8
+theme_override_font_sizes/font_size = 50
+text = " Level Complete "
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer" unique_id=552662296]
+show_behind_parent = true
+layout_mode = 2
+theme_override_constants/margin_left = 47
+theme_override_constants/margin_right = 47
+
+[node name="ScrollContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/MarginContainer" unique_id=2076059605]
+layout_mode = 2
+theme_type_variation = &"PanelContainerBackground"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/MarginContainer/ScrollContainer" unique_id=69534302]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 49
+theme_override_constants/margin_right = 16
+
+[node name="NextLevelBtn" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/ScrollContainer/MarginContainer" unique_id=962387716]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Next Level"

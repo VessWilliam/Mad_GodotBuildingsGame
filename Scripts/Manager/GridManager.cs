@@ -32,15 +32,21 @@ public partial class GridManager : Node
     private List<TileMapLayer> allTilemapLayer = new();
     private Dictionary<TileMapLayer, ElevationLayer> tileMapElevation = new();
 
+    private bool _initialLoadComplete = false;
 
     public override void _Ready()
     {
-        GameEvents.Instance.BuildingPlaced += OnBuildingPlaced;
-        GameEvents.Instance.BuildingDestroyed += OnBuildingDestroyed;
+
+        GameEvents.Instance.Connect(GameEvents.SignalName.BuildingPlaced,
+         Callable.From<BulidingComponent>(OnBuildingPlaced));
+
+        GameEvents.Instance.Connect(GameEvents.SignalName.BuildingDestroyed,
+         Callable.From<BulidingComponent>(OnBuildingDestroyed));
 
         allTilemapLayer = GetAllTileMapLayer(terrainTilemapLayer);
 
         MapTileMapElevationLayer();
+        Callable.From(() => _initialLoadComplete = true).CallDeferred();
     }
 
     public void ClearHighlightArea() => highlightTilemapLayer.Clear();
@@ -289,7 +295,7 @@ public partial class GridManager : Node
     private void OnBuildingPlaced(BulidingComponent buildingComponent)
     {
         UpdateValidBuildArea(buildingComponent);
-        UpdateCollectResourceArea(buildingComponent);
+        UpdateCollectResourceArea(buildingComponent, _initialLoadComplete);
     }
 
     private void OnBuildingDestroyed(BulidingComponent buildingComponent)
