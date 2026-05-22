@@ -88,6 +88,7 @@ Button/colors/font_outline_color = Color(0.28235295, 0.050980393, 0.050980393, 1
 Button/colors/font_pressed_color = Color(0.012499988, 0.012460926, 0.012460926, 1)
 Button/constants/outline_size = 4
 Button/font_sizes/font_size = 25
+Button/fonts/font = ExtResource("3_hnmaj")
 Button/styles/focus = SubResource("StyleBoxEmpty_q285b")
 Button/styles/hover = SubResource("StyleBoxTexture_q285b")
 Button/styles/hover_pressed = SubResource("StyleBoxTexture_7gcoc")

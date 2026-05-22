@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Game.Buildings;
 using Game.Component;
@@ -13,9 +12,6 @@ public partial class BuildingManager : Node
 {
     [Signal]
     public delegate void AvailableResourceCountChangedEventHandler(int resourceCount);
-
-    [Export]
-    private int statingResourceCount = 4;
 
     [Export]
     private GridManager gridManager;
@@ -40,19 +36,18 @@ public partial class BuildingManager : Node
 
     private int currentUsedResourceCount;
     private BuildingResource toPlaceBuildResource;
+    private int statingResourceCount;
 
     private int AvailableResourceCount =>
          statingResourceCount +
          currentResourceCount -
          currentUsedResourceCount;
 
-
     private StateEnum currentState = StateEnum.Normal;
-
 
     public override void _Ready()
     {
-       Callable.From(() => EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount)).CallDeferred();
+        Callable.From(() => EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount)).CallDeferred();
     }
 
     public override void _EnterTree()
@@ -88,6 +83,8 @@ public partial class BuildingManager : Node
                 break;
         }
     }
+
+    public void SetStatingResourceCount(int startcount) => statingResourceCount = startcount;
 
     public override void _Process(double delta)
     {
@@ -174,7 +171,6 @@ public partial class BuildingManager : Node
         buidingGhost = null;
     }
 
-
     private void UpdateHoveredGridArea()
     {
         switch (currentState)
@@ -213,7 +209,6 @@ public partial class BuildingManager : Node
         }
     }
 
-
     private bool IsAbleToBuildAtArea(Rect2I tileArea)
     {
         var allTileBuildable = gridManager.IsTileAreaBuildable(tileArea);
@@ -239,6 +234,5 @@ public partial class BuildingManager : Node
         GD.Print($"Resource tile updated: {resourceCount}");
         GD.Print($"Available: {AvailableResourceCount}");
     }
-
 
 }

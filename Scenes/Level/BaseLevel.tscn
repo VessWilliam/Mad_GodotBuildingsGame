@@ -9,6 +9,7 @@
 [ext_resource type="TileSet" uid="uid://wu8i71278jye" path="res://Resources/tiles.tres" id="5_qx3j0"]
 [ext_resource type="PackedScene" uid="uid://dbtx8ccudg732" path="res://Scenes/Buildings/Base.tscn" id="6_ah6f1"]
 [ext_resource type="PackedScene" uid="uid://5ui0maqtwn5g" path="res://Scenes/GoldMines/GoldMine.tscn" id="7_6f0v8"]
+[ext_resource type="PackedScene" uid="uid://brcyh1eo6luvb" path="res://Scenes/UI/ParallaxLayer.tscn" id="7_jsyjl"]
 [ext_resource type="TileSet" uid="uid://bt2wsixes6uv4" path="res://Resources/highlight_tileset.tres" id="8_jma8p"]
 [ext_resource type="PackedScene" uid="uid://d0cwvebpa76t7" path="res://Scenes/UI/GameUI.tscn" id="9_mqopy"]
 
@@ -21,6 +22,7 @@ highlightTilemapLayer = NodePath("../HighlightTileMapLayer")
 terrainTilemapLayer = NodePath("../YSortRoot/TerrianTileMapLayer")
 
 [node name="BuildingManager" parent="." unique_id=363034371 node_paths=PackedStringArray("gridManager", "ySortRoot", "gameUI") instance=ExtResource("3_toevt")]
+unique_name_in_owner = true
 statingResourceCount = 0
 gridManager = NodePath("../GridManager")
 ySortRoot = NodePath("../YSortRoot")
@@ -30,6 +32,8 @@ buidingGhostScene = ExtResource("4_jsyjl")
 [node name="GameUI" parent="." unique_id=264214732 node_paths=PackedStringArray("buildingManager") instance=ExtResource("9_mqopy")]
 unique_name_in_owner = true
 buildingManager = NodePath("../BuildingManager")
+
+[node name="ParrallaxRootBackground" parent="." unique_id=443723141 instance=ExtResource("7_jsyjl")]
 
 [node name="GameCamera" parent="." unique_id=1755277265 instance=ExtResource("3_xerb2")]
 
@@ -46,6 +50,7 @@ y_sort_enabled = true
 tile_set = ExtResource("5_qx3j0")
 
 [node name="Base" parent="YSortRoot" unique_id=1654910469 instance=ExtResource("6_ah6f1")]
+unique_name_in_owner = true
 
 [node name="GoldMine" parent="YSortRoot" unique_id=2085166556 instance=ExtResource("7_6f0v8")]
 unique_name_in_owner = true

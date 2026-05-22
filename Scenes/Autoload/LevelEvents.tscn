@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://b1rtrha5lw4e3"]
 
 [ext_resource type="Script" uid="uid://b47wni214iufc" path="res://Scripts/Autoload/LevelEvents.cs" id="1_1fkf5"]
-[ext_resource type="PackedScene" uid="uid://bvj0itve0le8y" path="res://Scenes/Level/Level1.tscn" id="2_nnxd6"]
+[ext_resource type="Resource" uid="uid://bta3g6orcftn5" path="res://Resources/LevelResources/level_01.tres" id="2_klqqs"]
+[ext_resource type="Resource" uid="uid://vwhld5c6qe4s" path="res://Resources/LevelResources/level_02.tres" id="3_58w8t"]
 
 [node name="LevelEvents" type="Node" unique_id=1221574024]
 script = ExtResource("1_1fkf5")
-levelSecens = Array[PackedScene]([ExtResource("2_nnxd6")])
+levelResources = Array[Object]([ExtResource("2_klqqs"), ExtResource("3_58w8t")])

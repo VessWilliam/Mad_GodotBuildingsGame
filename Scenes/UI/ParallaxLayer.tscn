@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://brcyh1eo6luvb"]
+
+[ext_resource type="Script" uid="uid://csdn6v7ly1rog" path="res://Scripts/Background/ParallaxLayer.cs" id="1_vjamk"]
+[ext_resource type="Texture2D" uid="uid://pstqyhuemrjw" path="res://Assets/clouds/clouds_one.png" id="2_weh8e"]
+[ext_resource type="Texture2D" uid="uid://oqf4yvhv7utb" path="res://Assets/clouds/clouds_seven.png" id="3_md1jg"]
+[ext_resource type="Texture2D" uid="uid://1y851ajpjdl" path="res://Assets/clouds/clouds_two.png" id="4_4bfnu"]
+
+[node name="ParrallaxRootBackground" type="Node" unique_id=443723141]
+
+[node name="ParallaxLayer" type="Parallax2D" parent="." unique_id=231444579 node_paths=PackedStringArray("CloudSprites")]
+z_index = 10
+y_sort_enabled = true
+repeat_size = Vector2(1280, 720)
+repeat_times = 5
+script = ExtResource("1_vjamk")
+CloudSprites = [NodePath("Cloud_a"), NodePath("Cloud_b"), NodePath("Cloud_c"), NodePath("Cloud_d")]
+
+[node name="Cloud_a" type="Sprite2D" parent="ParallaxLayer" unique_id=17386218]
+y_sort_enabled = true
+texture = ExtResource("2_weh8e")
+
+[node name="Cloud_b" type="Sprite2D" parent="ParallaxLayer" unique_id=246621011]
+y_sort_enabled = true
+position = Vector2(256, 256)
+texture = ExtResource("3_md1jg")
+
+[node name="Cloud_c" type="Sprite2D" parent="ParallaxLayer" unique_id=388260133]
+y_sort_enabled = true
+position = Vector2(1024, 192)
+texture = ExtResource("4_4bfnu")
+
+[node name="Cloud_d" type="Sprite2D" parent="ParallaxLayer" unique_id=1688978350]
+y_sort_enabled = true
+position = Vector2(704, -192)
+texture = ExtResource("2_weh8e")

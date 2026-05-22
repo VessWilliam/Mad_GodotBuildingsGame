@@ -2,18 +2,16 @@
 
 [ext_resource type="PackedScene" uid="uid://dsyfe8gk40n5c" path="res://Scenes/Level/BaseLevel.tscn" id="1_g1stx"]
 [ext_resource type="TileSet" uid="uid://wu8i71278jye" path="res://Resources/tiles.tres" id="2_8ux1l"]
+[ext_resource type="Resource" uid="uid://bta3g6orcftn5" path="res://Resources/LevelResources/level_01.tres" id="2_b2j2l"]
 [ext_resource type="PackedScene" uid="uid://bvw2tkmts54om" path="res://Scenes/Utils/ElevationLayer.tscn" id="3_mddlf"]
-[ext_resource type="Script" uid="uid://csdn6v7ly1rog" path="res://Scripts/Background/ParallaxLayer.cs" id="4_5vtej"]
-[ext_resource type="Texture2D" uid="uid://pstqyhuemrjw" path="res://Assets/clouds/clouds_one.png" id="5_i7gaw"]
-[ext_resource type="Texture2D" uid="uid://oqf4yvhv7utb" path="res://Assets/clouds/clouds_seven.png" id="6_xtiaw"]
-[ext_resource type="Texture2D" uid="uid://1y851ajpjdl" path="res://Assets/clouds/clouds_two.png" id="7_7axx8"]
 
 [node name="Level1" unique_id=547361296 instance=ExtResource("1_g1stx")]
+levelResource = ExtResource("2_b2j2l")
 
 [node name="BuildingManager" parent="." index="1" unique_id=363034371]
-statingResourceCount = 8
+statingResourceCount = 6
 
-[node name="YSortRoot" parent="." index="4" unique_id=902121781]
+[node name="YSortRoot" parent="." index="5" unique_id=902121781]
 position = Vector2(1, 0)
 
 [node name="TerrianTileMapLayer" parent="YSortRoot" index="0" unique_id=1123116985]
@@ -51,38 +49,9 @@ tile_map_data = PackedByteArray("AAAJAAkAAQAAAAAAAAAKAAoAAQAAAAAAAAAIAAkAAQAAAAA
 tile_set = ExtResource("2_8ux1l")
 
 [node name="Base" parent="YSortRoot" index="1" unique_id=1654910469]
-unique_name_in_owner = true
 position = Vector2(63, 256)
 
 [node name="GoldMine" parent="YSortRoot" index="2" unique_id=2085166556]
 position = Vector2(1087, 384)
-
-[node name="ParallaxLayer" type="Parallax2D" parent="." index="6" unique_id=935167394 node_paths=PackedStringArray("CloudSprites")]
-z_index = 10
-y_sort_enabled = true
-repeat_size = Vector2(1280, 720)
-repeat_times = 5
-script = ExtResource("4_5vtej")
-Speed = 20.0
-CloudSprites = [NodePath("Cloud_a"), NodePath("Cloud_b"), NodePath("Cloud_c"), NodePath("Cloud_d")]
-
-[node name="Cloud_a" type="Sprite2D" parent="ParallaxLayer" index="0" unique_id=1272088222]
-y_sort_enabled = true
-texture = ExtResource("5_i7gaw")
-
-[node name="Cloud_b" type="Sprite2D" parent="ParallaxLayer" index="1" unique_id=219953697]
-y_sort_enabled = true
-position = Vector2(256, 256)
-texture = ExtResource("6_xtiaw")
-
-[node name="Cloud_c" type="Sprite2D" parent="ParallaxLayer" index="2" unique_id=1130451241]
-y_sort_enabled = true
-position = Vector2(1024, 192)
-texture = ExtResource("7_7axx8")
-
-[node name="Cloud_d" type="Sprite2D" parent="ParallaxLayer" index="3" unique_id=1977497594]
-y_sort_enabled = true
-position = Vector2(704, -192)
-texture = ExtResource("5_i7gaw")
 
 [editable path="YSortRoot/TerrianTileMapLayer/ElevationLayer"]

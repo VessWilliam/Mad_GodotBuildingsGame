@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://cgha3jlnhr6f"]
+
+[ext_resource type="Script" uid="uid://bhfahoudi3oef" path="res://Scripts/UI/LevelSelection.cs" id="1_0yt1a"]
+[ext_resource type="Texture2D" uid="uid://busy77l5fxj6m" path="res://Assets/UI/wood_icon.png" id="1_fvdss"]
+[ext_resource type="FontFile" uid="uid://drrlwwoie27gu" path="res://Assets/Font/Bitfantasy.ttf" id="2_vs1vs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ugdyl"]
+atlas = ExtResource("1_fvdss")
+region = Rect2(37, 73, 35, 28)
+
+[node name="LevelSelection" type="PanelContainer" unique_id=1180943949]
+theme_type_variation = &"PanelContainerBtn"
+script = ExtResource("1_0yt1a")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1226237108]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = -10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1024461987]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1332877452]
+layout_mode = 2
+theme_override_constants/separation = -3
+
+[node name="LevelNumberLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=39729973]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8784314, 0.40784314, 0.105882354, 1)
+theme_override_colors/font_shadow_color = Color(0.28235295, 0.050980393, 0.050980393, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 45
+text = "Level 1"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=55020458]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1657950200]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture = SubResource("AtlasTexture_ugdyl")
+expand_mode = 1
+
+[node name="ResourceCountLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1849535945]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.715625, 0.5401291, 0.33097655, 1)
+theme_override_colors/font_shadow_color = Color(0.68235296, 0.49803922, 0.33333334, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_vs1vs")
+theme_override_font_sizes/font_size = 30
+text = "8"
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer" unique_id=510366285]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Select "

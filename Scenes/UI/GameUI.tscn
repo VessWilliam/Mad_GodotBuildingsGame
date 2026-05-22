@@ -5,11 +5,12 @@
 [ext_resource type="Resource" uid="uid://dtgmanhovvjh1" path="res://Resources/BuildingResources/village.tres" id="3_tog36"]
 [ext_resource type="PackedScene" uid="uid://gj34ktbnujad" path="res://Scenes/UI/BuildingSelection.tscn" id="4_tog36"]
 [ext_resource type="Texture2D" uid="uid://busy77l5fxj6m" path="res://Assets/UI/wood_icon.png" id="5_fe2yh"]
+[ext_resource type="FontFile" uid="uid://drrlwwoie27gu" path="res://Assets/Font/Bitfantasy.ttf" id="6_npa51"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_npa51"]
 atlas = ExtResource("5_fe2yh")
-region = Rect2(39.54, 74, 32.985, 28)
-margin = Rect2(0.98, 0, 1.84, 0)
+region = Rect2(39.54, 72, 32.985, 29.875)
+margin = Rect2(0, 0, 1.84, 0)
 
 [node name="GameUI" type="CanvasLayer" unique_id=1490250840]
 script = ExtResource("1_13cgw")
@@ -34,30 +35,45 @@ theme_type_variation = &"PanelContainerBackground"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer" unique_id=1669886176]
 layout_mode = 2
+theme_override_constants/separation = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1871346413]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=12882390]
 layout_mode = 2
-theme_override_constants/separation = 8
-alignment = 1
+theme_override_constants/separation = 4
+alignment = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1399370098]
-custom_minimum_size = Vector2(45, 45)
+[node name="TextureContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=447797536]
 layout_mode = 2
-size_flags_vertical = 8
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/TextureContainer" unique_id=1399370098]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
 texture = SubResource("AtlasTexture_npa51")
 expand_mode = 1
 
-[node name="ResourceLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1890260620]
+[node name="LabelResourceContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer" unique_id=23550496]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="ResourceLabel" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/LabelResourceContainer" unique_id=1890260620]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0.88235295, 0.4117647, 0.105882354, 1)
-theme_override_colors/font_shadow_color = Color(0.040624976, 0.040551975, 0.040498022, 1)
-theme_override_colors/font_outline_color = Color(0.050000012, 0.049531262, 0.04890626, 1)
+theme_override_colors/font_color = Color(0.715625, 0.5401291, 0.33097655, 1)
+theme_override_colors/font_shadow_color = Color(0.68235296, 0.49803922, 0.33333334, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 1
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 45
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("6_npa51")
+theme_override_font_sizes/font_size = 48
 text = "4"
+horizontal_alignment = 3
 
 [node name="BuildSelectionContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer" unique_id=1628532218]
 unique_name_in_owner = true

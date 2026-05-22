@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bespkc6bkqah6"]
+
+[ext_resource type="Script" uid="uid://dgr1uqgpxf56t" path="res://Scripts/UI/LevelSelectScreen.cs" id="1_lhiyq"]
+[ext_resource type="PackedScene" uid="uid://cgha3jlnhr6f" path="res://Scenes/UI/LevelSelection.tscn" id="1_vxida"]
+
+[node name="LevelSelectScreen" type="MarginContainer" unique_id=578943097]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_right = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lhiyq")
+levelSelectionScene = ExtResource("1_vxida")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1333633305]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_type_variation = &"PanelContainerBackground"
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=5973055]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer" unique_id=1062422390]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
+columns = 4

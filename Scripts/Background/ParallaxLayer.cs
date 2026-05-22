@@ -6,7 +6,7 @@ namespace Game.Background;
 public partial class ParallaxLayer : Parallax2D
 {
     [Export]
-    public float Speed { get; set; } = 80f; // positive = moves right
+    public float Speed { get; set; } = 20f; 
 
     [Export]
     public Sprite2D[] CloudSprites { get; set; }
@@ -39,11 +39,11 @@ public partial class ParallaxLayer : Parallax2D
 
     public override void _Process(double delta)
     {
-        if (CloudSprites == null) return;
+        if (CloudSprites is null) return;
 
         foreach (Sprite2D sprite in CloudSprites)
         {
-            if (sprite == null) continue;
+            if (sprite is null) continue;
 
             // Move right
             sprite.Position = new Vector2(
@@ -52,7 +52,7 @@ public partial class ParallaxLayer : Parallax2D
             );
 
             // If fully off the right edge, respawn on the left
-            float halfWidth = sprite.Texture != null ? sprite.Texture.GetWidth() * sprite.Scale.X / 2f : 32f;
+            float halfWidth = sprite.Texture is not null ? sprite.Texture.GetWidth() * sprite.Scale.X / 2f : 32f;
             if (sprite.Position.X - halfWidth > _screenWidth)
             {
                 RandomizeSprite(sprite, spawnAnywhere: false);
@@ -65,7 +65,7 @@ public partial class ParallaxLayer : Parallax2D
 
     private void RandomizeSprite(Sprite2D sprite, bool spawnAnywhere)
     {
-        float halfWidth = sprite.Texture != null ? sprite.Texture.GetWidth() * sprite.Scale.X / 2f : 32f;
+        float halfWidth = sprite.Texture is not null ? sprite.Texture.GetWidth() * sprite.Scale.X / 2f : 32f;
 
         // Set X position
         float newX = spawnAnywhere
