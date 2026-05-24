@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cy8w5805io6p6" path="res://Assets/buildings/tower_blue.png" id="1_wcg53"]
 
-[node name="SpriteTower" type="Node2D" unique_id=283921741]
+[node name="SpriteTower" type="Node2D" unique_id=1278756498]
 y_sort_enabled = true
 
 [node name="TowerSprite2D" type="Sprite2D" parent="." unique_id=1601509845]

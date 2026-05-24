@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dbtx8ccudg732" path="res://Scenes/Buildings/Base.tscn" id="4_kl3t2"]
 [ext_resource type="PackedScene" uid="uid://5ui0maqtwn5g" path="res://Scenes/GoldMines/GoldMine.tscn" id="5_ynupv"]
 [ext_resource type="PackedScene" uid="uid://brcyh1eo6luvb" path="res://Scenes/UI/ParallaxLayer.tscn" id="7_744d7"]
+[ext_resource type="PackedScene" uid="uid://bespkc6bkqah6" path="res://Scenes/UI/LevelSelectScreen.tscn" id="7_kl3t2"]
 
 [node name="MainMenu" type="Node" unique_id=1052397780]
 script = ExtResource("1_jex3y")
@@ -74,43 +75,48 @@ position = Vector2(192, -128)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1508232329]
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=1099924572]
+[node name="MainMenuContainer" type="MarginContainer" parent="CanvasLayer" unique_id=1099924572]
+unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer" unique_id=1411609733]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MainMenuContainer" unique_id=1411609733]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_type_variation = &"PanelContainerBackground"
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/PanelContainer" unique_id=148070403]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MainMenuContainer/PanelContainer" unique_id=148070403]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer" unique_id=2079720297]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer" unique_id=2079720297]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="PlayButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=623937398]
+[node name="PlayButton" type="Button" parent="CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=623937398]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Play"
 
-[node name="OptionsButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=712153344]
+[node name="OptionsButton" type="Button" parent="CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=712153344]
 layout_mode = 2
 text = "Options"
 
-[node name="ExitButton" type="Button" parent="CanvasLayer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2146302812]
+[node name="ExitButton" type="Button" parent="CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=2146302812]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Exit"
+
+[node name="LevelSelectScreen" parent="CanvasLayer" unique_id=578943097 instance=ExtResource("7_kl3t2")]
+unique_name_in_owner = true
 
 [node name="ParrallaxRootBackground" parent="." unique_id=443723141 instance=ExtResource("7_744d7")]
 

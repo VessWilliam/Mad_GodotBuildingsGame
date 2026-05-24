@@ -89,14 +89,6 @@ public partial class BuildingManager : Node
     public override void _Process(double delta)
     {
         var mouseGridPos = gridManager.GetMouseGridCellPosition();
-        var rootCell = hoverGridArea.Position;
-
-        if (rootCell != mouseGridPos)
-        {
-            hoverGridArea.Position = mouseGridPos;
-            UpdateHoveredGridArea();
-        }
-
         switch (currentState)
         {
             case StateEnum.Normal:
@@ -107,6 +99,12 @@ public partial class BuildingManager : Node
 
         }
 
+        var rootCell = hoverGridArea.Position;
+        if (rootCell != mouseGridPos)
+        {
+            hoverGridArea.Position = mouseGridPos;
+            UpdateHoveredGridArea();
+        }
     }
 
     private void UpdateGridDisplay()
@@ -115,6 +113,7 @@ public partial class BuildingManager : Node
 
         gridManager.HighlightBuildArea();
 
+        buidingGhost.DoHoverAnimation();
         if (!IsAbleToBuildAtArea(hoverGridArea))
         {
             buidingGhost.SetInvalid();
@@ -124,6 +123,7 @@ public partial class BuildingManager : Node
         gridManager.HighlightExpandBuildArea(hoverGridArea, toPlaceBuildResource.BuildingRadius);
         gridManager.HighlightResourceArea(hoverGridArea, toPlaceBuildResource.ResourceRadius);
         buidingGhost.SetValid();
+
     }
 
     private void PlaceBuildingAtHovered()
@@ -221,8 +221,8 @@ public partial class BuildingManager : Node
         ChangeState(StateEnum.PlacingBuilding);
         hoverGridArea.Size = resource.Dimensions;
         var buildiingSprite = resource.SpriteScene.Instantiate<Node2D>();
-        buidingGhost.AddChild(buildiingSprite);
-
+        buidingGhost.AddSpriteNode(buildiingSprite);
+        buidingGhost.SetDemensions(resource.Dimensions);
         toPlaceBuildResource = resource;
         UpdateGridDisplay();
     }

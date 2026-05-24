@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b3lv1t8y4kyhc" path="res://Assets/buildings/house.png" id="1_8b0ha"]
 
-[node name="SpriteVillage" type="Node2D" unique_id=900668617]
+[node name="SpriteVillage" type="Node2D" unique_id=78949455]
 y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1857620127]
