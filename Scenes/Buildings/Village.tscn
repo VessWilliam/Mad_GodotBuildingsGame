@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b6xm4qlo2namq"]
 
 [ext_resource type="PackedScene" uid="uid://cl8fclajmmwtt" path="res://Scenes/Component/BulidingComponent.tscn" id="1_we6cg"]
+[ext_resource type="PackedScene" uid="uid://cmmjhk2q7g67t" path="res://Scenes/Component/BuildingAnimatorComponent.tscn" id="2_qygkm"]
 [ext_resource type="PackedScene" uid="uid://dx047lxdigdjm" path="res://Scenes/Buildings/Sprites/SpriteVillage.tscn" id="2_we6cg"]
 
 [node name="Village" type="Node2D" unique_id=1773718701]
@@ -9,4 +10,6 @@ y_sort_enabled = true
 [node name="BulidingComponent" parent="." unique_id=1264297234 instance=ExtResource("1_we6cg")]
 buildingResourcePath = "uid://dtgmanhovvjh1"
 
-[node name="SpriteVillage" parent="." unique_id=900668617 instance=ExtResource("2_we6cg")]
+[node name="BuildingAnimatorComponent" parent="." unique_id=1455991372 instance=ExtResource("2_qygkm")]
+
+[node name="SpriteVillage" parent="BuildingAnimatorComponent" unique_id=900668617 instance=ExtResource("2_we6cg")]

@@ -128,6 +128,19 @@ public partial class GridManager : Node
 
     }
 
+    public Vector2I GetMouseGridCellPositionWithOffset(Vector2 demensions)
+    {
+        var mousePos = highlightTilemapLayer.GetGlobalMousePosition() / 64;
+        
+        mousePos -= demensions / 2;
+        
+        mousePos = mousePos.Round();
+
+        return new Vector2I((int)mousePos.X, (int)mousePos.Y);
+
+    }
+
+
     public Vector2I GetMouseGridCellPosition()
     {
         var mousePos = highlightTilemapLayer.GetGlobalMousePosition();
@@ -138,6 +151,7 @@ public partial class GridManager : Node
     public Vector2I ConvertWorldtoTilePosition(Vector2 worldPos)
     {
         var tilePos = (worldPos / 64).Floor();
+        
         return new((int)tilePos.X, (int)tilePos.Y);
     }
 
