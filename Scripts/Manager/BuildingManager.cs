@@ -1,6 +1,7 @@
 using System.Linq;
 using Game.Buildings;
 using Game.Component;
+using Game.Extentions;
 using Game.Generals;
 using Game.Resources;
 using Game.UI;
@@ -134,6 +135,8 @@ public partial class BuildingManager : Node
         var building = toPlaceBuildResource.BuildingScene.Instantiate<Node2D>();
 
         building.GlobalPosition = hoverGridArea.Position * 64;
+      
+        building.GetFirstNodeOfType<BuildingAnimatorComponent>()?.PlayPlaceAnimation();
 
         ySortRoot.AddChild(building);
 

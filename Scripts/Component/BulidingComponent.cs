@@ -11,6 +11,9 @@ public partial class BulidingComponent : Node2D
     [Export(PropertyHint.File, "*.tscn")]
     private string buildingResourcePath;
 
+    [Export]
+    private BuildingAnimatorComponent buildingAnimatorComponent;
+
     private HashSet<Vector2I> occupiedTiles = new();
 
     public BuildingResource BuildingResource { get; private set; }
@@ -22,6 +25,11 @@ public partial class BulidingComponent : Node2D
         {
             BuildingResource = GD.Load<BuildingResource>(buildingResourcePath);
         }
+
+        if (buildingAnimatorComponent is not null)
+            buildingAnimatorComponent.DestroyAnimationFinished += () => Owner.QueueFree();
+
+        if (BuildingResource is null) return;
 
         AddToGroup(nameof(BulidingComponent));
         init();
@@ -41,7 +49,9 @@ public partial class BulidingComponent : Node2D
     public void Destroy()
     {
         GameEvents.EmitBuildingDestroyed(this);
-        Owner.QueueFree();
+        buildingAnimatorComponent?.PlayDestroyAnimation();
+
+        if (buildingAnimatorComponent is null) Owner.QueueFree();
     }
 
     private void init()
@@ -53,6 +63,7 @@ public partial class BulidingComponent : Node2D
     private void CalculateOccupiedCellPosition()
     {
         Vector2I gridPos = GetGridCellPosition();
+
         Vector2I dimension = BuildingResource.Dimensions;
 
         for (int x = gridPos.X; x < gridPos.X + dimension.X; x++)

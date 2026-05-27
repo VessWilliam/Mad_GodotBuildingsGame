@@ -1,12 +1,16 @@
 [gd_scene format=3 uid="uid://cm06gtnqksfq3"]
 
 [ext_resource type="PackedScene" uid="uid://cl8fclajmmwtt" path="res://Scenes/Component/BulidingComponent.tscn" id="1_ywl2g"]
+[ext_resource type="PackedScene" uid="uid://cmmjhk2q7g67t" path="res://Scenes/Component/BuildingAnimatorComponent.tscn" id="2_8qjvt"]
 [ext_resource type="PackedScene" uid="uid://c6icp0c0slx13" path="res://Scenes/Buildings/Sprites/SpriteTower.tscn" id="2_ak2qy"]
 
 [node name="Tower" type="Node2D" unique_id=1855005810]
 y_sort_enabled = true
 
-[node name="BulidingComponent" parent="." unique_id=1264297234 instance=ExtResource("1_ywl2g")]
+[node name="BulidingComponent" parent="." unique_id=1264297234 node_paths=PackedStringArray("buildingAnimatorComponent") instance=ExtResource("1_ywl2g")]
 buildingResourcePath = "uid://baxwxwlvmgjs8"
+buildingAnimatorComponent = NodePath("../BuildingAnimatorComponent")
 
-[node name="TowerSprite2D" parent="." unique_id=682040836 instance=ExtResource("2_ak2qy")]
+[node name="BuildingAnimatorComponent" parent="." unique_id=1455991372 instance=ExtResource("2_8qjvt")]
+
+[node name="TowerSprite2D" parent="BuildingAnimatorComponent" unique_id=682040836 instance=ExtResource("2_ak2qy")]
