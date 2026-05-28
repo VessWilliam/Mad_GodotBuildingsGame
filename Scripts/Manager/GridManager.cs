@@ -29,7 +29,7 @@ public partial class GridManager : Node
     private HashSet<Vector2I> collectedResourceTiles = new();
     private HashSet<Vector2I> allTilesBuildableRadius = new();
     private HashSet<Vector2I> occupiedBuild = new();
-   
+
     private List<TileMapLayer> allTilemapLayer = new();
     private Dictionary<TileMapLayer, ElevationLayer> tileMapElevation = new();
 
@@ -67,7 +67,7 @@ public partial class GridManager : Node
     }
 
     public bool IsTilePositionBuildable(Vector2I tilePos) => validBuildableArea.Contains(tilePos);
-    
+
     public bool IsTilePositionInAnyBuildableRadius(Vector2I tilePos) => allTilesBuildableRadius.Contains(tilePos);
 
     public bool IsTileAreaBuildable(Rect2I tileArea)
@@ -131,9 +131,9 @@ public partial class GridManager : Node
     public Vector2I GetMouseGridCellPositionWithOffset(Vector2 demensions)
     {
         var mousePos = highlightTilemapLayer.GetGlobalMousePosition() / 64;
-        
+
         mousePos -= demensions / 2;
-        
+
         mousePos = mousePos.Round();
 
         return new Vector2I((int)mousePos.X, (int)mousePos.Y);
@@ -151,7 +151,7 @@ public partial class GridManager : Node
     public Vector2I ConvertWorldtoTilePosition(Vector2 worldPos)
     {
         var tilePos = (worldPos / 64).Floor();
-        
+
         return new((int)tilePos.X, (int)tilePos.Y);
     }
 
@@ -187,7 +187,7 @@ public partial class GridManager : Node
         var rootCell = buildingComponent.GetGridCellPosition();
         int radius = buildingComponent.BuildingResource.BuildingRadius;
         var tileArea = new Rect2I(rootCell, buildingComponent.BuildingResource.Dimensions);
-        
+
         var allTiles = GetTilesInRadius(tileArea, buildingComponent.BuildingResource.BuildingRadius, (_) => true);
         allTilesBuildableRadius.UnionWith(allTiles);
 
@@ -200,19 +200,16 @@ public partial class GridManager : Node
         if (emitSignal) EmitSignal(SignalName.GridStateUpdate);
     }
 
-    private void RecalculateBuildArea(BulidingComponent excludeComponent)
+    private void RecalculateBuildArea()
     {
         occupiedBuild.Clear();
         validBuildableArea.Clear();
         collectedResourceTiles.Clear();
         allTilesBuildableRadius.Clear();
 
-        var buildingComponenets = GetTree()
-        .GetNodesInGroup(nameof(BulidingComponent))
-        .Cast<BulidingComponent>().Where(b => b != excludeComponent)
-        .ToList();
+        var buildingComponenets = BulidingComponent.GetValidBuildingComponent(this);
 
-        GD.Print($"Recalculating with {buildingComponenets.Count} buildings");
+        GD.Print($"Recalculating with {buildingComponenets.Count()} buildings");
 
         foreach (var item in buildingComponenets)
         {
@@ -320,6 +317,6 @@ public partial class GridManager : Node
 
     private void OnBuildingDestroyed(BulidingComponent buildingComponent)
     {
-        RecalculateBuildArea(buildingComponent);
+        RecalculateBuildArea();
     }
 }

@@ -16,6 +16,8 @@ public partial class BulidingComponent : Node2D
 
     private HashSet<Vector2I> occupiedTiles = new();
 
+    public bool IsDestroying { get; private set; }
+
     public BuildingResource BuildingResource { get; private set; }
 
     public override void _Ready()
@@ -48,11 +50,17 @@ public partial class BulidingComponent : Node2D
 
     public void Destroy()
     {
+        IsDestroying = true;
         GameEvents.EmitBuildingDestroyed(this);
         buildingAnimatorComponent?.PlayDestroyAnimation();
 
         if (buildingAnimatorComponent is null) Owner.QueueFree();
     }
+
+    public static IEnumerable<BulidingComponent> GetValidBuildingComponent(Node node) =>
+      node.GetTree()
+      .GetNodesInGroup(nameof(BulidingComponent))
+      .Cast<BulidingComponent>().Where(b => !b.IsDestroying);
 
     private void init()
     {

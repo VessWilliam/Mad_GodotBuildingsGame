@@ -135,7 +135,7 @@ public partial class BuildingManager : Node
         var building = toPlaceBuildResource.BuildingScene.Instantiate<Node2D>();
 
         building.GlobalPosition = hoverGridArea.Position * 64;
-      
+
         building.GetFirstNodeOfType<BuildingAnimatorComponent>()?.PlayPlaceAnimation();
 
         ySortRoot.AddChild(building);
@@ -152,9 +152,7 @@ public partial class BuildingManager : Node
     {
         var rootCell = hoverGridArea.Position;
 
-        var building = GetTree()
-        .GetNodesInGroup(nameof(BulidingComponent))
-        .Cast<BulidingComponent>()
+        var building = BulidingComponent.GetValidBuildingComponent(this)
         .FirstOrDefault(b => b.BuildingResource.IsDeletable && b.IsBuildArea(rootCell));
 
         if (building is null) return;
