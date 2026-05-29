@@ -1,4 +1,3 @@
-using System.Linq;
 using Game.Extentions;
 using Godot;
 
@@ -8,6 +7,9 @@ public partial class BuildingAnimatorComponent : Node2D
 {
     [Signal]
     public delegate void DestroyAnimationFinishedEventHandler();
+
+    [Export]
+    private PackedScene impactParticlesScene;
 
     [Export]
     private Texture2D maskTexture;
@@ -35,6 +37,8 @@ public partial class BuildingAnimatorComponent : Node2D
             .SetEase(Tween.EaseType.In)
             .From(Vector2.Up * 128);
 
+        InitParticlesTween();
+
         activeTween.TweenProperty(animationRootNode, "position", Vector2.Up * 16, .1)
             .SetTrans(Tween.TransitionType.Quad)
             .SetEase(Tween.EaseType.Out);
@@ -49,7 +53,7 @@ public partial class BuildingAnimatorComponent : Node2D
     {
         if (!InitTween())
             return;
-        
+
         animationRootNode.Position = Vector2.Zero;
 
         maskNode.ClipChildren = ClipChildrenMode.Only;
@@ -109,5 +113,15 @@ public partial class BuildingAnimatorComponent : Node2D
         activeTween = CreateTween();
 
         return activeTween is not null;
+    }
+
+    private void InitParticlesTween()
+    {
+        activeTween.TweenCallback(Callable.From(() =>
+        {
+            var particles = impactParticlesScene.Instantiate<Node2D>();
+            GetParent().AddChild(particles);
+            particles.GlobalPosition = GlobalPosition;
+        }));
     }
 }
