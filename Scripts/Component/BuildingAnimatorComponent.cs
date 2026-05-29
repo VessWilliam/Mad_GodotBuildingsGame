@@ -12,6 +12,9 @@ public partial class BuildingAnimatorComponent : Node2D
     private PackedScene impactParticlesScene;
 
     [Export]
+    private PackedScene destroyParticlesScene;
+
+    [Export]
     private Texture2D maskTexture;
 
     private Tween activeTween;
@@ -58,6 +61,10 @@ public partial class BuildingAnimatorComponent : Node2D
 
         maskNode.ClipChildren = ClipChildrenMode.Only;
         maskNode.Texture = maskTexture;
+
+        var particles = destroyParticlesScene.Instantiate<Node2D>();
+        Owner.GetParent().AddChild(particles);
+        particles.GlobalPosition = GlobalPosition;
 
         activeTween.TweenProperty(animationRootNode, "rotation_degrees", -5, .1);
         activeTween.TweenProperty(animationRootNode, "rotation_degrees", 5, .1);
@@ -120,7 +127,7 @@ public partial class BuildingAnimatorComponent : Node2D
         activeTween.TweenCallback(Callable.From(() =>
         {
             var particles = impactParticlesScene.Instantiate<Node2D>();
-            GetParent().AddChild(particles);
+            Owner.GetParent().AddChild(particles);
             particles.GlobalPosition = GlobalPosition;
         }));
     }
