@@ -117,6 +117,8 @@ public partial class BuildingManager : Node
 
         gridManager.HighlightBuildArea();
 
+        gridManager.HighlightGoblinOccupiedArea();
+
         buidingGhost.DoHoverAnimation();
         if (!IsAbleToBuildAtArea(hoverGridArea))
         {

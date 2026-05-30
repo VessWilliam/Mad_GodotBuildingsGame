@@ -4,12 +4,10 @@
 [ext_resource type="Resource" uid="uid://vwhld5c6qe4s" path="res://Resources/LevelResources/level_02.tres" id="2_6f3v7"]
 [ext_resource type="TileSet" uid="uid://wu8i71278jye" path="res://Resources/tiles.tres" id="2_6jy46"]
 [ext_resource type="PackedScene" uid="uid://bvw2tkmts54om" path="res://Scenes/Utils/ElevationLayer.tscn" id="3_phv41"]
+[ext_resource type="PackedScene" uid="uid://be63mrh76423e" path="res://Scenes/Buildings/GoblinCamp.tscn" id="5_kxj7e"]
 
 [node name="Level2" unique_id=547361296 instance=ExtResource("1_dap3h")]
 levelResource = ExtResource("2_6f3v7")
-
-[node name="BuildingManager" parent="." index="1" unique_id=363034371]
-statingResourceCount = 10
 
 [node name="GameCamera" parent="." index="4" unique_id=1755277265]
 position = Vector2(448, -512)
@@ -59,6 +57,9 @@ position = Vector2(576, -640)
 
 [node name="GoldMine" parent="YSortRoot" parent_id_path=PackedInt32Array(902121781) index="2" unique_id=2085166556]
 position = Vector2(448, 128)
+
+[node name="GoblinCamp" parent="YSortRoot" parent_id_path=PackedInt32Array(902121781) index="4" unique_id=451051080 instance=ExtResource("5_kxj7e")]
+position = Vector2(-384, -64)
 
 [editable path="ParrallaxRootBackground"]
 [editable path="YSortRoot/TerrianTileMapLayer/ElevationLayer"]

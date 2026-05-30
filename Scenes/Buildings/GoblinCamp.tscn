@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://be63mrh76423e"]
+
+[ext_resource type="PackedScene" uid="uid://cl8fclajmmwtt" path="res://Scenes/Component/BulidingComponent.tscn" id="1_qwyqt"]
+[ext_resource type="PackedScene" uid="uid://cmmjhk2q7g67t" path="res://Scenes/Component/BuildingAnimatorComponent.tscn" id="2_tb53f"]
+[ext_resource type="Texture2D" uid="uid://j34u7pou8hya" path="res://Assets/buildings/wood_tower_red.png" id="3_awnvg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1dtjo"]
+atlas = ExtResource("3_awnvg")
+region = Rect2(0, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v016h"]
+atlas = ExtResource("3_awnvg")
+region = Rect2(256, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_la17m"]
+atlas = ExtResource("3_awnvg")
+region = Rect2(512, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rti0"]
+atlas = ExtResource("3_awnvg")
+region = Rect2(768, 0, 256, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mufk0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dtjo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v016h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_la17m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6rti0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="GoblinCamp" type="Node2D" unique_id=451051080]
+y_sort_enabled = true
+
+[node name="BulidingComponent" parent="." unique_id=1264297234 node_paths=PackedStringArray("buildingAnimatorComponent") instance=ExtResource("1_qwyqt")]
+buildingResourcePath = "uid://d4inkengtk4tn"
+buildingAnimatorComponent = NodePath("../BuildingAnimatorComponent")
+
+[node name="BuildingAnimatorComponent" parent="." unique_id=1455991372 instance=ExtResource("2_tb53f")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BuildingAnimatorComponent" unique_id=595019361]
+position = Vector2(64, 96)
+sprite_frames = SubResource("SpriteFrames_mufk0")
+autoplay = "default"
+frame_progress = 0.4913304
+centered = false
+offset = Vector2(-128, -160)

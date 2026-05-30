@@ -18,17 +18,20 @@ public partial class BuildingResource : Resource
     public Vector2I Dimensions { get; private set; } = Vector2I.One;
 
     [Export]
-    public int ResourceCost { get; private set; } = 0;
+    public int ResourceCost { get; private set; } = default;
 
     [Export]
-    public int BuildingRadius { get; private set; } = 0;
+    public int BuildingRadius { get; private set; } = default;
 
     [Export]
-    public int ResourceRadius { get; private set; } = 0;
+    public int ResourceRadius { get; private set; } = default;
 
     [Export]
-    public PackedScene BuildingScene { get; private set; } = null!;
+    public int DangerRadius { get; private set; } = default;
 
     [Export]
-    public PackedScene SpriteScene { get; private set; } = null!;
+    public PackedScene BuildingScene { get; private set; } = default!;
+
+    [Export]
+    public PackedScene SpriteScene { get; private set; } = default!;
 }
