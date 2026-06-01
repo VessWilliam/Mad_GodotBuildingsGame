@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cbxfsmj15bgpm" path="res://Scripts/UI/GameUI.cs" id="1_13cgw"]
 [ext_resource type="Resource" uid="uid://baxwxwlvmgjs8" path="res://Resources/BuildingResources/tower.tres" id="2_xkiwj"]
 [ext_resource type="Resource" uid="uid://dtgmanhovvjh1" path="res://Resources/BuildingResources/village.tres" id="3_tog36"]
+[ext_resource type="Resource" uid="uid://sb1kwxmil0vp" path="res://Resources/BuildingResources/barracks.tres" id="4_intyv"]
 [ext_resource type="PackedScene" uid="uid://gj34ktbnujad" path="res://Scenes/UI/BuildingSelection.tscn" id="4_tog36"]
 [ext_resource type="Texture2D" uid="uid://busy77l5fxj6m" path="res://Assets/UI/wood_icon.png" id="5_fe2yh"]
 [ext_resource type="FontFile" uid="uid://drrlwwoie27gu" path="res://Assets/Font/Bitfantasy.ttf" id="6_npa51"]
@@ -14,7 +15,7 @@ margin = Rect2(0, 0, 1.84, 0)
 
 [node name="GameUI" type="CanvasLayer" unique_id=1490250840]
 script = ExtResource("1_13cgw")
-resource = Array[Object]([ExtResource("3_tog36"), ExtResource("2_xkiwj")])
+resource = Array[Object]([ExtResource("3_tog36"), ExtResource("2_xkiwj"), ExtResource("4_intyv")])
 buildSelectionScene = ExtResource("4_tog36")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=264214732]

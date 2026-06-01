@@ -30,8 +30,13 @@ public partial class BuildingResource : Resource
     public int DangerRadius { get; private set; } = default;
 
     [Export]
+    public int AttackRadius { get; private set; } = default;
+
+    [Export]
     public PackedScene BuildingScene { get; private set; } = default!;
 
     [Export]
     public PackedScene SpriteScene { get; private set; } = default!;
+
+    public bool isAttackTile => AttackRadius > 0;
 }

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BuildingResource" format=3 uid="uid://sb1kwxmil0vp"]
+
+[ext_resource type="PackedScene" uid="uid://clx670orb8i1b" path="res://Scenes/Buildings/Barracks.tscn" id="1_j3hsu"]
+[ext_resource type="Script" uid="uid://bp73do5yfy2mb" path="res://Scripts/Resources/BuildingResource.cs" id="1_r08lc"]
+
+[resource]
+script = ExtResource("1_r08lc")
+DisplayName = "Barracks"
+Description = "Destroys Goblin Camps"
+Dimensions = Vector2i(5, 2)
+ResourceCost = 8
+AttackRadius = 5
+BuildingScene = ExtResource("1_j3hsu")
+SpriteScene = ExtResource("1_j3hsu")
+metadata/_custom_type_script = "uid://bp73do5yfy2mb"
