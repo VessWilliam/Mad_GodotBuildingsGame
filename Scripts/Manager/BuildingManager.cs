@@ -128,15 +128,21 @@ public partial class BuildingManager : Node
         }
 
         buidingGhost.DoHoverAnimation();
+
         if (!IsAbleToBuildAtArea(hoverGridArea))
         {
             buidingGhost.SetInvalid();
             return;
         }
 
-        gridManager.HighlightExpandBuildArea(hoverGridArea, toPlaceBuildResource.BuildingRadius);
+        if (toPlaceBuildResource.isAttackTile)
+            gridManager.HighlightAttackArea(hoverGridArea, toPlaceBuildResource.AttackRadius);
+        else
+            gridManager.HighlightExpandBuildArea(hoverGridArea, toPlaceBuildResource.BuildingRadius);
+
         gridManager.HighlightResourceArea(hoverGridArea, toPlaceBuildResource.ResourceRadius);
         buidingGhost.SetValid();
+
 
     }
 
@@ -146,9 +152,9 @@ public partial class BuildingManager : Node
 
         building.GlobalPosition = hoverGridArea.Position * 64;
 
-        building.GetFirstNodeOfType<BuildingAnimatorComponent>()?.PlayPlaceAnimation();
-
         ySortRoot.AddChild(building);
+
+        building.GetFirstNodeOfType<BuildingAnimatorComponent>()?.PlayPlaceAnimation();
 
         currentUsedResourceCount += toPlaceBuildResource.ResourceCost;
 

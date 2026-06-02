@@ -9,7 +9,7 @@ public partial class BuildingAnimatorComponent : Node2D
     public delegate void DestroyAnimationFinishedEventHandler();
 
     [Export]
-    private PackedScene impactParticlesScene;
+    private PackedScene placeParticlesScene;
 
     [Export]
     private PackedScene destroyParticlesScene;
@@ -26,7 +26,7 @@ public partial class BuildingAnimatorComponent : Node2D
     public override void _Ready()
     {
         SetUpNode();
-        PlayPlaceAnimation();
+        //PlayPlaceAnimation();
     }
 
     public void PlayPlaceAnimation()
@@ -40,7 +40,7 @@ public partial class BuildingAnimatorComponent : Node2D
             .SetEase(Tween.EaseType.In)
             .From(Vector2.Up * 128);
 
-        InitParticlesTween();
+        InitParticlesTween(placeParticlesScene);
 
         activeTween.TweenProperty(animationRootNode, "position", Vector2.Up * 16, .1)
             .SetTrans(Tween.TransitionType.Quad)
@@ -62,9 +62,7 @@ public partial class BuildingAnimatorComponent : Node2D
         maskNode.ClipChildren = ClipChildrenMode.Only;
         maskNode.Texture = maskTexture;
 
-        var particles = destroyParticlesScene.Instantiate<Node2D>();
-        Owner.GetParent().AddChild(particles);
-        particles.GlobalPosition = GlobalPosition;
+        InitParticlesTween(destroyParticlesScene);
 
         activeTween.TweenProperty(animationRootNode, "rotation_degrees", -5, .1);
         activeTween.TweenProperty(animationRootNode, "rotation_degrees", 5, .1);
@@ -122,13 +120,17 @@ public partial class BuildingAnimatorComponent : Node2D
         return activeTween is not null;
     }
 
-    private void InitParticlesTween()
+    private void InitParticlesTween(PackedScene selectedscene) =>
+     activeTween.TweenCallback(Callable.From(() => SpawnParticles(selectedscene)));
+
+    private void SpawnParticles(PackedScene particlesScene)
     {
-        activeTween.TweenCallback(Callable.From(() =>
-        {
-            var particles = impactParticlesScene.Instantiate<Node2D>();
-            Owner.GetParent().AddChild(particles);
-            particles.GlobalPosition = GlobalPosition;
-        }));
+        var particleParent = Owner?.GetParent();
+
+        if (particleParent is null) return;
+
+        var particles = particlesScene.Instantiate<Node2D>();
+        particleParent.AddChild(particles);
+        particles.GlobalPosition = GlobalPosition;
     }
 }

@@ -3,7 +3,6 @@ using Godot;
 
 namespace Game.Extentions;
 
-
 public static class Rect2IExtentions
 {
     public static IEnumerable<Vector2I> ToTiles(this Rect2I rect)

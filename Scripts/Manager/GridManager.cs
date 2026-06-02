@@ -81,11 +81,16 @@ public partial class GridManager : Node
 
         var targetelevationLayer = firstlayer is null ? null : tileMapElevation[firstlayer];
 
+        var tileSetToCheck = GetBuildableTilesSet(isAttackTile);
+
+        if (isAttackTile) tileSetToCheck = tileSetToCheck.Except(occupiedBuild).ToHashSet();
+
         return tiles.All(t =>
         {
             (TileMapLayer layer, bool isBuildable) = GetTileCustomData(t, Constants.IS_BUILDABLE);
             var elevationLayer = layer is null ? null : tileMapElevation[layer];
-            return isBuildable && GetBuildableTilesSet(isAttackTile)
+
+            return isBuildable && tileSetToCheck
             .Contains(t) && elevationLayer == targetelevationLayer;
         });
 
@@ -126,6 +131,23 @@ public partial class GridManager : Node
         }
     }
 
+    public void HighlightAttackArea(Rect2I tileArea, int radius)
+    {
+        var buildAreaTile = tileArea.ToTiles().ToList();
+        
+        var validTiles = GetValidTilesInRadius(tileArea, radius)
+        .ToHashSet()
+        .Except(validAttackTiles)
+        .Except(buildAreaTile);
+
+        var atlasCoords = new Vector2I(1, 0);
+
+        foreach (var item in validTiles)
+        {
+            highlightTilemapLayer.SetCell(item, 0, atlasCoords);
+        }
+    }
+
     public void HighlightResourceArea(Rect2I tileArea, int radius)
     {
         var resourceTiles = GetResourceTilesInRadius(tileArea, radius);
@@ -136,7 +158,6 @@ public partial class GridManager : Node
         {
             highlightTilemapLayer.SetCell(item, 0, atlasCoords);
         }
-
     }
 
     public Vector2I GetMouseGridCellPositionWithOffset(Vector2 demensions)
