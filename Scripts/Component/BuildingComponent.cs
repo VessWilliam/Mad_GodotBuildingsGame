@@ -18,6 +18,8 @@ public partial class BuildingComponent : Node2D
 
     public bool IsDestroying { get; private set; }
 
+    public bool IsDisable  { get; private set; } = false;
+
     private HashSet<Vector2I> occupiedTiles = new();
 
     public static IEnumerable<BuildingComponent> GetValidBuildingComponents(Node node)
@@ -78,12 +80,26 @@ public partial class BuildingComponent : Node2D
         return occupiedTiles.Contains(tilePosition);
     }
 
+    public void Disable()
+    {
+       if (IsDisable) return;
+       IsDisable = true;
+       GameEvents.EmitBuildingDisable(this);
+    }
+
+    public void Enable()
+    {
+        if (!IsDisable) return;
+        IsDisable = false;
+        GameEvents.EmitBuildingEnable(this);
+    }
+
     public void Destroy()
     {
-        
-        GD.Print($"Destroy called: {GetPath()}");
-        GD.Print($"Destroy called: {BuildingResource.DisplayName}");
-        GD.Print($"Position: {GlobalPosition}");
+
+        // GD.Print($"Destroy called: {GetPath()}");
+        // GD.Print($"Destroy called: {BuildingResource.DisplayName}");
+        // GD.Print($"Position: {GlobalPosition}");
 
         IsDestroying = true;
 
@@ -91,11 +107,8 @@ public partial class BuildingComponent : Node2D
 
         buildingAnimatorComponent?.PlayDestroyAnimation();
 
-        if (buildingAnimatorComponent == null)
-        {
-            GD.Print("No animator, freeing immediately");
-            Owner.QueueFree();
-        }
+        if (buildingAnimatorComponent is null) Owner.QueueFree();
+
     }
 
     private void CalculateOccupiedCellPositions()
@@ -112,8 +125,8 @@ public partial class BuildingComponent : Node2D
 
     private void Initialize()
     {
-        GD.Print($"Building initialized: {BuildingResource.DisplayName}");
-        GD.Print($"Position: {GlobalPosition}");
+        // GD.Print($"Building initialized: {BuildingResource.DisplayName}");
+        // GD.Print($"Position: {GlobalPosition}");
 
         CalculateOccupiedCellPositions();
         GameEvents.EmitBuildingPlaced(this);
