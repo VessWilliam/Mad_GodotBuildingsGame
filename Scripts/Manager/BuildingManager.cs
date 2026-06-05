@@ -54,7 +54,7 @@ public partial class BuildingManager : Node
 
     public override void _EnterTree()
     {
-        gridManager.ResourceTileUpdate += OnResourceTileUpdated;
+        gridManager.ResourceTilesUpdated += OnResourceTileUpdated;
 
         gameUI.BuildingResourceSelected += OnBuildingResourceSelected;
     }
@@ -98,7 +98,7 @@ public partial class BuildingManager : Node
                 mouseGridPos = gridManager.GetMouseGridCellPosition();
                 break;
             case StateEnum.PlacingBuilding:
-                mouseGridPos = gridManager.GetMouseGridCellPositionWithOffset(buildingGhostDemensions);
+                mouseGridPos = gridManager.GetMouseGridCellPositionWithDimensionOffset(buildingGhostDemensions);
                 buidingGhost.GlobalPosition = mouseGridPos * 64;
                 break;
         }
@@ -113,17 +113,17 @@ public partial class BuildingManager : Node
 
     private void UpdateGridDisplay()
     {
-        gridManager.ClearHighlightArea();
+        gridManager.ClearHighlightedTiles();
 
-        if (toPlaceBuildResource.IsAttackTile)
+        if (toPlaceBuildResource.IsAttackBuilding())
         {
-            gridManager.HighlightGoblinOccupiedArea();
-            gridManager.HighlightBuildArea(true);
+            gridManager.HighlightGoblinOccupiedTiles();
+            gridManager.HighlightBuildableTiles(true);
         }
         else
         {
-            gridManager.HighlightBuildArea();
-            gridManager.HighlightGoblinOccupiedArea();
+            gridManager.HighlightBuildableTiles();
+            gridManager.HighlightGoblinOccupiedTiles();
 
         }
 
@@ -135,12 +135,12 @@ public partial class BuildingManager : Node
             return;
         }
 
-        if (toPlaceBuildResource.IsAttackTile)
-            gridManager.HighlightAttackArea(hoverGridArea, toPlaceBuildResource.AttackRadius);
+        if (toPlaceBuildResource.IsAttackBuilding())
+            gridManager.HighlightAttackTiles(hoverGridArea, toPlaceBuildResource.AttackRadius);
         else
-            gridManager.HighlightExpandBuildArea(hoverGridArea, toPlaceBuildResource.BuildingRadius);
+            gridManager.HighlightExpandedBuildableTiles(hoverGridArea, toPlaceBuildResource.BuildingRadius);
 
-        gridManager.HighlightResourceArea(hoverGridArea, toPlaceBuildResource.ResourceRadius);
+        gridManager.HighlightResourceTiles(hoverGridArea, toPlaceBuildResource.ResourceRadius);
         buidingGhost.SetValid();
 
 
@@ -148,6 +148,11 @@ public partial class BuildingManager : Node
 
     private void PlaceBuildingAtHovered()
     {
+        // GD.Print("=== PLACE BUILDING ===");
+        // GD.Print($"Resource: {toPlaceBuildResource.DisplayName}");
+        // GD.Print($"Tile: {hoverGridArea.Position}");
+
+
         var building = toPlaceBuildResource.BuildingScene.Instantiate<Node2D>();
 
         building.GlobalPosition = hoverGridArea.Position * 64;
@@ -160,7 +165,7 @@ public partial class BuildingManager : Node
 
         ChangeState(StateEnum.Normal);
 
-        GD.Print($"Available Resource Count: {AvailableResourceCount}");
+        //GD.Print($"Available Resource Count: {AvailableResourceCount}");
         EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
     }
 
@@ -168,8 +173,8 @@ public partial class BuildingManager : Node
     {
         var rootCell = hoverGridArea.Position;
 
-        var building = BulidingComponent.GetValidBuildingComponent(this)
-        .FirstOrDefault(b => b.BuildingResource.IsDeletable && b.IsBuildArea(rootCell));
+        var building = BuildingComponent.GetValidBuildingComponents(this)
+        .FirstOrDefault(b => b.BuildingResource.IsDeletable && b.IsTileInBuildingArea(rootCell));
 
         if (building is null) return;
 
@@ -177,14 +182,14 @@ public partial class BuildingManager : Node
 
         building.Destroy();
 
-        GD.Print($"Available Resource Count: {AvailableResourceCount}");
+        //GD.Print($"Available Resource Count: {AvailableResourceCount}");
         EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
 
     }
 
     private void ClearBuildGhost()
     {
-        gridManager.ClearHighlightArea();
+        gridManager.ClearHighlightedTiles();
 
         if (IsInstanceValid(buidingGhost)) buidingGhost.QueueFree();
 
@@ -231,7 +236,7 @@ public partial class BuildingManager : Node
 
     private bool IsAbleToBuildAtArea(Rect2I tileArea)
     {
-        var allTileBuildable = gridManager.IsTileAreaBuildable(tileArea, toPlaceBuildResource.IsAttackTile);
+        var allTileBuildable = gridManager.IsTileAreaBuildable(tileArea, toPlaceBuildResource.IsAttackBuilding());
         return allTileBuildable && AvailableResourceCount >= toPlaceBuildResource.ResourceCost;
     }
 
@@ -253,8 +258,8 @@ public partial class BuildingManager : Node
     {
         currentResourceCount = resourceCount;
         EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
-        GD.Print($"Resource tile updated: {resourceCount}");
-        GD.Print($"Available: {AvailableResourceCount}");
+        //GD.Print($"Resource tile updated: {resourceCount}");
+        //GD.Print($"Available: {AvailableResourceCount}");
     }
 
 }

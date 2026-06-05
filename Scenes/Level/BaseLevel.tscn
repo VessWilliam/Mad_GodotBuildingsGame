@@ -17,9 +17,9 @@
 script = ExtResource("1_2ve4c")
 levelCompleteScene = ExtResource("2_toevt")
 
-[node name="GridManager" parent="." unique_id=1117861085 node_paths=PackedStringArray("highlightTilemapLayer", "terrainTilemapLayer") instance=ExtResource("2_xerb2")]
+[node name="GridManager" parent="." unique_id=1117861085 node_paths=PackedStringArray("highlightTilemapLayer", "baseTerrainTilemapLayer") instance=ExtResource("2_xerb2")]
 highlightTilemapLayer = NodePath("../YSortRoot/HighlightTileMapLayer")
-terrainTilemapLayer = NodePath("../YSortRoot/TerrianTileMapLayer")
+baseTerrainTilemapLayer = NodePath("../YSortRoot/TerrianTileMapLayer")
 
 [node name="BuildingManager" parent="." unique_id=363034371 node_paths=PackedStringArray("gridManager", "ySortRoot", "gameUI") instance=ExtResource("3_toevt")]
 unique_name_in_owner = true

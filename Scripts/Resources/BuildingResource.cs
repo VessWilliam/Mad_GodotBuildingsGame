@@ -39,8 +39,8 @@ public partial class BuildingResource : Resource
     public PackedScene SpriteScene { get; private set; } = default!;
 
 
-    public bool IsAttackTile => AttackRadius > 0;
+    public bool IsAttackBuilding() => AttackRadius > 0;
 
-    public bool IsDangerTile => DangerRadius <= 0;
+    public bool IsDangerBuilding() => DangerRadius > 0;
 
 }

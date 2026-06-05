@@ -54,6 +54,9 @@ public partial class BuildingAnimatorComponent : Node2D
 
     public void PlayDestroyAnimation()
     {
+        GD.Print($"In tree: {IsInsideTree()}");
+        GD.Print($"Process: {ProcessMode}");
+
         if (!InitTween())
             return;
 
@@ -79,20 +82,29 @@ public partial class BuildingAnimatorComponent : Node2D
 
     private void SetUpNode()
     {
-        var spriteNode = this.GetFirstNodeOfType<Sprite2D>();
+        Node2D spriteNode = null;
 
-        GD.Print($"Sprite node: {spriteNode}");
+        spriteNode ??= this.GetFirstNodeOfType<Sprite2D>();
+        spriteNode ??= this.GetFirstNodeOfType<AnimatedSprite2D>();
 
-        if (spriteNode is null) return;
+        if (spriteNode is null)
+            return;
 
         var originalParent = spriteNode.GetParent();
 
-        originalParent.RemoveChild(spriteNode);
-        originalParent.QueueFree();
+        if (originalParent != this)
+        {
+            originalParent.RemoveChild(spriteNode);
+            originalParent.QueueFree();
+        }
+        else
+        {
+            RemoveChild(spriteNode);
+        }
 
-        Position = new Vector2(spriteNode.Position.X, spriteNode.Position.Y);
+        Position = spriteNode.Position;
 
-        maskNode = new()
+        maskNode = new Sprite2D
         {
             Centered = true,
             Offset = new Vector2(0, -130)
@@ -100,17 +112,22 @@ public partial class BuildingAnimatorComponent : Node2D
 
         AddChild(maskNode);
 
-        animationRootNode = new();
+        animationRootNode = new Node2D();
         maskNode.AddChild(animationRootNode);
 
         animationRootNode.AddChild(spriteNode);
-        spriteNode.Position = new Vector2(0, 0);
+        spriteNode.Position = Vector2.Zero;
     }
-
 
     private bool InitTween()
     {
-        if (animationRootNode is null) return false;
+        GD.Print($"animationRootNode: {animationRootNode}");
+
+        if (animationRootNode is null)
+        {
+            GD.Print("InitTween failed - animationRootNode is null");
+            return false;
+        }
 
         if (activeTween is not null && activeTween.IsValid())
             activeTween.Kill();

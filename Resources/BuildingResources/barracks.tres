@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://clx670orb8i1b" path="res://Scenes/Buildings/Barracks.tscn" id="1_j3hsu"]
 [ext_resource type="Script" uid="uid://bp73do5yfy2mb" path="res://Scripts/Resources/BuildingResource.cs" id="1_r08lc"]
+[ext_resource type="PackedScene" uid="uid://cqo1su2f631yp" path="res://Scenes/Buildings/Sprites/SpriteBarrack.tscn" id="2_4r3ax"]
 
 [resource]
 script = ExtResource("1_r08lc")
@@ -11,5 +12,5 @@ Dimensions = Vector2i(5, 2)
 ResourceCost = 8
 AttackRadius = 5
 BuildingScene = ExtResource("1_j3hsu")
-SpriteScene = ExtResource("1_j3hsu")
+SpriteScene = ExtResource("2_4r3ax")
 metadata/_custom_type_script = "uid://bp73do5yfy2mb"

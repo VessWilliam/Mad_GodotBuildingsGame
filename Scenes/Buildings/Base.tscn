@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dbtx8ccudg732"]
 
-[ext_resource type="PackedScene" uid="uid://cl8fclajmmwtt" path="res://Scenes/Component/BulidingComponent.tscn" id="1_rhcgv"]
+[ext_resource type="PackedScene" uid="uid://cl8fclajmmwtt" path="res://Scenes/Component/BuildingComponent.tscn" id="1_rhcgv"]
 [ext_resource type="Texture2D" uid="uid://dqjqxl6k060td" path="res://Assets/buildings/castle_white.png" id="2_k34hx"]
 
 [node name="Base" type="Node2D" unique_id=1654910469]

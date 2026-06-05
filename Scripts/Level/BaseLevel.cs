@@ -43,14 +43,14 @@ public partial class BaseLevel : Node
         gameCamera.SetCenter(baseBuilding.GlobalPosition);
 
         buildingManager.SetStatingResourceCount(levelResource.StaringResourcesCount);
-        gridManager.GridStateUpdate += OnGridStateUpdated;
+        gridManager.GridStateUpdated += OnGridStateUpdated;
     }
 
     private void OnGridStateUpdated()
     {
-        var goldMinePos = gridManager.ConvertWorldtoTilePosition(goldMine.GlobalPosition);
+        var goldMinePos = gridManager.ConvertWorldPositionToTilePosition(goldMine.GlobalPosition);
 
-        if (gridManager.IsTilePositionInAnyBuildableRadius(goldMinePos))
+        if (gridManager.IsTilePositionInAnyBuildingRadius(goldMinePos))
         {
             var levelCompleteInstance = levelCompleteScene.Instantiate<LevelCompleteScreen>();
             AddChild(levelCompleteInstance);

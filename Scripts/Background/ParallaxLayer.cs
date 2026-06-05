@@ -6,21 +6,21 @@ namespace Game.Background;
 public partial class ParallaxLayer : Parallax2D
 {
     [Export]
-    public float Speed { get; set; } = 20f; 
+    public float Speed { get; set; } = 20f;
 
     [Export]
     public Sprite2D[] CloudSprites { get; set; }
 
     [Export]
-    public float CloudAlpha { get; set; } = 0.6f; 
+    public float CloudAlpha { get; set; } = 0.6f;
 
     private float _screenWidth;
     private Random _random = new Random();
 
     public override void _Ready()
     {
-        GD.Print("ParallaxLayer _Ready called");
-        GD.Print($"CloudSprites count: {CloudSprites?.Length ?? 0}");
+        //GD.Print("ParallaxLayer _Ready called");
+        //GD.Print($"CloudSprites count: {CloudSprites?.Length ?? 0}");
 
         ProcessMode = ProcessModeEnum.Always;
         _screenWidth = GetViewport().GetVisibleRect().Size.X;
@@ -31,7 +31,7 @@ public partial class ParallaxLayer : Parallax2D
         {
             if (sprite == null) continue;
             RandomizeSprite(sprite, spawnAnywhere: true);
-            
+
             // Apply static transparency
             sprite.Modulate = new Color(1, 1, 1, CloudAlpha);
         }
@@ -56,7 +56,7 @@ public partial class ParallaxLayer : Parallax2D
             if (sprite.Position.X - halfWidth > _screenWidth)
             {
                 RandomizeSprite(sprite, spawnAnywhere: false);
-                
+
                 // Re-apply static transparency after respawn
                 sprite.Modulate = new Color(1, 1, 1, CloudAlpha);
             }
