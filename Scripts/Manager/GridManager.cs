@@ -36,6 +36,7 @@ public partial class GridManager : Node
 
     private List<TileMapLayer> allTilemapLayers = new();
     private Dictionary<TileMapLayer, ElevationLayer> tileMapLayerToElevationLayer = new();
+    private Dictionary<BuildingComponent, HashSet<Vector2I>> buildingToBuildableTiles = new();
 
     public override void _Ready()
     {
@@ -166,6 +167,37 @@ public partial class GridManager : Node
         return new Vector2I((int)tilePosition.X, (int)tilePosition.Y);
     }
 
+    public bool CanDestroyBuilding(BuildingComponent component)
+    {
+        if (component.BuildingResource.BuildingRadius <= 0) return false;
+
+        var dependentBuildings = BuildingComponent.GetValidBuildingComponents(this)
+             .Where(bc =>
+             {
+                 var anyTileInRadius = bc.GetTileArea().ToTiles().Any(
+                     tp => buildingToBuildableTiles[component].Contains(tp)
+                 );
+                 return bc != component && anyTileInRadius;
+             });
+
+        var allBuildingsStillValid = dependentBuildings.All(db =>
+        {
+            var tilesForBuilding = db.GetTileArea().ToTiles();
+            return tilesForBuilding.All(tp =>
+            {
+                var tileIsInSet = buildingToBuildableTiles.Keys.Where(k => k != component)
+                .Any(bc => buildingToBuildableTiles[bc].Contains(tp));
+                return tileIsInSet;
+            });
+
+        });
+
+        if (!allBuildingsStillValid) return false;
+
+        return true;
+    }
+
+
     private HashSet<Vector2I> GetBuildableTileSet(bool isAttackTiles = false)
     {
         return isAttackTiles ? validBuildableAttackTiles : validBuildableTiles;
@@ -228,11 +260,17 @@ public partial class GridManager : Node
         occupiedTiles.UnionWith(component.GetOccupiedCellPositions());
         var tileArea = component.GetTileArea();
 
+
+        //if (component.BuildingResource.BuildingRadius > 0)
+        
         var allTiles = GetTilesInRadius(tileArea, component.BuildingResource.BuildingRadius, (_) => true);
         allTilesInBuildingRadius.UnionWith(allTiles);
 
         var validTiles = GetValidTilesInRadius(tileArea, component.BuildingResource.BuildingRadius);
+        buildingToBuildableTiles[component] = validTiles.ToHashSet();
         validBuildableTiles.UnionWith(validTiles);
+    
+
         validBuildableTiles.ExceptWith(occupiedTiles);
         validBuildableAttackTiles.UnionWith(validBuildableTiles);
 
@@ -274,6 +312,7 @@ public partial class GridManager : Node
         collectedResourceTiles.Clear();
         goblinOccupiedTiles.Clear();
         attackTiles.Clear();
+       // buildingToBuildableTiles.Clear();
 
         var buildingComponents = BuildingComponent.GetValidBuildingComponents(this);
 

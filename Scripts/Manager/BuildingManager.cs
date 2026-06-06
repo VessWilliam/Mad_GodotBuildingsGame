@@ -173,14 +173,16 @@ public partial class BuildingManager : Node
     {
         var rootCell = hoverGridArea.Position;
 
-        var building = BuildingComponent.GetValidBuildingComponents(this)
+        var buildingComponets = BuildingComponent.GetValidBuildingComponents(this)
         .FirstOrDefault(b => b.BuildingResource.IsDeletable && b.IsTileInBuildingArea(rootCell));
 
-        if (building is null) return;
+        if ( buildingComponets is null) return;
 
-        currentUsedResourceCount -= building.BuildingResource.ResourceCost;
+       //if(!gridManager.CanDestroyBuilding(buildingComponets)) return;
 
-        building.Destroy();
+        currentUsedResourceCount -= buildingComponets.BuildingResource.ResourceCost;
+
+        buildingComponets.Destroy();
 
         //GD.Print($"Available Resource Count: {AvailableResourceCount}");
         EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
