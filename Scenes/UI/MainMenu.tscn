@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://5ui0maqtwn5g" path="res://Scenes/GoldMines/GoldMine.tscn" id="5_ynupv"]
 [ext_resource type="PackedScene" uid="uid://brcyh1eo6luvb" path="res://Scenes/UI/ParallaxLayer.tscn" id="7_744d7"]
 [ext_resource type="PackedScene" uid="uid://bespkc6bkqah6" path="res://Scenes/UI/LevelSelectScreen.tscn" id="7_kl3t2"]
+[ext_resource type="Theme" uid="uid://d2oqwsvt54vpm" path="res://Resources/Theme/theme.tres" id="7_ynupv"]
 
 [node name="MainMenu" type="Node" unique_id=1052397780]
 script = ExtResource("1_jex3y")
@@ -87,6 +88,7 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("7_ynupv")
 theme_type_variation = &"PanelContainerBackground"
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MainMenuContainer/PanelContainer" unique_id=148070403]
@@ -117,6 +119,7 @@ text = "Exit"
 
 [node name="LevelSelectScreen" parent="CanvasLayer" unique_id=578943097 instance=ExtResource("7_kl3t2")]
 unique_name_in_owner = true
+visible = false
 
 [node name="ParrallaxRootBackground" parent="." unique_id=443723141 instance=ExtResource("7_744d7")]
 

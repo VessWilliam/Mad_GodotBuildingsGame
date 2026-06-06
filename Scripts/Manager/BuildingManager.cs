@@ -148,9 +148,9 @@ public partial class BuildingManager : Node
 
     private void PlaceBuildingAtHovered()
     {
-        // GD.Print("=== PLACE BUILDING ===");
-        // GD.Print($"Resource: {toPlaceBuildResource.DisplayName}");
-        // GD.Print($"Tile: {hoverGridArea.Position}");
+        GD.Print("=== PLACE BUILDING ===");
+        GD.Print($"Resource: {toPlaceBuildResource.DisplayName}");
+        GD.Print($"Tile: {hoverGridArea.Position}");
 
 
         var building = toPlaceBuildResource.BuildingScene.Instantiate<Node2D>();
@@ -176,9 +176,9 @@ public partial class BuildingManager : Node
         var buildingComponets = BuildingComponent.GetValidBuildingComponents(this)
         .FirstOrDefault(b => b.BuildingResource.IsDeletable && b.IsTileInBuildingArea(rootCell));
 
-        if ( buildingComponets is null) return;
+        if (buildingComponets is null) return;
 
-       //if(!gridManager.CanDestroyBuilding(buildingComponets)) return;
+        if(!gridManager.CanDestroyBuilding(buildingComponets)) return;
 
         currentUsedResourceCount -= buildingComponets.BuildingResource.ResourceCost;
 

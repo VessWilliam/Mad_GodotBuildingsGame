@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://gj34ktbnujad"]
 
+[ext_resource type="Theme" uid="uid://d2oqwsvt54vpm" path="res://Resources/Theme/theme.tres" id="1_ds6dh"]
 [ext_resource type="Script" uid="uid://c15xb8qnm6xdt" path="res://Scripts/UI/BuildSelection.cs" id="1_ug24m"]
 [ext_resource type="Texture2D" uid="uid://busy77l5fxj6m" path="res://Assets/UI/wood_icon.png" id="2_7n67g"]
 
@@ -11,6 +12,7 @@ margin = Rect2(0.98, 0, 1.84, 0)
 [node name="BuildSelection" type="PanelContainer" unique_id=1516168022]
 offset_right = 135.0
 offset_bottom = 148.0
+theme = ExtResource("1_ds6dh")
 theme_type_variation = &"PanelContainerBtn"
 script = ExtResource("1_ug24m")
 

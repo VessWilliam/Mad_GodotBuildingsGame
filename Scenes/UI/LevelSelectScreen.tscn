@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dgr1uqgpxf56t" path="res://Scripts/UI/LevelSelectScreen.cs" id="1_lhiyq"]
 [ext_resource type="PackedScene" uid="uid://cgha3jlnhr6f" path="res://Scenes/UI/LevelSelection.tscn" id="1_vxida"]
+[ext_resource type="Theme" uid="uid://d2oqwsvt54vpm" path="res://Resources/Theme/theme.tres" id="3_ugdyl"]
 
 [node name="LevelSelectScreen" type="MarginContainer" unique_id=578943097]
 anchors_preset = 15
@@ -22,6 +23,7 @@ levelSelectionScene = ExtResource("1_vxida")
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("3_ugdyl")
 theme_type_variation = &"PanelContainerBackground"
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=5973055]

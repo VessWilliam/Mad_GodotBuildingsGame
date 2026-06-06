@@ -18,7 +18,7 @@ public partial class BuildingComponent : Node2D
 
     public bool IsDestroying { get; private set; }
 
-    public bool IsDisable  { get; private set; } = false;
+    public bool IsDisable { get; private set; } = false;
 
     private HashSet<Vector2I> occupiedTiles = new();
 
@@ -82,9 +82,9 @@ public partial class BuildingComponent : Node2D
 
     public void Disable()
     {
-       if (IsDisable) return;
-       IsDisable = true;
-       GameEvents.EmitBuildingDisable(this);
+        if (IsDisable) return;
+        IsDisable = true;
+        GameEvents.EmitBuildingDisable(this);
     }
 
     public void Enable()
@@ -97,9 +97,9 @@ public partial class BuildingComponent : Node2D
     public void Destroy()
     {
 
-        // GD.Print($"Destroy called: {GetPath()}");
-        // GD.Print($"Destroy called: {BuildingResource.DisplayName}");
-        // GD.Print($"Position: {GlobalPosition}");
+        GD.Print($"Destroy called: {GetPath()}");
+        GD.Print($"Destroy called: {BuildingResource.DisplayName}");
+        GD.Print($"Position: {GlobalPosition}");
 
         IsDestroying = true;
 

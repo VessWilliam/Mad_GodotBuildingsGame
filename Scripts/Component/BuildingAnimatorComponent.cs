@@ -95,7 +95,7 @@ public partial class BuildingAnimatorComponent : Node2D
         if (originalParent != this)
         {
             originalParent.RemoveChild(spriteNode);
-            originalParent.QueueFree();
+            originalParent.CallDeferred("queue_free");
         }
         else
         {

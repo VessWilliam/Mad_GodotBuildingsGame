@@ -12,6 +12,9 @@ public partial class BuildingResource : Resource
     public string Description { get; private set; } = string.Empty;
 
     [Export]
+    public bool IsBase { get; private set; } = default;
+
+    [Export]
     public bool IsDeletable { get; private set; } = true;
 
     [Export]

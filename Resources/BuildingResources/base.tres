@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_vfke2")
 DisplayName = "Base"
+IsBase = true
 IsDeletable = false
 Dimensions = Vector2i(5, 2)
 BuildingRadius = 3
