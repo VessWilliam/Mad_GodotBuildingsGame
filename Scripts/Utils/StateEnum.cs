@@ -1,4 +1,4 @@
-namespace Game.Generals;
+namespace Game.Utils;
 
 public enum StateEnum
 {

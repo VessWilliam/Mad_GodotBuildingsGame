@@ -1,5 +1,4 @@
-
-namespace Game.Generals;
+namespace Game.Utils;
 
 public class Constants
 {

@@ -1,8 +1,8 @@
 using Game.Buildings.Contexts;
 using Game.Buildings.Services;
 using Game.Buildings.Services.IServices;
-using Game.Generals;
-using Game.Manager;
+using Game.Utils;
+using Game.Grids;
 using Game.Resources;
 using Game.UI;
 using Godot;
@@ -74,7 +74,21 @@ public partial class BuildingManager : Node
 
                 if (evt.IsActionPressed(ACTION_LEFT_CLICK) && _placementService.IsConfirmPlacement())
                 {
-                    currentUsedResourceCount += _placementService.GetPlacementCost();
+                    var cost = _placementService.GetPlacementCost();
+
+                    if (AvailableResourceCount < cost)
+                    {
+                        GD.Print("Not enough resources!");
+                        return;
+                    }
+
+                    GD.Print("=== RESOURCE CHECK ===");
+                    GD.Print($"Available: {AvailableResourceCount}");
+                    GD.Print($"Cost: {_placementService.GetPlacementCost()}");
+
+                    currentUsedResourceCount += cost;
+                    GD.Print($"After Build Available: {AvailableResourceCount}");
+
                     _placementService.ConfrimPlacement();
                     ChangeState(StateEnum.Normal);
                     EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
