@@ -3,9 +3,14 @@ using Godot;
 
 namespace Game.Buildings.Contexts;
 
-public class BuildingPlacementContext
+public class BuildingPlacementContext : BuildingsBaseContext
 {
-    public GridManager GridManager { get; set; }
+    public BuildingPlacementContext(Node2D ysortRoot, PackedScene cursorScene,
+           GridManager gridManager) : base(gridManager)
+    {
+        YsortRoot = ysortRoot;
+        CursorScene = cursorScene;
+    }
 
     public Node2D YsortRoot { get; set; }
 

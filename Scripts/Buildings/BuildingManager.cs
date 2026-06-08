@@ -1,8 +1,6 @@
-using System.Linq;
 using Game.Buildings.Contexts;
 using Game.Buildings.Services;
 using Game.Buildings.Services.IServices;
-using Game.Component;
 using Game.Generals;
 using Game.Manager;
 using Game.Resources;
@@ -25,7 +23,6 @@ public partial class BuildingManager : Node
     public readonly StringName ACTION_RIGHT_CLICK = Constants.RIGHT_CLICK;
     public readonly StringName ACTION_CANCEL = Constants.CANCEL;
 
-    private IBuildingPlacement _placementService;
     private int currentResourceCount;
     private int currentUsedResourceCount;
     private int statingResourceCount;
@@ -33,16 +30,21 @@ public partial class BuildingManager : Node
     private int AvailableResourceCount =>
         statingResourceCount + currentResourceCount - currentUsedResourceCount;
 
+    private IBuildingRemove _removeService;
+    private IBuildingPlacement _placementService;
+
     private StateEnum currentState = StateEnum.Normal;
 
     public override void _Ready()
     {
-        _placementService = new BuildingPlacementService(new BuildingPlacementContext
-        {
-            GridManager = gridManager,
-            YsortRoot = ySortRoot,
-            CursorScene = buidingGhostScene
-        });
+        _placementService = new BuildingPlacementService(new BuildingPlacementContext(
+            gridManager: gridManager,
+            ysortRoot: ySortRoot,
+            cursorScene: buidingGhostScene));
+
+        _removeService = new BuildingRemoveService(new BuildingRemoveContext(
+            gridManager: gridManager,
+            rootScene: this));
 
         Callable.From(() => EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount))
             .CallDeferred();
@@ -60,7 +62,7 @@ public partial class BuildingManager : Node
         {
             case StateEnum.Normal:
                 if (evt.IsActionPressed(ACTION_LEFT_CLICK))
-                    DestroyBuildingAtHovered();
+                    RemoveBuildingAtHovered();
                 break;
 
             case StateEnum.PlacingBuilding:
@@ -94,26 +96,20 @@ public partial class BuildingManager : Node
         _placementService.UpdateGridDisplay();
     }
 
-    private void DestroyBuildingAtHovered()
+    private void RemoveBuildingAtHovered()
     {
         var rootCell = gridManager.GetMouseGridCellPosition();
 
-        var building = BuildingComponent.GetValidBuildingComponents(this)
-            .FirstOrDefault(b =>
-                b.BuildingResource.IsDeletable &&
-                b.IsTileInBuildingArea(rootCell));
+        if (!_removeService.IsRemove(rootCell, out int refund)) return;
 
-        if (building is null) return;
-        if (!gridManager.CanDestroyBuilding(building)) return;
+        currentUsedResourceCount -= refund;
 
-        currentUsedResourceCount -= building.BuildingResource.ResourceCost;
-        gridManager.DestroyBuilding(building);
         EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
     }
 
     private void ChangeState(StateEnum toState)
     {
-        if (currentState == StateEnum.PlacingBuilding)
+        if (currentState is StateEnum.PlacingBuilding)
             _placementService.CancelPlacement();
         currentState = toState;
     }

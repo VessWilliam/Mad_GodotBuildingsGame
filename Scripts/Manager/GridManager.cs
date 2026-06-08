@@ -255,6 +255,7 @@ public partial class GridManager : Node
         villages.Remove(component);
         component.Destroy();
     }
+    
     private HashSet<Vector2I> GetBuildableTileSet(bool isAttackTiles = false) =>
     isAttackTiles ? validBuildableAttackTiles : validBuildableTiles;
 
