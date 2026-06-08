@@ -1,17 +1,17 @@
 [gd_scene format=3 uid="uid://del8yud3h8ywd"]
 
-[ext_resource type="Script" uid="uid://becomoaulcwl2" path="res://Scripts/Bulidings/BuildingGhost.cs" id="1_ffk5q"]
-[ext_resource type="Texture2D" uid="uid://dby80jmaqv4jq" path="res://Assets/UI/topLeft.png" id="2_xgkqo"]
-[ext_resource type="Texture2D" uid="uid://duwgo1vy2cplt" path="res://Assets/UI/topright.png" id="3_s7rdl"]
-[ext_resource type="Texture2D" uid="uid://d0a61luhqa4mx" path="res://Assets/UI/bottomleft.png" id="4_v48xm"]
-[ext_resource type="Texture2D" uid="uid://bjl4n0ig0xwo2" path="res://Assets/UI/bottomRight.png" id="5_smrry"]
+[ext_resource type="Script" uid="uid://ba3717tfdwxnj" path="res://Scripts/Buildings/BuildingCursor.cs" id="1_mo2i4"]
+[ext_resource type="Texture2D" uid="uid://dby80jmaqv4jq" path="res://Assets/UI/topLeft.png" id="2_vh4vv"]
+[ext_resource type="Texture2D" uid="uid://duwgo1vy2cplt" path="res://Assets/UI/topright.png" id="3_165lj"]
+[ext_resource type="Texture2D" uid="uid://d0a61luhqa4mx" path="res://Assets/UI/bottomleft.png" id="4_wps0p"]
+[ext_resource type="Texture2D" uid="uid://bjl4n0ig0xwo2" path="res://Assets/UI/bottomRight.png" id="5_0okdj"]
 
 [sub_resource type="Animation" id="Animation_xgkqo"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("%TopLeft/Sprite2D:position")
+tracks/0/path = NodePath("../TopLeft/Sprite2D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -23,7 +23,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("%TopRight/Sprite2D:position")
+tracks/1/path = NodePath("../TopRight/Sprite2D:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -35,7 +35,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("%BottomLeft/Sprite2D:position")
+tracks/2/path = NodePath("../BottomLeft/Sprite2D:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -65,7 +65,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("%TopLeft/Sprite2D:position")
+tracks/0/path = NodePath("../TopLeft/Sprite2D:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -77,7 +77,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("%TopRight/Sprite2D:position")
+tracks/1/path = NodePath("../TopRight/Sprite2D:position")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -89,7 +89,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("%BottomLeft/Sprite2D:position")
+tracks/2/path = NodePath("../BottomLeft/Sprite2D:position")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -117,9 +117,9 @@ _data = {
 &"cursor": SubResource("Animation_s7rdl")
 }
 
-[node name="BuildingGhost" type="Node2D" unique_id=192985018]
+[node name="BuildingCursor" type="Node2D" unique_id=192985018]
 y_sort_enabled = true
-script = ExtResource("1_ffk5q")
+script = ExtResource("1_mo2i4")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1728264335]
 root_node = NodePath("../BottomRight")
@@ -131,7 +131,7 @@ unique_name_in_owner = true
 z_index = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="TopLeft" unique_id=201722568]
-texture = ExtResource("2_xgkqo")
+texture = ExtResource("2_vh4vv")
 centered = false
 offset = Vector2(-20, -22)
 region_enabled = true
@@ -143,7 +143,7 @@ z_index = 1
 position = Vector2(64, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="TopRight" unique_id=282290049]
-texture = ExtResource("3_s7rdl")
+texture = ExtResource("3_165lj")
 centered = false
 offset = Vector2(-18, -20)
 region_enabled = true
@@ -155,7 +155,7 @@ z_index = 1
 position = Vector2(-0.040265318, 63.610767)
 
 [node name="Sprite2D" type="Sprite2D" parent="BottomLeft" unique_id=1898082142]
-texture = ExtResource("4_v48xm")
+texture = ExtResource("4_wps0p")
 centered = false
 offset = Vector2(-11.83, -18.625)
 region_enabled = true
@@ -167,7 +167,7 @@ z_index = 1
 position = Vector2(64, 64)
 
 [node name="Sprite2D" type="Sprite2D" parent="BottomRight" unique_id=984417184]
-texture = ExtResource("5_smrry")
+texture = ExtResource("5_0okdj")
 centered = false
 offset = Vector2(-17.755, -18)
 region_enabled = true

@@ -2,7 +2,7 @@ using Godot;
 
 namespace Game.Buildings;
 
-public partial class BuildingGhost : Node2D
+public partial class BuildingCursor : Node2D
 {
     private Node2D topLeft;
     private Node2D bottomLeft;

@@ -1,4 +1,4 @@
-using Game.Manager;
+using Game.Buildings;
 using Game.Resources;
 using Godot;
 namespace Game.UI;
