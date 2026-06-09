@@ -13,5 +13,10 @@ public interface IGridHighlight
 
     public void HighlightEnemyOccupiedTiles();
 
-    public void HighlightExpandedTiles(IEnumerable<Vector2I> expanded);
+    public void HighlightExpandTiles(Rect2I tileArea, int radius);
+    
+    public void HighlightAttackTiles(Rect2I tileArea, int radius);
+
+    public void HighlightResourceTiles(Rect2I tileArea, int radius);
+
 }

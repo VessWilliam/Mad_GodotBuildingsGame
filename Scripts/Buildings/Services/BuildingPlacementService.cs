@@ -91,13 +91,13 @@ public class BuildingPlacementService : IBuildingPlacement
 
         if (_resource.IsAttackBuilding())
         {
-            _context.GridManager.HighlightGoblinOccupiedTiles();
-            _context.GridManager.HighlightBuildableTiles(true);
+            _context.GridManager.DisplayEnemyOccupiedTiles();
+            _context.GridManager.DisplayBuildableTiles(true);
         }
         else
         {
-            _context.GridManager.HighlightBuildableTiles();
-            _context.GridManager.HighlightGoblinOccupiedTiles();
+            _context.GridManager.DisplayBuildableTiles(false);
+            _context.GridManager.DisplayEnemyOccupiedTiles();
         }
 
         _cursor?.DoHoverAnimation();
@@ -109,11 +109,11 @@ public class BuildingPlacementService : IBuildingPlacement
         }
 
         if (_resource.IsAttackBuilding())
-            _context.GridManager.HighlightAttackTiles(_hoverGridArea, _resource.AttackRadius);
+            _context.GridManager.DisplayAttackTiles(_hoverGridArea, _resource.AttackRadius);
         else
-            _context.GridManager.HighlightExpandedBuildableTiles(_hoverGridArea, _resource.BuildingRadius);
+            _context.GridManager.DisplayExpandTiles(_hoverGridArea, _resource.BuildingRadius);
 
-        _context.GridManager.HighlightResourceTiles(_hoverGridArea, _resource.ResourceRadius);
+        _context.GridManager.DisplayResourceTiles(_hoverGridArea, _resource.ResourceRadius);
         _cursor?.SetValid();
     }
 }

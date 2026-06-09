@@ -1,7 +1,9 @@
 using Game.Autoload;
 using Game.Component;
 using Game.Extentions;
+using Game.Grids.Services;
 using Game.Utils;
+using Games.Grids.Services.IServices;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -25,6 +27,8 @@ public partial class GridManager : Node
     private TileMapLayer baseTerrainTilemapLayer;
 
     private readonly GridStats _stats = new();
+
+    private IGridHighlight _highlightService;
     private List<TileMapLayer> allTilemapLayers = new();
     private Dictionary<TileMapLayer, ElevationLayer> tileMapLayerToElevationLayer = new();
 
@@ -36,8 +40,13 @@ public partial class GridManager : Node
         GameEvents.Instance.Connect(GameEvents.SignalName.BuildingEnable, Callable.From<BuildingComponent>(OnBuildingEnable));
         allTilemapLayers = GetAllTilemapLayers(baseTerrainTilemapLayer);
 
-
         MapTileMapLayersToElevationLayers();
+
+        _highlightService = new GridHighlightService(highlightTilemapLayer,
+            _stats,
+            GetValidTilesInRadius,
+            GetResourceTilesInRadius
+);
     }
 
     public (TileMapLayer, bool) GetTileCustomData(Vector2I tilePosition, string dataName)
@@ -79,63 +88,17 @@ public partial class GridManager : Node
         });
     }
 
-    public void HighlightGoblinOccupiedTiles()
-    {
-        var atlasCoords = new Vector2I(2, 0);
-        foreach (var tilePosition in _stats.EnemyOccupiedTiles)
-        {
-            highlightTilemapLayer.SetCell(tilePosition, 0, atlasCoords);
-        }
-    }
+    public void DisplayEnemyOccupiedTiles() => _highlightService.HighlightEnemyOccupiedTiles();
 
-    public void HighlightBuildableTiles(bool isAttackTiles = false)
-    {
-        foreach (var tilePosition in GetBuildableTileSet(isAttackTiles))
-        {
-            highlightTilemapLayer.SetCell(tilePosition, 0, Vector2I.Zero);
-        }
-    }
+    public void DisplayBuildableTiles(bool isAttackTiles = false) => _highlightService.HighlightBuildableTiles(isAttackTiles);
 
-    public void HighlightExpandedBuildableTiles(Rect2I tileArea, int radius)
-    {
-        var validTiles = GetValidTilesInRadius(tileArea, radius).ToHashSet();
+    public void DisplayExpandTiles(Rect2I tileArea, int radius) => _highlightService.HighlightExpandTiles(tileArea, radius);
 
-        var expandedTiles = validTiles.Except(_stats.BuildableTiles)
-        .Except(_stats.OccupiedTiles);
+    public void DisplayAttackTiles(Rect2I tileArea, int radius) => _highlightService.HighlightAttackTiles(tileArea, radius);
 
-        var atlasCoords = new Vector2I(1, 0);
-        foreach (var tilePosition in expandedTiles)
-        {
-            highlightTilemapLayer.SetCell(tilePosition, 0, atlasCoords);
-        }
+    public void DisplayResourceTiles(Rect2I tileArea, int radius) => _highlightService.HighlightResourceTiles(tileArea, radius);
 
-    }
-
-    public void HighlightAttackTiles(Rect2I tileArea, int radius)
-    {
-        var buildingAreaTiles = tileArea.ToTiles();
-        var validTiles = GetValidTilesInRadius(tileArea, radius).ToHashSet()
-            .Except(_stats.AttackBuildableTiles)
-            .Except(buildingAreaTiles);
-
-        var atlasCoords = new Vector2I(1, 0);
-        foreach (var tilePosition in validTiles)
-        {
-            highlightTilemapLayer.SetCell(tilePosition, 0, atlasCoords);
-        }
-    }
-
-    public void HighlightResourceTiles(Rect2I tileArea, int radius)
-    {
-        var resourceTiles = GetResourceTilesInRadius(tileArea, radius);
-        var atlasCoords = new Vector2I(1, 0);
-        foreach (var tilePosition in resourceTiles)
-        {
-            highlightTilemapLayer.SetCell(tilePosition, 0, atlasCoords);
-        }
-    }
-
-    public void ClearHighlightedTiles() => highlightTilemapLayer.Clear();
+    public void ClearHighlightedTiles() => _highlightService.ClearHighlightTile();
 
 
     public Vector2I GetMouseGridCellPositionWithDimensionOffset(Vector2 dimensions)
