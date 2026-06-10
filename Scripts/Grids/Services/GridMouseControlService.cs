@@ -7,26 +7,26 @@ namespace Game.Grids.Services;
 
 public class GridMouseControlService : IGridMouseControl
 {
-    private readonly TileMapLayer _referenceLayer;
+    private readonly TileMapLayer _highlightTilemapLayer;
 
-    public GridMouseControlService(TileMapLayer referenceLayer) => _referenceLayer = referenceLayer;
+    public GridMouseControlService(TileMapLayer referenceLayer) => _highlightTilemapLayer = referenceLayer;
 
-    public Vector2I ConvertWorldPositionToTilePosition(Vector2 worldPosition)
+    public Vector2I WorldPositionToTilePosition(Vector2 worldPosition)
     {
         var tilePosition = worldPosition / 64;
         tilePosition = tilePosition.Floor();
         return new((int)tilePosition.X, (int)tilePosition.Y);
     }
 
-    public Vector2I GetMouseGridCellPosition()
+    public Vector2I MouseGridCellPosition()
     {
-        var mouse = _referenceLayer.GetLocalMousePosition();
-        return ConvertWorldPositionToTilePosition(mouse);
+        var mouse = _highlightTilemapLayer.GetLocalMousePosition();
+        return WorldPositionToTilePosition(mouse);
     }
 
-    public Vector2I GetMouseGridCellPositionWithDimensionOffset(Vector2 dimensions)
+    public Vector2I MouseGridCellPositionWithDimensionOffset(Vector2 dimensions)
     {
-        var mouseGridPosition = _referenceLayer.GetLocalMousePosition();
+        var mouseGridPosition = _highlightTilemapLayer.GetLocalMousePosition() / 64;
         mouseGridPosition -= dimensions / 2;
         mouseGridPosition = mouseGridPosition.Round();
         return new((int)mouseGridPosition.X, (int)mouseGridPosition.Y);

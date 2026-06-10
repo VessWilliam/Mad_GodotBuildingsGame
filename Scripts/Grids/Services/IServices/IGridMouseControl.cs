@@ -4,9 +4,9 @@ namespace Game.Grids.Services.IServices;
 
 public interface IGridMouseControl
 {
-    Vector2I GetMouseGridCellPosition();
+    Vector2I MouseGridCellPosition();
     
-    Vector2I GetMouseGridCellPositionWithDimensionOffset(Vector2 dimensions);
+    Vector2I MouseGridCellPositionWithDimensionOffset(Vector2 dimensions);
 
-    Vector2I ConvertWorldPositionToTilePosition(Vector2 worldPosition);
+    Vector2I WorldPositionToTilePosition(Vector2 worldPosition);
 }

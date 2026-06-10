@@ -2,6 +2,7 @@ using Game.Autoload;
 using Game.Component;
 using Game.Extentions;
 using Game.Grids.Services;
+using Game.Grids.Services.IServices;
 using Game.Utils;
 using Games.Grids.Services.IServices;
 using Godot;
@@ -29,7 +30,11 @@ public partial class GridManager : Node
     private readonly GridStats _stats = new();
 
     private IGridHighlight _highlightService;
+
+    private IGridMouseControl _mouseControlService;
+
     private List<TileMapLayer> allTilemapLayers = new();
+
     private Dictionary<TileMapLayer, ElevationLayer> tileMapLayerToElevationLayer = new();
 
     public override void _Ready()
@@ -45,8 +50,9 @@ public partial class GridManager : Node
         _highlightService = new GridHighlightService(highlightTilemapLayer,
             _stats,
             GetValidTilesInRadius,
-            GetResourceTilesInRadius
-);
+            GetResourceTilesInRadius);
+
+        _mouseControlService = new GridMouseControlService(highlightTilemapLayer);
     }
 
     public (TileMapLayer, bool) GetTileCustomData(Vector2I tilePosition, string dataName)
@@ -101,26 +107,13 @@ public partial class GridManager : Node
     public void ClearHighlightedTiles() => _highlightService.ClearHighlightTile();
 
 
-    public Vector2I GetMouseGridCellPositionWithDimensionOffset(Vector2 dimensions)
-    {
-        var mouseGridPosition = highlightTilemapLayer.GetGlobalMousePosition() / 64;
-        mouseGridPosition -= dimensions / 2;
-        mouseGridPosition = mouseGridPosition.Round();
-        return new Vector2I((int)mouseGridPosition.X, (int)mouseGridPosition.Y);
-    }
+    public Vector2I GetMouseGridCellPositionWithDimensionOffset(Vector2 dimensions) => _mouseControlService.MouseGridCellPositionWithDimensionOffset(dimensions);
 
-    public Vector2I GetMouseGridCellPosition()
-    {
-        var mousePosition = highlightTilemapLayer.GetGlobalMousePosition();
-        return ConvertWorldPositionToTilePosition(mousePosition);
-    }
+    public Vector2I GetMouseGridCellPosition() => _mouseControlService.MouseGridCellPosition();
 
-    public Vector2I ConvertWorldPositionToTilePosition(Vector2 worldPosition)
-    {
-        var tilePosition = worldPosition / 64;
-        tilePosition = tilePosition.Floor();
-        return new Vector2I((int)tilePosition.X, (int)tilePosition.Y);
-    }
+    public Vector2I ConvertWorldPositionToTilePosition(Vector2 worldPosition) => _mouseControlService.WorldPositionToTilePosition(worldPosition);
+
+    
 
     public bool CanDestroyBuilding(BuildingComponent component)
     {
@@ -407,6 +400,7 @@ public partial class GridManager : Node
         UpdateBuildingComponentGridState(component);
         CheckGoblinCampDestruction();
     }
+
     private void OnBuildingDestroyed(BuildingComponent component)
     {
         GD.Print($"BuildingDestroyed signal: {component.BuildingResource.DisplayName}");
@@ -415,17 +409,12 @@ public partial class GridManager : Node
         _stats.OwnerBuildings.Remove(component);
         RecalculateGrid();
 
-
         GD.Print($"Buildings in dictionary: {_stats.BuildingRadiusTiles.Count}");
     }
 
-    private void OnBuildingEnable(BuildingComponent component)
-    {
-        UpdateBuildingComponentGridState(component);
-    }
+    private void OnBuildingEnable(BuildingComponent component) => UpdateBuildingComponentGridState(component);
 
-    private void OnBuildingDisable(BuildingComponent component)
-    {
-        RecalculateGrid();
-    }
+
+    private void OnBuildingDisable(BuildingComponent component) => RecalculateGrid();
+
 }
