@@ -29,6 +29,8 @@ public partial class GridManager : Node
 
     private readonly GridStats _stats = new();
 
+    private IGridTile _tileService;
+
     private IGridHighlight _highlightService;
 
     private IGridMouseControl _mouseControlService;
@@ -45,54 +47,23 @@ public partial class GridManager : Node
         GameEvents.Instance.Connect(GameEvents.SignalName.BuildingEnable, Callable.From<BuildingComponent>(OnBuildingEnable));
         allTilemapLayers = GetAllTilemapLayers(baseTerrainTilemapLayer);
 
+
         MapTileMapLayersToElevationLayers();
+
+        _tileService = new GridTileServices(_stats, allTilemapLayers, tileMapLayerToElevationLayer);
 
         _highlightService = new GridHighlightService(highlightTilemapLayer,
             _stats,
-            GetValidTilesInRadius,
-            GetResourceTilesInRadius);
+            _tileService.GetPlacmentTilesInRadiusList,
+            _tileService.GetResourceTilesInRadiusList);
 
         _mouseControlService = new GridMouseControlService(highlightTilemapLayer);
-    }
-
-    public (TileMapLayer, bool) GetTileCustomData(Vector2I tilePosition, string dataName)
-    {
-        foreach (var layer in allTilemapLayers)
-        {
-            var customData = layer.GetCellTileData(tilePosition);
-
-            if (customData is null || (bool)customData.GetCustomData(Constants.IS_IGNORE))
-                continue;
-
-            return (layer, (bool)customData.GetCustomData(dataName));
-        }
-        return (null, false);
     }
 
     public bool IsTilePositionInAnyBuildingRadius(Vector2I tilePosition) =>
      _stats.AllRadiusTiles.Contains(tilePosition);
 
-    public bool IsTileAreaBuildable(Rect2I tileArea, bool isAttackTiles = false)
-    {
-        var tiles = tileArea.ToTiles().ToList();
-        if (tiles.Count is 0) return false;
-
-        var (firstTileMapLayer, _) = GetTileCustomData(tiles[0], Constants.IS_BUILDABLE);
-
-        var targetElevationLayer = firstTileMapLayer is not null ? tileMapLayerToElevationLayer[firstTileMapLayer] : null;
-
-        var tileSetToCheck = GetBuildableTileSet(isAttackTiles);
-
-        if (isAttackTiles) tileSetToCheck = tileSetToCheck.Except(_stats.OccupiedTiles).ToHashSet();
-
-        return tiles.All((tilePosition) =>
-        {
-            var (tileMapLayer, isBuildable) = GetTileCustomData(tilePosition, Constants.IS_BUILDABLE);
-            var elevationLayer = tileMapLayer is not null ? tileMapLayerToElevationLayer[tileMapLayer] : null;
-
-            return isBuildable && tileSetToCheck.Contains(tilePosition) && elevationLayer == targetElevationLayer;
-        });
-    }
+    public bool IsTileAreaBuildable(Rect2I tileArea, bool isAttackTiles = false) => _tileService.IsTileAreaBuildable(tileArea, isAttackTiles);
 
     public void DisplayEnemyOccupiedTiles() => _highlightService.HighlightEnemyOccupiedTiles();
 
@@ -106,14 +77,11 @@ public partial class GridManager : Node
 
     public void ClearHighlightedTiles() => _highlightService.ClearHighlightTile();
 
-
     public Vector2I GetMouseGridCellPositionWithDimensionOffset(Vector2 dimensions) => _mouseControlService.MouseGridCellPositionWithDimensionOffset(dimensions);
 
     public Vector2I GetMouseGridCellPosition() => _mouseControlService.MouseGridCellPosition();
 
     public Vector2I ConvertWorldPositionToTilePosition(Vector2 worldPosition) => _mouseControlService.WorldPositionToTilePosition(worldPosition);
-
-    
 
     public bool CanDestroyBuilding(BuildingComponent component)
     {
@@ -129,7 +97,7 @@ public partial class GridManager : Node
         if (component.BuildingResource.IsAttackBuilding())
         {
             var tileArea = component.GetTileArea();
-            var attackArea = GetTilesInRadius(tileArea, component.BuildingResource.AttackRadius, (_) => true)
+            var attackArea = _tileService.GetTileInRadius(tileArea, component.BuildingResource.AttackRadius, (_) => true)
                 .ToHashSet();
 
             var buildingsInRadius = _stats.PlacementOrder.Where(b =>
@@ -147,7 +115,7 @@ public partial class GridManager : Node
 
         // Tower — grouped to village if both radii overlap bidirectionally
         var towerArea = component.GetTileArea();
-        var towerRadius = GetTilesInRadius(towerArea, component.BuildingResource.BuildingRadius, (_) => true)
+        var towerRadius = _tileService.GetTileInRadius(towerArea, component.BuildingResource.BuildingRadius, (_) => true)
             .ToHashSet();
 
         var hasBarrackInRadius = _stats.PlacementOrder.Any(b =>
@@ -173,7 +141,7 @@ public partial class GridManager : Node
         {
             var villageArea = v.GetTileArea();
             var towerReachesVillage = v.GetOccupiedCellPositions().Any(towerRadius.Contains);
-            var villageRadius = GetTilesInRadius(villageArea, v.BuildingResource.ResourceRadius, (_) => true).ToHashSet();
+            var villageRadius = _tileService.GetTileInRadius(villageArea, v.BuildingResource.ResourceRadius, (_) => true).ToHashSet();
             var villageReachesTower = component.GetOccupiedCellPositions().Any(villageRadius.Contains);
             GD.Print($"  village: {v.GetGridCellPosition()} | towerReachesVillage: {towerReachesVillage} | villageReachesTower: {villageReachesTower}");
             return towerReachesVillage && villageReachesTower;
@@ -196,9 +164,6 @@ public partial class GridManager : Node
         _stats.PlacementOrder.Remove(component);
         component.Destroy();
     }
-
-    private HashSet<Vector2I> GetBuildableTileSet(bool isAttackTiles = false) =>
-         _stats.GetBuildableTileSet(isAttackTiles);
 
     private List<TileMapLayer> GetAllTilemapLayers(Node2D rootNode)
     {
@@ -246,7 +211,7 @@ public partial class GridManager : Node
         var tileArea = buildingComponent.GetTileArea();
         if (buildingComponent.BuildingResource.IsDangerBuilding())
         {
-            var tilesInRadius = GetValidTilesInRadius(tileArea, buildingComponent.BuildingResource.DangerRadius).ToHashSet();
+            var tilesInRadius = _tileService.GetPlacmentTilesInRadiusList(tileArea, buildingComponent.BuildingResource.DangerRadius).ToHashSet();
             tilesInRadius.ExceptWith(_stats.OccupiedTiles);
             _stats.EnemyOccupiedTiles.UnionWith(tilesInRadius);
         }
@@ -259,10 +224,10 @@ public partial class GridManager : Node
 
         if (component.BuildingResource.BuildingRadius > 0)
         {
-            var allTiles = GetTilesInRadius(tileArea, component.BuildingResource.BuildingRadius, (_) => true);
+            var allTiles = _tileService.GetTileInRadius(tileArea, component.BuildingResource.BuildingRadius, (_) => true);
             _stats.AllRadiusTiles.UnionWith(allTiles);
 
-            var validTiles = GetValidTilesInRadius(tileArea, component.BuildingResource.BuildingRadius);
+            var validTiles = _tileService.GetPlacmentTilesInRadiusList(tileArea, component.BuildingResource.BuildingRadius);
             _stats.BuildingRadiusTiles[component] = validTiles.ToHashSet();
             _stats.BuildableTiles.UnionWith(validTiles);
         }
@@ -277,7 +242,7 @@ public partial class GridManager : Node
     private void UpdateCollectedResourceTiles(BuildingComponent component)
     {
         var tileArea = component.GetTileArea();
-        var resourceTiles = GetResourceTilesInRadius(tileArea, component.BuildingResource.ResourceRadius);
+        var resourceTiles = _tileService.GetResourceTilesInRadiusList(tileArea, component.BuildingResource.ResourceRadius);
 
         var oldResourceTileCount = _stats.ResourceTiles.Count;
         _stats.ResourceTiles.UnionWith(resourceTiles);
@@ -294,10 +259,19 @@ public partial class GridManager : Node
         if (!component.BuildingResource.IsAttackBuilding()) return;
 
         var tileArea = component.GetTileArea();
-        var newAttackTiles = GetTilesInRadius(tileArea, component.BuildingResource.AttackRadius, (_) => true)
+        var newAttackTiles = _tileService.GetTileInRadius(tileArea, component.BuildingResource.AttackRadius, (_) => true)
             .ToHashSet();
         _stats.AttackTiles.UnionWith(newAttackTiles);
     }
+
+    private void UpdateBuildingComponentGridState(BuildingComponent component)
+    {
+        UpdateGoblinOccupiedTiles(component);
+        UpdateValidBuildableTiles(component);
+        UpdateCollectedResourceTiles(component);
+        UpdateAttackTiles(component);
+    }
+
 
     private void RecalculateGrid()
     {
@@ -338,57 +312,6 @@ public partial class GridManager : Node
         }
     }
 
-    private bool IsTileInsideCircle(Vector2 centerPosition, Vector2 tilePosition, float radius)
-    {
-        var distanceX = centerPosition.X - (tilePosition.X + .5);
-        var distanceY = centerPosition.Y - (tilePosition.Y + .5);
-        var distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
-        return distanceSquared <= radius * radius;
-    }
-
-    private List<Vector2I> GetTilesInRadius(Rect2I tileArea, int radius, Func<Vector2I, bool> filterFn)
-    {
-        var result = new List<Vector2I>();
-        var tileAreaF = tileArea.ToRect2F();
-        var tileAreaCenter = tileAreaF.GetCenter();
-        var radiusMod = Mathf.Max(tileAreaF.Size.X, tileAreaF.Size.Y) / 2;
-
-        for (var x = tileArea.Position.X - radius; x < tileArea.End.X + radius; x++)
-        {
-            for (var y = tileArea.Position.Y - radius; y < tileArea.End.Y + radius; y++)
-            {
-                var tilePosition = new Vector2I(x, y);
-                if (!IsTileInsideCircle(tileAreaCenter, tilePosition, radius + radiusMod) || !filterFn(tilePosition)) continue;
-                result.Add(tilePosition);
-            }
-        }
-        return result;
-    }
-
-    private List<Vector2I> GetValidTilesInRadius(Rect2I tileArea, int radius)
-    {
-        return GetTilesInRadius(tileArea, radius, (tilePosition) =>
-        {
-            return GetTileCustomData(tilePosition, Constants.IS_BUILDABLE).Item2;
-        });
-    }
-
-    private List<Vector2I> GetResourceTilesInRadius(Rect2I tileArea, int radius)
-    {
-        return GetTilesInRadius(tileArea, radius, (tilePosition) =>
-        {
-            return GetTileCustomData(tilePosition, Constants.IS_WOOD).Item2;
-        });
-    }
-
-    private void UpdateBuildingComponentGridState(BuildingComponent component)
-    {
-        UpdateGoblinOccupiedTiles(component);
-        UpdateValidBuildableTiles(component);
-        UpdateCollectedResourceTiles(component);
-        UpdateAttackTiles(component);
-    }
-
     private void OnBuildingPlaced(BuildingComponent component)
     {
         _stats.PlacementOrder.Add(component);
@@ -416,5 +339,4 @@ public partial class GridManager : Node
 
 
     private void OnBuildingDisable(BuildingComponent component) => RecalculateGrid();
-
 }
