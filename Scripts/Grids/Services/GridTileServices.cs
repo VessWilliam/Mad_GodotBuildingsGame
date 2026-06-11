@@ -19,6 +19,10 @@ public class GridTileServices : IGridTile
 
     private readonly Dictionary<TileMapLayer, ElevationLayer> _tilemapElevationLayer;
 
+    private readonly Dictionary<Vector2I, (TileMapLayer, bool)> _buildableCache = new();
+
+    private readonly Dictionary<Vector2I, (TileMapLayer, bool)> _woodCache = new();
+
     public GridTileServices(GridStats stats, List<TileMapLayer> tilemapLayer,
          Dictionary<TileMapLayer, ElevationLayer> tilemapElevationLayer)
     {
@@ -30,11 +34,11 @@ public class GridTileServices : IGridTile
 
     public bool IsTileAreaBuildable(Rect2I tileArea, bool isAttackTiles = false)
     {
-        var tiles = tileArea.ToTiles().ToList();
+        var tiles = tileArea.ToTiles();
 
         if (tiles.Count is 0) return false;
 
-        var (firstLayer, _) = TileCustomData(tiles[0], Constants.IS_BUILDABLE);
+        var (firstLayer, _) = GetBuildableData(tiles[0]);
 
         var elevationTile = firstLayer is not null ? _tilemapElevationLayer[firstLayer] : null;
 
@@ -44,7 +48,7 @@ public class GridTileServices : IGridTile
 
         var result = tiles.All(tpos =>
         {
-            var (tileMapLayer, isBuildable) = TileCustomData(tpos, Constants.IS_BUILDABLE);
+            var (tileMapLayer, isBuildable) = GetBuildableData(tpos);
             var elevationLayer = tileMapLayer is null ? null : _tilemapElevationLayer[tileMapLayer];
             return isBuildable && buildableTile.Contains(tpos) && elevationLayer == elevationTile;
         });
@@ -59,11 +63,11 @@ public class GridTileServices : IGridTile
 
     public List<Vector2I> GetPlacmentTilesInRadiusList(Rect2I tileArea, int radius) =>
        GetTileInRadius(tileArea, radius, (tilePosition) =>
-         TileCustomData(tilePosition, Constants.IS_BUILDABLE).Item2);
+         GetBuildableData(tilePosition).Item2);
 
     public List<Vector2I> GetResourceTilesInRadiusList(Rect2I tileArea, int radius) =>
         GetTileInRadius(tileArea, radius, (tilePosition) =>
-            TileCustomData(tilePosition, Constants.IS_WOOD).Item2);
+            GetWoodData(tilePosition).Item2);
 
 
     public List<Vector2I> GetTileInRadius(Rect2I tileArea, int radius, Func<Vector2I, bool> filter)
@@ -114,4 +118,30 @@ public class GridTileServices : IGridTile
 
         return (null, false);
     }
+
+    private (TileMapLayer, bool) GetBuildableData(Vector2I tilePosition)
+    {
+        if (_buildableCache.TryGetValue(tilePosition, out var value))
+            return value;
+
+        value = TileCustomData(tilePosition, Constants.IS_BUILDABLE);
+
+        _buildableCache[tilePosition] = value;
+
+        return value;
+    }
+
+
+    private (TileMapLayer, bool) GetWoodData(Vector2I tilePosition)
+    {
+        if (_woodCache.TryGetValue(tilePosition, out var value))
+            return value;
+
+        value = TileCustomData(tilePosition, Constants.IS_WOOD);
+
+        _woodCache[tilePosition] = value;
+
+        return value;
+    }
+
 }

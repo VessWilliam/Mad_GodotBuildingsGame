@@ -29,6 +29,8 @@ public partial class GridManager : Node
 
     private readonly GridStats _stats = new();
 
+    private GridCache _cache;
+
     private IGridTile _tileService;
 
     private IGridHighlight _highlightService;
@@ -58,6 +60,8 @@ public partial class GridManager : Node
             _tileService.GetResourceTilesInRadiusList);
 
         _mouseControlService = new GridMouseControlService(highlightTilemapLayer);
+
+        _cache = new GridCache(_tileService);
     }
 
     public bool IsTilePositionInAnyBuildingRadius(Vector2I tilePosition) =>
@@ -97,7 +101,7 @@ public partial class GridManager : Node
         if (component.BuildingResource.IsAttackBuilding())
         {
             var tileArea = component.GetTileArea();
-            var attackArea = _tileService.GetTileInRadius(tileArea, component.BuildingResource.AttackRadius, (_) => true)
+            var attackArea = _cache.GetCacheRadius(component, tileArea, component.BuildingResource.AttackRadius)
                 .ToHashSet();
 
             var buildingsInRadius = _stats.PlacementOrder.Where(b =>
@@ -115,8 +119,7 @@ public partial class GridManager : Node
 
         // Tower — grouped to village if both radii overlap bidirectionally
         var towerArea = component.GetTileArea();
-        var towerRadius = _tileService.GetTileInRadius(towerArea, component.BuildingResource.BuildingRadius, (_) => true)
-            .ToHashSet();
+        var towerRadius = _stats.BuildingRadiusTiles[component];
 
         var hasBarrackInRadius = _stats.PlacementOrder.Any(b =>
             b.BuildingResource.IsAttackBuilding() &&
@@ -259,7 +262,7 @@ public partial class GridManager : Node
         if (!component.BuildingResource.IsAttackBuilding()) return;
 
         var tileArea = component.GetTileArea();
-        var newAttackTiles = _tileService.GetTileInRadius(tileArea, component.BuildingResource.AttackRadius, (_) => true)
+        var newAttackTiles = _cache.GetCacheRadius(component, tileArea, component.BuildingResource.AttackRadius)
             .ToHashSet();
         _stats.AttackTiles.UnionWith(newAttackTiles);
     }

@@ -19,7 +19,7 @@ public class GridStats
     public HashSet<Vector2I> AttackTiles { get; } = new();
 
     public HashSet<Vector2I> EnemyOccupiedTiles { get; } = new();
-
+    
     public Dictionary<BuildingComponent, HashSet<Vector2I>> BuildingRadiusTiles { get; } = new();
 
     public List<BuildingComponent> PlacementOrder { get; } = new();
