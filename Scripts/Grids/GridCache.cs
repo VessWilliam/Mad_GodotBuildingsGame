@@ -8,7 +8,7 @@ using Godot;
 namespace Game.Grids.Services;
 
 
-public class GridCache
+public class GridCache : IGridCache
 {
     private readonly IGridTile _tileService;
 
