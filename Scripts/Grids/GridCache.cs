@@ -29,4 +29,13 @@ public class GridCache : IGridCache
     }
 
     public void ClearCache() => _cache.Clear();
+
+    public void Invalidate(BuildingComponent component)
+    {
+         var removeKey =  _cache.Keys.Where(k => k.Item1 == component).ToList();
+         foreach (var item in removeKey)
+         {
+            _cache.Remove(item);
+         }
+    }
 }

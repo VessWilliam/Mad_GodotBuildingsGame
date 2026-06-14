@@ -56,7 +56,7 @@ public partial class GridManager : Node
 
         _highlightService = new GridHighlightService(highlightTilemapLayer,
             _stats,
-            _tileService.GetPlacmentTilesInRadiusList,
+            _tileService.GetPlacementTilesInRadiusList,
             _tileService.GetResourceTilesInRadiusList);
 
         _mouseControlService = new GridMouseControlService(highlightTilemapLayer);
@@ -214,7 +214,7 @@ public partial class GridManager : Node
         var tileArea = buildingComponent.GetTileArea();
         if (buildingComponent.BuildingResource.IsDangerBuilding())
         {
-            var tilesInRadius = _tileService.GetPlacmentTilesInRadiusList(tileArea, buildingComponent.BuildingResource.DangerRadius).ToHashSet();
+            var tilesInRadius = _tileService.GetPlacementTilesInRadiusList(tileArea, buildingComponent.BuildingResource.DangerRadius).ToHashSet();
             tilesInRadius.ExceptWith(_stats.OccupiedTiles);
             _stats.EnemyOccupiedTiles.UnionWith(tilesInRadius);
         }
@@ -230,7 +230,7 @@ public partial class GridManager : Node
             var allTiles = _tileService.GetTileInRadius(tileArea, component.BuildingResource.BuildingRadius, (_) => true);
             _stats.AllRadiusTiles.UnionWith(allTiles);
 
-            var validTiles = _tileService.GetPlacmentTilesInRadiusList(tileArea, component.BuildingResource.BuildingRadius);
+            var validTiles = _tileService.GetPlacementTilesInRadiusList(tileArea, component.BuildingResource.BuildingRadius);
             _stats.BuildingRadiusTiles[component] = validTiles.ToHashSet();
             _stats.BuildableTiles.UnionWith(validTiles);
         }

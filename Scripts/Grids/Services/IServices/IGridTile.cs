@@ -10,7 +10,7 @@ public interface IGridTile
 
     bool IsTileAreaBuildable(Rect2I tileArea, bool isAttackTiles = false);
 
-    List<Vector2I> GetPlacmentTilesInRadiusList(Rect2I tileArea, int radius);
+    List<Vector2I>  GetPlacementTilesInRadiusList(Rect2I tileArea, int radius);
 
     List<Vector2I> GetResourceTilesInRadiusList(Rect2I tileArea, int radius);
 

@@ -61,7 +61,7 @@ public class GridTileServices : IGridTile
           _stats.AllRadiusTiles.Contains(tilePosition);
 
 
-    public List<Vector2I> GetPlacmentTilesInRadiusList(Rect2I tileArea, int radius) =>
+    public List<Vector2I> GetPlacementTilesInRadiusList(Rect2I tileArea, int radius) =>
        GetTileInRadius(tileArea, radius, (tilePosition) =>
          GetBuildableData(tilePosition).Item2);
 

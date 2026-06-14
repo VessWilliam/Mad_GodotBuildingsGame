@@ -5,6 +5,9 @@ using Godot;
 public interface IGridCache
 {
     HashSet<Vector2I> GetCacheRadius(BuildingComponent b, Rect2I area, int radius);
+
     void ClearCache();
+
+    void Invalidate(BuildingComponent component); 
 }
 
