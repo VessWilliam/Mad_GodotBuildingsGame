@@ -1,9 +1,9 @@
 
 
 using System.Linq;
-using Game.Buildings.Contexts;
 using Game.Buildings.Services.IServices;
 using Game.Component;
+using Game.Grids;
 using Godot;
 
 namespace Game.Buildings.Services;
@@ -11,27 +11,33 @@ namespace Game.Buildings.Services;
 
 public class BuildingRemoveService : IBuildingRemove
 {
-    private readonly BuildingRemoveContext _context;
+    private GridManager _gridManager { get; set; }
 
-    public BuildingRemoveService(BuildingRemoveContext context) => _context = context;
+    private Node _rootScene { get; set; }
+
+    public BuildingRemoveService(GridManager gridManager, Node rootScene)
+    {
+        _gridManager = gridManager;
+        _rootScene = rootScene;
+    }
 
     public bool IsRemove(Vector2I rootCell, out int refundCost)
     {
         refundCost = 0;
 
         var building = BuildingComponent
-        .GetValidBuildingComponents(_context.RootScene)
-       .FirstOrDefault(b => 
+        .GetValidBuildingComponents(_rootScene)
+       .FirstOrDefault(b =>
         b.BuildingResource.IsDeletable &&
         b.IsTileInBuildingArea(rootCell));
 
         if (building is null) return false;
 
-        if (!_context.GridManager.CanDestroyBuilding(building)) return false;
+        if (!_gridManager.CanDestroyBuilding(building)) return false;
 
         refundCost = building.BuildingResource.ResourceCost;
 
-        _context.GridManager.DestroyBuilding(building);
+        _gridManager.DestroyBuilding(building);
 
         return true;
     }

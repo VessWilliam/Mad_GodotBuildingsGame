@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,74 +8,52 @@ using Godot;
 
 namespace Game.Grids.Services;
 
-
 public class GridTileServices : IGridTile
 {
-    private readonly GridStats _stats;
-
     private readonly List<TileMapLayer> _tilemapLayer;
-
     private readonly Dictionary<TileMapLayer, ElevationLayer> _tilemapElevationLayer;
-
     private readonly Dictionary<Vector2I, (TileMapLayer, bool)> _buildableCache = new();
-
     private readonly Dictionary<Vector2I, (TileMapLayer, bool)> _woodCache = new();
 
-    public GridTileServices(GridStats stats, List<TileMapLayer> tilemapLayer,
+    public GridTileServices(List<TileMapLayer> tilemapLayer,
          Dictionary<TileMapLayer, ElevationLayer> tilemapElevationLayer)
     {
-        _stats = stats;
         _tilemapLayer = tilemapLayer;
         _tilemapElevationLayer = tilemapElevationLayer;
     }
 
-
-    public bool IsTileAreaBuildable(Rect2I tileArea, bool isAttackTiles = false)
+    public bool IsTileAreaBuildable(Rect2I tileArea, HashSet<Vector2I> buildableTiles, HashSet<Vector2I> occupiedTiles, bool isAttackTiles = false)
     {
         var tiles = tileArea.ToTiles();
 
         if (tiles.Count is 0) return false;
 
         var (firstLayer, _) = GetBuildableData(tiles[0]);
-
         var elevationTile = firstLayer is not null ? _tilemapElevationLayer[firstLayer] : null;
 
-        var buildableTile = _stats.GetBuildableTileSet(isAttackTiles);
+        if (isAttackTiles) buildableTiles = buildableTiles.Except(occupiedTiles).ToHashSet();
 
-        if (isAttackTiles) buildableTile = buildableTile.Except(_stats.OccupiedTiles).ToHashSet();
-
-        var result = tiles.All(tpos =>
+        return tiles.All(tpos =>
         {
             var (tileMapLayer, isBuildable) = GetBuildableData(tpos);
             var elevationLayer = tileMapLayer is null ? null : _tilemapElevationLayer[tileMapLayer];
-            return isBuildable && buildableTile.Contains(tpos) && elevationLayer == elevationTile;
+            return isBuildable && buildableTiles.Contains(tpos) && elevationLayer == elevationTile;
         });
-
-        return result;
-
     }
 
-    public bool IsTilePositionInAnyBuildingRadius(Vector2I tilePosition) =>
-          _stats.AllRadiusTiles.Contains(tilePosition);
-
-
     public List<Vector2I> GetPlacementTilesInRadiusList(Rect2I tileArea, int radius) =>
-       GetTileInRadius(tileArea, radius, (tilePosition) =>
-         GetBuildableData(tilePosition).Item2);
+        GetTileInRadius(tileArea, radius, (tilePosition) =>
+            GetBuildableData(tilePosition).Item2);
 
     public List<Vector2I> GetResourceTilesInRadiusList(Rect2I tileArea, int radius) =>
         GetTileInRadius(tileArea, radius, (tilePosition) =>
             GetWoodData(tilePosition).Item2);
 
-
     public List<Vector2I> GetTileInRadius(Rect2I tileArea, int radius, Func<Vector2I, bool> filter)
     {
         var result = new List<Vector2I>();
-
         var tileAreaF = tileArea.ToRect2F();
-
         var tileAreaCenter = tileAreaF.GetCenter();
-
         var radiusMax = Mathf.Max(tileAreaF.Size.X, tileAreaF.Size.Y) / 2;
 
         for (var x = tileArea.Position.X - radius; x < tileArea.End.X + radius; x++)
@@ -125,12 +101,9 @@ public class GridTileServices : IGridTile
             return value;
 
         value = TileCustomData(tilePosition, Constants.IS_BUILDABLE);
-
         _buildableCache[tilePosition] = value;
-
         return value;
     }
-
 
     private (TileMapLayer, bool) GetWoodData(Vector2I tilePosition)
     {
@@ -138,10 +111,7 @@ public class GridTileServices : IGridTile
             return value;
 
         value = TileCustomData(tilePosition, Constants.IS_WOOD);
-
         _woodCache[tilePosition] = value;
-
         return value;
     }
-
 }

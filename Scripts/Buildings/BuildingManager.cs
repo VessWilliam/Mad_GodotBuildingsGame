@@ -1,4 +1,3 @@
-using Game.Buildings.Contexts;
 using Game.Buildings.Services;
 using Game.Buildings.Services.IServices;
 using Game.Utils;
@@ -37,14 +36,9 @@ public partial class BuildingManager : Node
 
     public override void _Ready()
     {
-        _placementService = new BuildingPlacementService(new BuildingPlacementContext(
-            gridManager: gridManager,
-            ysortRoot: ySortRoot,
-            cursorScene: buidingGhostScene));
+        _placementService = new BuildingPlacementService(gridManager, ySortRoot, buidingGhostScene);
 
-        _removeService = new BuildingRemoveService(new BuildingRemoveContext(
-            gridManager: gridManager,
-            rootScene: this));
+        _removeService = new BuildingRemoveService(gridManager, this);
 
         Callable.From(() => EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount))
             .CallDeferred();

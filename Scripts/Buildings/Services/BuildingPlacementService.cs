@@ -1,7 +1,7 @@
-using Game.Buildings.Contexts;
 using Game.Buildings.Services.IServices;
 using Game.Component;
 using Game.Extentions;
+using Game.Grids;
 using Game.Resources;
 using Godot;
 
@@ -9,8 +9,6 @@ namespace Game.Buildings.Services;
 
 public class BuildingPlacementService : IBuildingPlacement
 {
-    private readonly BuildingPlacementContext _context;
-
     private BuildingCursor _cursor;
 
     private BuildingResource _resource;
@@ -19,7 +17,19 @@ public class BuildingPlacementService : IBuildingPlacement
 
     public bool IsPlacement => _resource is not null;
 
-    public BuildingPlacementService(BuildingPlacementContext context) => _context = context;
+    public GridManager _gridManager { get; set; }
+
+    private Node2D _ysortRoot { get; set; }
+
+    private PackedScene _cursorScene { get; set; }
+
+    public BuildingPlacementService(GridManager gridManager, Node2D ysortRoot,
+          PackedScene cursorScene)
+    {
+        _gridManager = gridManager;
+        _ysortRoot = ysortRoot;
+        _cursorScene = cursorScene;
+    }
 
 
     public void StartPlacement(BuildingResource resource)
@@ -27,8 +37,8 @@ public class BuildingPlacementService : IBuildingPlacement
         _resource = resource;
         _hoverGridArea.Size = resource.Dimensions;
 
-        _cursor = _context.CursorScene.Instantiate<BuildingCursor>();
-        _context.YsortRoot.AddChild(_cursor);
+        _cursor = _cursorScene.Instantiate<BuildingCursor>();
+        _ysortRoot.AddChild(_cursor);
 
         var sprite = resource.SpriteScene.Instantiate<Node2D>();
         _cursor.AddSpriteNode(sprite);
@@ -52,7 +62,7 @@ public class BuildingPlacementService : IBuildingPlacement
 
         var building = _resource.BuildingScene.Instantiate<Node2D>();
         building.GlobalPosition = _hoverGridArea.Position * 64;
-        _context.YsortRoot.AddChild(building);
+        _ysortRoot.AddChild(building);
         building.GetFirstNodeOfType<BuildingAnimatorComponent>()?.PlayPlaceAnimation();
 
         CancelPlacement();
@@ -73,31 +83,31 @@ public class BuildingPlacementService : IBuildingPlacement
 
 
     public bool IsConfirmPlacement() =>
-     _resource is not null && _context.GridManager.IsTileAreaBuildable(_hoverGridArea, _resource.IsAttackBuilding());
+     _resource is not null && _gridManager.IsTileAreaBuildable(_hoverGridArea, _resource.IsAttackBuilding());
 
 
     private void ClearCursor()
     {
         _cursor?.SafeQueueFree();
         _cursor = null;
-        _context.GridManager.ClearHighlightedTiles();
+        _gridManager.ClearHighlightedTiles();
     }
 
     public void UpdateGridDisplay()
     {
         if (!IsPlacement) return;
 
-        _context.GridManager.ClearHighlightedTiles();
+        _gridManager.ClearHighlightedTiles();
 
         if (_resource.IsAttackBuilding())
         {
-            _context.GridManager.DisplayEnemyOccupiedTiles();
-            _context.GridManager.DisplayBuildableTiles(true);
+            _gridManager.DisplayEnemyOccupiedTiles();
+            _gridManager.DisplayBuildableTiles(true);
         }
         else
         {
-            _context.GridManager.DisplayBuildableTiles(false);
-            _context.GridManager.DisplayEnemyOccupiedTiles();
+            _gridManager.DisplayBuildableTiles(false);
+            _gridManager.DisplayEnemyOccupiedTiles();
         }
 
         _cursor?.DoHoverAnimation();
@@ -109,11 +119,11 @@ public class BuildingPlacementService : IBuildingPlacement
         }
 
         if (_resource.IsAttackBuilding())
-            _context.GridManager.DisplayAttackTiles(_hoverGridArea, _resource.AttackRadius);
+            _gridManager.DisplayAttackTiles(_hoverGridArea, _resource.AttackRadius);
         else
-            _context.GridManager.DisplayExpandTiles(_hoverGridArea, _resource.BuildingRadius);
+            _gridManager.DisplayExpandTiles(_hoverGridArea, _resource.BuildingRadius);
 
-        _context.GridManager.DisplayResourceTiles(_hoverGridArea, _resource.ResourceRadius);
+        _gridManager.DisplayResourceTiles(_hoverGridArea, _resource.ResourceRadius);
         _cursor?.SetValid();
     }
 }
