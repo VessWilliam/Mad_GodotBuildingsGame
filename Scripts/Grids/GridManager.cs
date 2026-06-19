@@ -146,6 +146,7 @@ public partial class GridManager : Node
                            b.BuildingResource.ResourceRadius == 0)
                 .Distinct()
                 .ToList();
+
             int orphanIndex = orphanTowers.IndexOf(component);
             bool canDelete = orphanIndex == orphanTowers.Count - 1;
             GD.Print($"  Barracks exist - Tower LIFO: {canDelete} (index {orphanIndex} of {orphanTowers.Count})");
@@ -272,8 +273,8 @@ public partial class GridManager : Node
             if (building == null || !GodotObject.IsInstanceValid(building))
                 continue;
 
-            var tileArea = building.GetTileArea();
-            var isInsideAttackTile = tileArea.ToTiles().Any(_gridState.Stats.AttackTiles.Contains);
+            var tileArea = building.GetOccupiedCellPositions();
+            var isInsideAttackTile = tileArea.Any(_gridState.Stats.AttackTiles.Contains);
             if (isInsideAttackTile) building.Disable();
             else building.Enable();
         }
