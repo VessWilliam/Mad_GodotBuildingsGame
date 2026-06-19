@@ -1,11 +1,12 @@
 using Game.Autoload;
+using Game.Resources;
 using Godot;
 
 namespace Game.UI;
 
-
 public partial class LevelSelectScreen : MarginContainer
 {
+    private const int PAGE_SIZE = 6;
 
     [Signal]
     public delegate void HomePressedEventHandler();
@@ -15,17 +16,46 @@ public partial class LevelSelectScreen : MarginContainer
 
     private GridContainer gridContainer;
     private Button homeButton;
+    private Button previosButton;
+    private Button nextButton;
+
+    private int pageIndex;
+    private int maxPageIndex;
+    private LevelResource[] levelResources;
 
     public override void _Ready()
     {
-        gridContainer = GetNode<GridContainer>("%GridContainer");        
+        gridContainer = GetNode<GridContainer>("%GridContainer");
         homeButton = GetNode<Button>("%HomeButton");
 
-        var levels = LevelEvents.GetLevelResources();
+        previosButton = GetNode<Button>("%PrevButton");
+        nextButton = GetNode<Button>("%NxtButton");
 
-        for (var i = 0; i < levels.Length; i++)
+        levelResources = LevelEvents.GetLevelResources();
+        maxPageIndex = levelResources.Length / PAGE_SIZE;
+
+        homeButton.Pressed += OnHomeButtonPressed;
+        previosButton.Pressed += () => OnPageChanged(-1);
+        nextButton.Pressed += () => OnPageChanged(1);
+
+        ShowPage();
+    }
+
+    private void ShowPage()
+    {
+        UpdateButtonVisibility();
+
+        foreach (var item in gridContainer.GetChildren())
         {
-            var levelScene = levels[i];
+            item.QueueFree();
+        }
+
+        var startIndex = pageIndex * PAGE_SIZE;
+        var endIndex = Mathf.Min(startIndex + PAGE_SIZE, levelResources.Length);
+
+        for (var i = startIndex; i < endIndex; i++)
+        {
+            var levelScene = levelResources[i];
 
             var levelSelectScene = levelSelectionScene.Instantiate<LevelSelection>();
 
@@ -35,12 +65,23 @@ public partial class LevelSelectScreen : MarginContainer
             levelSelectScene.SetLevelNumber(i);
             levelSelectScene.LevelSelected += OnLevelSelected;
         }
+    }
 
-
-        homeButton.Pressed += OnHomeButtonPressed;
+    private void UpdateButtonVisibility()
+    {
+        previosButton.Disabled = pageIndex == 0;
+        previosButton.Modulate = pageIndex == 0 ? Colors.Transparent : Colors.White;
+        nextButton.Disabled = pageIndex == maxPageIndex;
+        nextButton.Modulate = pageIndex == maxPageIndex ? Colors.Transparent : Colors.White;
     }
 
     private void OnHomeButtonPressed() => EmitSignal(SignalName.HomePressed);
-    
+
     private void OnLevelSelected(int index) => LevelEvents.Instance.ChangeLevel(index);
+
+    private void OnPageChanged(int change)
+    {
+        pageIndex += change;
+        ShowPage();
+    }
 }

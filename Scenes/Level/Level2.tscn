@@ -9,7 +9,7 @@
 [node name="Level2" unique_id=547361296 instance=ExtResource("1_dap3h")]
 levelResource = ExtResource("2_6f3v7")
 
-[node name="GameCamera" parent="." index="5" unique_id=1755277265]
+[node name="GameCamera" parent="." index="4" unique_id=1755277265]
 position = Vector2(448, -512)
 
 [node name="TerrianTileMapLayer" parent="YSortRoot" parent_id_path=PackedInt32Array(902121781) index="0" unique_id=1123116985]
