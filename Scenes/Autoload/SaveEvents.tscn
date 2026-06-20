@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bc24ojq136xwf"]
+
+[ext_resource type="Script" uid="uid://vaylsna1qsep" path="res://Scripts/Autoload/SaveEvents.cs" id="1_e6165"]
+
+[node name="SaveEvents" type="Node" unique_id=1359832628]
+script = ExtResource("1_e6165")

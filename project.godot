@@ -19,6 +19,7 @@ config/icon="uid://cfolohjl81087"
 
 GameEvents="*uid://y8hnfb3a65eg"
 LevelEvents="*uid://b1rtrha5lw4e3"
+SaveEvents="*uid://bc24ojq136xwf"
 
 [display]
 
