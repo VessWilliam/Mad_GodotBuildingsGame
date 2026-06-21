@@ -12,6 +12,8 @@ config_version=5
 
 config/name="building"
 run/main_scene="uid://b00ukhnao4ib6"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="BuildingSaveGameData"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="uid://cfolohjl81087"
 

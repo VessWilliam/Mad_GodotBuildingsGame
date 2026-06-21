@@ -5,6 +5,7 @@ using Godot;
 using Game.Camera;
 using Game.UI;
 using Game.Resources;
+using Game.Autoload;
 
 namespace Game.Level;
 
@@ -30,6 +31,8 @@ public partial class BaseLevel : Node
 
     private BuildingManager buildingManager;
 
+    private bool IslevelComplete = false;
+
     public override void _Ready()
     {
         gridManager = GetNode<GridManager>("GridManager");
@@ -47,17 +50,27 @@ public partial class BaseLevel : Node
         gridManager.GridStateUpdated += OnGridStateUpdated;
     }
 
+
+    private void ShowLevelComplete()
+    {
+        IslevelComplete = true;
+
+        SaveEvents.SaveLevelCompletion(levelResource);
+
+        var levelCompleteInstance = levelCompleteScene.Instantiate<LevelCompleteScreen>();
+        AddChild(levelCompleteInstance);
+
+        goldMine.SetActive();
+        gameUI.HideUI();
+    }
+
     private void OnGridStateUpdated()
     {
+        if (IslevelComplete) return;
+
         var goldMinePos = gridManager.ConvertWorldPositionToTilePosition(goldMine.GlobalPosition);
 
         if (gridManager.IsTilePositionInAnyBuildingRadius(goldMinePos))
-        {
-            var levelCompleteInstance = levelCompleteScene.Instantiate<LevelCompleteScreen>();
-            AddChild(levelCompleteInstance);
-
-            goldMine.SetActive();
-            gameUI.HideUI();
-        }
+            ShowLevelComplete();
     }
 }
