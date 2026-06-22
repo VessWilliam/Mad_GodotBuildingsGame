@@ -1,0 +1,120 @@
+[gd_scene format=3 uid="uid://bu6lca8k5q6xu"]
+
+[ext_resource type="Texture2D" uid="uid://cwm5mu0je5fff" path="res://Assets/effects/particle.png" id="1_cfcjj"]
+
+[sub_resource type="Animation" id="Animation_xdd84"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_e0hg6"]
+resource_name = "default"
+length = 3.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_21112"]
+_data = {
+&"RESET": SubResource("Animation_xdd84"),
+&"default": SubResource("Animation_e0hg6")
+}
+
+[sub_resource type="Gradient" id="Gradient_e0hg6"]
+offsets = PackedFloat32Array(0.00298208, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.765625, 0.765625, 0.765625, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_21112"]
+gradient = SubResource("Gradient_e0hg6")
+
+[sub_resource type="Gradient" id="Gradient_pu6dr"]
+colors = PackedColorArray(1, 0.9595508, 0.659375, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sf4j8"]
+gradient = SubResource("Gradient_pu6dr")
+
+[sub_resource type="Curve" id="Curve_b3r3r"]
+bake_resolution = 180
+_data = [Vector2(0.016791046, 0.010926843), 0.0, 0.0, 0, 0, Vector2(0.19589552, 0.99298537), 0.0, 0.0, 0, 0, Vector2(0.3022388, 0.95923156), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_8sqd8"]
+curve = SubResource("Curve_b3r3r")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1iyp7"]
+lifetime_randomness = 0.4
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(160, 1, 1)
+angle_min = -505.0
+angle_max = -460.5
+direction = Vector3(0, -1, 0)
+spread = 15.0
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+angular_velocity_min = -360.0
+angular_velocity_max = 359.99997
+gravity = Vector3(0, -200, 0)
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_8sqd8")
+scale_over_velocity_max = 100.0
+color_ramp = SubResource("GradientTexture1D_sf4j8")
+color_initial_ramp = SubResource("GradientTexture1D_21112")
+
+[node name="BarracksDestroyParticles" type="Node2D" unique_id=1025206552]
+y_sort_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=495414917]
+libraries/ = SubResource("AnimationLibrary_21112")
+autoplay = &"default"
+
+[node name="Node2D" type="Node2D" parent="." unique_id=142830285]
+position = Vector2(0, 64)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Node2D" unique_id=1237128017]
+position = Vector2(0, -54)
+emitting = false
+amount = 100
+texture = ExtResource("1_cfcjj")
+lifetime = 0.8
+one_shot = true
+explosiveness = 0.09
+randomness = 0.04
+fixed_fps = 0
+interpolate = false
+draw_order = 0
+process_material = SubResource("ParticleProcessMaterial_1iyp7")

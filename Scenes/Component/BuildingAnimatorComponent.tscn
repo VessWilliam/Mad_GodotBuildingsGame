@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cmmjhk2q7g67t"]
 
 [ext_resource type="Script" uid="uid://b1x21neecf6is" path="res://Scripts/Component/BuildingAnimatorComponent.cs" id="1_rt76q"]
-[ext_resource type="PackedScene" uid="uid://xs81caqpxya1" path="res://Scenes/effects/BuildingPlaceParticles.tscn" id="2_315qt"]
+[ext_resource type="PackedScene" uid="uid://xs81caqpxya1" path="res://Scenes/Effect/BuildingPlaceParticles.tscn" id="2_315qt"]
 [ext_resource type="Texture2D" uid="uid://5hqr8dft6c8a" path="res://Assets/tiles/building_mask.png" id="2_dk5ua"]
-[ext_resource type="PackedScene" uid="uid://bvxad53yrwexv" path="res://Scenes/effects/BuildingDestroyParticles.tscn" id="3_kvxn5"]
+[ext_resource type="PackedScene" uid="uid://bvxad53yrwexv" path="res://Scenes/Effect/BuildingDestroyParticles.tscn" id="3_kvxn5"]
 
 [node name="BuildingAnimatorComponent" type="Node2D" unique_id=1455991372]
 y_sort_enabled = true
