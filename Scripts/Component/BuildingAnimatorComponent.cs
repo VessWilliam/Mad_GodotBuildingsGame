@@ -1,3 +1,4 @@
+using Game.Camera;
 using Game.Extentions;
 using Godot;
 
@@ -149,5 +150,6 @@ public partial class BuildingAnimatorComponent : Node2D
         var particles = particlesScene.Instantiate<Node2D>();
         particleParent.AddChild(particles);
         particles.GlobalPosition = GlobalPosition;
+        GameCamera.Shake();
     }
 }

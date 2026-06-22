@@ -22,6 +22,14 @@ public partial class SaveEvents : Node
         ReadSaveData();
     }
 
+    public static bool IsLevelCompleted(string levelid)
+    {
+
+        saveData.LevelCompletedData.TryGetValue(levelid.ToString(), out var data);
+
+        return data?.IsCompleted is true;
+    }
+
     public static void SaveLevelCompletion(LevelResource resouce)
     {
         saveData.SaveLevelCompletion(resouce.Id, true);
@@ -39,16 +47,16 @@ public partial class SaveEvents : Node
     {
         try
         {
-            if (!FileAccess.FileExists(SAVE_PATH))
-                return;
+            if (!FileAccess.FileExists(SAVE_PATH)) return;
 
             using var savefile = FileAccess.Open(SAVE_PATH, FileAccess.ModeFlags.Read);
             var dataString = savefile.GetLine();
+
             saveData = JsonConvert.DeserializeObject<SaveData>(dataString);
         }
         catch (Exception)
         {
-            GD.PushWarning("Save file is corrupted!");
+            GD.PushWarning("save file is corrupted !");
         }
     }
 }

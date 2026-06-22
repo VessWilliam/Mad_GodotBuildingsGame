@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bhfahoudi3oef" path="res://Scripts/UI/LevelSelection.cs" id="1_0yt1a"]
 [ext_resource type="Texture2D" uid="uid://busy77l5fxj6m" path="res://Assets/UI/wood_icon.png" id="1_fvdss"]
 [ext_resource type="FontFile" uid="uid://drrlwwoie27gu" path="res://Assets/Font/Bitfantasy.ttf" id="2_vs1vs"]
+[ext_resource type="Texture2D" uid="uid://c0kh083ql6i8v" path="res://Assets/UI/check.png" id="4_pnsx7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ugdyl"]
 atlas = ExtResource("1_fvdss")
@@ -19,32 +20,59 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 14
 theme_override_constants/margin_bottom = -10
 
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1120513753]
+z_index = 1
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer" unique_id=1346790798]
+layout_mode = 2
+theme_override_constants/margin_left = -26
+theme_override_constants/margin_top = -10
+
+[node name="CompleteIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer" unique_id=520844584]
+unique_name_in_owner = true
+visible = false
+modulate = Color(0.57507807, 1, 0.30624998, 1)
+self_modulate = Color(0.39949542, 1, 0.265625, 1)
+z_index = 1
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("4_pnsx7")
+expand_mode = 1
+stretch_mode = 2
+
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1024461987]
 layout_mode = 2
 theme_override_constants/separation = 9
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1332877452]
 layout_mode = 2
-theme_override_constants/separation = -3
+theme_override_constants/separation = 7
 
 [node name="LevelNumberLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=39729973]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0.8784314, 0.40784314, 0.105882354, 1)
 theme_override_colors/font_shadow_color = Color(0.28235295, 0.050980393, 0.050980393, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 45
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 7
+theme_override_fonts/font = ExtResource("2_vs1vs")
+theme_override_font_sizes/font_size = 31
 text = "Level 1"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer" unique_id=55020458]
 layout_mode = 2
-theme_override_constants/separation = 15
+size_flags_horizontal = 0
+theme_override_constants/separation = 14
 alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" unique_id=1657950200]
-custom_minimum_size = Vector2(20, 20)
+custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 texture = SubResource("AtlasTexture_ugdyl")
 expand_mode = 1
@@ -55,8 +83,8 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.715625, 0.5401291, 0.33097655, 1)
 theme_override_colors/font_shadow_color = Color(0.68235296, 0.49803922, 0.33333334, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 0
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("2_vs1vs")
 theme_override_font_sizes/font_size = 30
