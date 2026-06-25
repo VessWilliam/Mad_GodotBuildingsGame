@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c5lbwqxdkc6jc" path="res://Scenes/Manager/BuildingManager.tscn" id="3_toevt"]
 [ext_resource type="PackedScene" uid="uid://dq7osa665ufuo" path="res://Scenes/Camera/GameCamera.tscn" id="3_xerb2"]
 [ext_resource type="PackedScene" uid="uid://del8yud3h8ywd" path="res://Scenes/Buildings/BuildingCursor.tscn" id="4_jsyjl"]
+[ext_resource type="PackedScene" uid="uid://qsmwdvt6q88n" path="res://Scenes/Manager/ResourceIndicatorManager.tscn" id="4_qx3j0"]
 [ext_resource type="TileSet" uid="uid://wu8i71278jye" path="res://Resources/tiles.tres" id="5_qx3j0"]
 [ext_resource type="PackedScene" uid="uid://dbtx8ccudg732" path="res://Scenes/Buildings/Base.tscn" id="6_ah6f1"]
 [ext_resource type="PackedScene" uid="uid://5ui0maqtwn5g" path="res://Scenes/GoldMines/GoldMine.tscn" id="7_6f0v8"]
@@ -60,3 +61,6 @@ self_modulate = Color(0.896875, 0.8828614, 0.8828614, 0.9098039)
 show_behind_parent = true
 y_sort_enabled = true
 tile_set = ExtResource("8_jma8p")
+
+[node name="ResourceIndicatorManager" parent="." unique_id=232509046 node_paths=PackedStringArray("gridManager") instance=ExtResource("4_qx3j0")]
+gridManager = NodePath("../GridManager")

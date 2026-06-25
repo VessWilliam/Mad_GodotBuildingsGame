@@ -80,6 +80,13 @@ public partial class GridManager : Node
         );
     }
 
+    public HashSet<Vector2I> GetResourceTile()
+    {
+        return _gridState.Stats.ResourceTiles.ToHashSet();
+    }
+
+
+
     public bool CanDestroyBuilding(BuildingComponent component)
     {
         // Guard against disposed components

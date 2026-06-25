@@ -19,7 +19,7 @@ public partial class BaseLevel : Node
 
     private GridManager gridManager;
 
-    private GoldMine goldMine;
+    private GoldMine goldMine; 
 
     private GameCamera gameCamera;
 
