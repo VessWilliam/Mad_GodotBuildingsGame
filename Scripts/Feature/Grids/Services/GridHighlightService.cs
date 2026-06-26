@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Extentions;
-using Games.Grids.Services.IServices;
+using Games.Feature.Grids.Services.IServices;
 using Godot;
 
-namespace Game.Grids.Services;
+namespace Game.Feature.Grids.Services;
 
 public class GridHighlightService : IGridHighlight
 {

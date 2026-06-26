@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Game.Grids.Services.IServices;
+namespace Game.Feature.Grids.Services.IServices;
 
 public interface IGridMouseControl
 {

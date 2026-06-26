@@ -1,12 +1,12 @@
-using Game.Buildings.Services;
-using Game.Buildings.Services.IServices;
+using Game.Feature.Buildings.Services.IServices;
 using Game.Utils;
-using Game.Grids;
+using Game.Feature.Grids;
 using Game.Resources;
 using Game.UI;
 using Godot;
+using Game.Feature.Buildings.Services;
 
-namespace Game.Buildings;
+namespace Game.Feature.Buildings;
 
 public partial class BuildingManager : Node
 {

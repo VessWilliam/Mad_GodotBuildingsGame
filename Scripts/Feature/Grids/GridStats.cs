@@ -2,7 +2,7 @@ using Game.Component;
 using Godot;
 using System.Collections.Generic;
 
-namespace Game.Grids;
+namespace Game.Feature.Grids;
 
 public class GridStats
 {

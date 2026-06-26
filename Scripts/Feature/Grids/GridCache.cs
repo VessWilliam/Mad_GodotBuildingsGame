@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.Component;
-using Game.Grids.Services.IServices;
+using Game.Feature.Grids.Services.IServices;
+using Games.Feature.Grids.Services.IServices;
 using Godot;
 
-namespace Game.Grids.Services;
+namespace Game.Feature.Grids.Services;
 
 public enum RadiusType
 {

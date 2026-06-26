@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Extentions;
-using Game.Grids.Services.IServices;
+using Game.Feature.Grids.Services.IServices;
 using Game.Utils;
 using Godot;
 
-namespace Game.Grids.Services;
+namespace Game.Feature.Grids.Services;
 
 public class GridTileServices : IGridTile
 {

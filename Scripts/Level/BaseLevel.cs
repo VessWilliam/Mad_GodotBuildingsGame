@@ -1,5 +1,5 @@
-using Game.Buildings;
-using Game.Grids;
+using Game.Feature.Buildings;
+using Game.Feature.Grids;
 using Game.Gold;
 using Godot;
 using Game.Camera;

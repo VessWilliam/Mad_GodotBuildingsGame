@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
+using Game.Feature.Grids;
 using Game.UI;
 using Godot;
 
-namespace Game.Grids;
+namespace Game.Feature.Collector;
 
 
 public partial class ResourceIndicatorManager : Node

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 
-namespace Games.Grids.Services.IServices;
+namespace Games.Feature.Grids.Services.IServices;
 
 public interface IGridHighlight
 {

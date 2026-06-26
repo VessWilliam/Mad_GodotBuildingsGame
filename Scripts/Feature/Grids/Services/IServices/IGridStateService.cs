@@ -1,6 +1,6 @@
 using Game.Component;
 
-namespace Game.Grids.Services.IServices;
+namespace Game.Feature.Grids.Services.IServices;
 
 public interface IGridStateService
 {

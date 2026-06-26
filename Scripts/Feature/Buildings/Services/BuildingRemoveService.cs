@@ -1,12 +1,12 @@
 
 
 using System.Linq;
-using Game.Buildings.Services.IServices;
+using Game.Feature.Buildings.Services.IServices;
 using Game.Component;
-using Game.Grids;
+using Game.Feature.Grids;
 using Godot;
 
-namespace Game.Buildings.Services;
+namespace Game.Feature.Buildings.Services;
 
 
 public class BuildingRemoveService : IBuildingRemove

@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Game.Buildings.Services.IServices;
+namespace Game.Feature.Buildings.Services.IServices;
 
 public interface IBuildingRemove
 {

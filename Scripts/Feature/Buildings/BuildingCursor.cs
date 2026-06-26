@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Game.Buildings;
+namespace Game.Feature.Buildings;
 
 public partial class BuildingCursor : Node2D
 {

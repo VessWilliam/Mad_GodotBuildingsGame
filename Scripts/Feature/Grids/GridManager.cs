@@ -1,15 +1,14 @@
 using Game.Autoload;
 using Game.Component;
-using Game.Extentions;
-using Game.Grids.Services;
-using Game.Grids.Services.IServices;
+using Game.Feature.Grids.Services;
+using Game.Feature.Grids.Services.IServices;
 using Game.Utils;
-using Games.Grids.Services.IServices;
+using Games.Feature.Grids.Services.IServices;
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Game.Grids;
+namespace Game.Feature.Grids;
 
 public partial class GridManager : Node
 {
