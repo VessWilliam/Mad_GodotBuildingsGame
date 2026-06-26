@@ -83,7 +83,7 @@ public class BuildingPlacementService : IBuildingPlacement
 
 
     public bool IsConfirmPlacement() =>
-     _resource is not null && _gridManager.IsTileAreaBuildable(_hoverGridArea, _resource.IsAttackBuilding());
+      _resource is not null && _gridManager.IsTileAreaBuildable(_hoverGridArea, _resource.IsAttackBuilding());
 
 
     private void ClearCursor()

@@ -29,6 +29,7 @@ public class GridTileServices : IGridTile
         if (tiles.Count is 0) return false;
 
         var (firstLayer, _) = GetBuildableData(tiles[0]);
+        
         var elevationTile = firstLayer is not null ? _tilemapElevationLayer[firstLayer] : null;
 
         if (isAttackTiles) buildableTiles = buildableTiles.Except(occupiedTiles).ToHashSet();

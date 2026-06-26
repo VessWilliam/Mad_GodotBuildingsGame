@@ -5,6 +5,7 @@ using Game.Resources;
 using Game.UI;
 using Godot;
 using Game.Feature.Buildings.Services;
+using Game.Feature.FloatingTexts;
 
 namespace Game.Feature.Buildings;
 
@@ -33,6 +34,8 @@ public partial class BuildingManager : Node
     private IBuildingPlacement _placementService;
 
     private StateEnum currentState = StateEnum.Normal;
+
+    private float _lastGridUpdateTime = 0;
 
     public override void _Ready()
     {
@@ -66,13 +69,20 @@ public partial class BuildingManager : Node
                     return;
                 }
 
-                if (evt.IsActionPressed(ACTION_LEFT_CLICK) && _placementService.IsConfirmPlacement())
+                if (evt.IsActionPressed(ACTION_LEFT_CLICK))
                 {
                     var cost = _placementService.GetPlacementCost();
 
+                    if (!_placementService.IsConfirmPlacement())
+                    {
+                        FloatingTextManager.ShowMessage("Can't build here");
+                        return;
+                    }
+
+
                     if (AvailableResourceCount < cost)
                     {
-                        GD.Print("Not enough resources!");
+                        FloatingTextManager.ShowMessage("Not enough wood");
                         return;
                     }
 
@@ -96,6 +106,11 @@ public partial class BuildingManager : Node
     public override void _Process(double delta)
     {
         if (currentState is StateEnum.Normal) return;
+
+        float currentTime = Time.GetTicksMsec() / 1000.0f;
+        if (currentTime - _lastGridUpdateTime < 0.05f)
+            return;
+        _lastGridUpdateTime = currentTime;
 
         var mouseGridPos = gridManager.GetMouseGridCellPositionWithDimensionOffset(
             _placementService.GetHoverGridArea().Size);

@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://brcyh1eo6luvb" path="res://Scenes/UI/ParallaxLayer.tscn" id="7_jsyjl"]
 [ext_resource type="TileSet" uid="uid://bt2wsixes6uv4" path="res://Resources/highlight_tileset.tres" id="8_jma8p"]
 [ext_resource type="PackedScene" uid="uid://d0cwvebpa76t7" path="res://Scenes/UI/GameUI.tscn" id="9_mqopy"]
+[ext_resource type="PackedScene" uid="uid://c2tuobtad2k7t" path="res://Scenes/Manager/FloatingTextManager.tscn" id="14_ah6f1"]
 
 [node name="BaseLevel" type="Node" unique_id=547361296]
 script = ExtResource("1_2ve4c")
@@ -64,3 +65,5 @@ tile_set = ExtResource("8_jma8p")
 
 [node name="ResourceIndicatorManager" parent="." unique_id=232509046 node_paths=PackedStringArray("gridManager") instance=ExtResource("4_qx3j0")]
 gridManager = NodePath("../GridManager")
+
+[node name="FloatingTextManager" parent="." unique_id=1012174711 instance=ExtResource("14_ah6f1")]

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://blx2jrb4b56tm"]
 
 [ext_resource type="Script" uid="uid://dfisolchtdm5f" path="res://Scripts/UI/FloatingText.cs" id="1_qygeh"]
+[ext_resource type="FontFile" uid="uid://drrlwwoie27gu" path="res://Assets/Font/Bitfantasy.ttf" id="2_5clbq"]
 
 [sub_resource type="Animation" id="Animation_lmjhl"]
 length = 0.001
@@ -52,8 +53,8 @@ tracks/1/path = NodePath("Node2D:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.30580047, 0.48132306, 1.010569, 1.3002942, 1.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 0.75, 2.1435478, 1),
+"times": PackedFloat32Array(0, 0.125, 0.30580047, 0.48132306, 1.0895625, 1.3002942, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1.5528973, 2.1435478, 1),
 "update": 0,
 "values": [Vector2(1, 1), Vector2(1.25, 1.25), Vector2(0.9, 0.9), Vector2(0.5, 0.5), Vector2(1.25, 1.25), Vector2(1, 1), Vector2(0, 0)]
 }
@@ -102,12 +103,14 @@ offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
-theme_override_colors/font_color = Color(0.946875, 0.31964433, 0.22488281, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0.06562501, 0.022763677, 0.022763677, 1)
-theme_override_constants/shadow_offset_x = -2
-theme_override_constants/shadow_offset_y = -1
-theme_override_constants/outline_size = 4
+theme_override_colors/font_color = Color(1, 0.33749998, 0.33749998, 1)
+theme_override_colors/font_shadow_color = Color(0.859375, 0.58813477, 0.58813477, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = -3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 7
+theme_override_constants/shadow_outline_size = 7
+theme_override_fonts/font = ExtResource("2_5clbq")
 theme_override_font_sizes/font_size = 32
 text = "Some Sample text"
 horizontal_alignment = 1

@@ -5,6 +5,7 @@ using Game.Feature.Buildings.Services.IServices;
 using Game.Component;
 using Game.Feature.Grids;
 using Godot;
+using Game.Feature.FloatingTexts;
 
 namespace Game.Feature.Buildings.Services;
 
@@ -33,7 +34,12 @@ public class BuildingRemoveService : IBuildingRemove
 
         if (building is null) return false;
 
-        if (!_gridManager.CanDestroyBuilding(building)) return false;
+        if (!_gridManager.CanDestroyBuilding(building))
+        {
+
+           FloatingTextManager.ShowMessage($"Can't destroy {building.BuildingResource.DisplayName}");
+           return false;
+        }
 
         refundCost = building.BuildingResource.ResourceCost;
 
