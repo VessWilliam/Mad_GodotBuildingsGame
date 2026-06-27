@@ -21,6 +21,7 @@ GameEvents="*uid://y8hnfb3a65eg"
 LevelEvents="*uid://b1rtrha5lw4e3"
 SaveEvents="*uid://bc24ojq136xwf"
 SettingsEvents="*uid://blqo0h275igkr"
+CursorEvents="*uid://b86ot4sxcn8st"
 
 [display]
 

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://b86ot4sxcn8st"]
+
+[ext_resource type="Script" uid="uid://ddaepwjlelpl7" path="res://Scripts/Autoload/CursorEvents.cs" id="1_arjv1"]
+[ext_resource type="Texture2D" uid="uid://bvku0vryixqel" path="res://Assets/UI/pointer.png" id="2_8a04v"]
+
+[node name="CursorEvents" type="CanvasLayer" unique_id=2065673484]
+layer = 10
+script = ExtResource("1_arjv1")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=230849477]
+unique_name_in_owner = true
+modulate = Color(0.7977293, 0.7977293, 0.7977293, 1)
+self_modulate = Color(1.6594846, 1.6216007, 1.451123, 1)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("2_8a04v")
+centered = false
+offset = Vector2(-6, -7)
+flip_h = true
