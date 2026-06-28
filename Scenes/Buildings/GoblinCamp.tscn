@@ -1,8 +1,12 @@
 [gd_scene format=3 uid="uid://be63mrh76423e"]
 
 [ext_resource type="PackedScene" uid="uid://cl8fclajmmwtt" path="res://Scenes/Component/BuildingComponent.tscn" id="1_qwyqt"]
+[ext_resource type="Script" uid="uid://dd3ernuvvevc4" path="res://Scripts/GlobinCamp/GoblinCamp.cs" id="1_v016h"]
 [ext_resource type="PackedScene" uid="uid://cmmjhk2q7g67t" path="res://Scenes/Component/BuildingAnimatorComponent.tscn" id="2_tb53f"]
 [ext_resource type="Texture2D" uid="uid://j34u7pou8hya" path="res://Assets/buildings/wood_tower_red.png" id="3_awnvg"]
+[ext_resource type="Texture2D" uid="uid://cx1mvu57vmrvi" path="res://Assets/buildings/wood_tower_destroyed.png" id="5_la17m"]
+[ext_resource type="Texture2D" uid="uid://d3g1i0vusfvm7" path="res://Assets/effects/Fire_03.png" id="6_6rti0"]
+[ext_resource type="Texture2D" uid="uid://bj3q0644xehvb" path="res://Assets/effects/Fire.png" id="7_mufk0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1dtjo"]
 atlas = ExtResource("3_awnvg")
@@ -38,10 +42,171 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_la17m")
+}],
+"loop": true,
+"name": &"destroyed",
+"speed": 5.0
 }]
 
-[node name="GoblinCamp" type="Node2D" unique_id=451051080]
+[sub_resource type="AtlasTexture" id="AtlasTexture_d37r4"]
+atlas = ExtResource("6_6rti0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eiibi"]
+atlas = ExtResource("6_6rti0")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q75tq"]
+atlas = ExtResource("6_6rti0")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8yir"]
+atlas = ExtResource("6_6rti0")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20w8u"]
+atlas = ExtResource("6_6rti0")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ht6sy"]
+atlas = ExtResource("6_6rti0")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ipyfc"]
+atlas = ExtResource("6_6rti0")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o87vu"]
+atlas = ExtResource("6_6rti0")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e21po"]
+atlas = ExtResource("6_6rti0")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fuki0"]
+atlas = ExtResource("6_6rti0")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kt8y7"]
+atlas = ExtResource("6_6rti0")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfgm6"]
+atlas = ExtResource("6_6rti0")
+region = Rect2(704, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ppngj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d37r4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eiibi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q75tq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u8yir")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_20w8u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ht6sy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ipyfc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o87vu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e21po")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fuki0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kt8y7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mfgm6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 11.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lfffd"]
+atlas = ExtResource("7_mufk0")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rmhvt"]
+atlas = ExtResource("7_mufk0")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t7gbb"]
+atlas = ExtResource("7_mufk0")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_67ulp"]
+atlas = ExtResource("7_mufk0")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6h4lo"]
+atlas = ExtResource("7_mufk0")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vpl2"]
+atlas = ExtResource("7_mufk0")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4j3fm"]
+atlas = ExtResource("7_mufk0")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7rqlq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lfffd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rmhvt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t7gbb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_67ulp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6h4lo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1vpl2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4j3fm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="GoblinCamp" type="Node2D" unique_id=451051080 node_paths=PackedStringArray("buildingComponent", "FireParent", "animatedSprite2D")]
 y_sort_enabled = true
+script = ExtResource("1_v016h")
+buildingComponent = NodePath("BulidingComponent")
+FireParent = NodePath("BuildingAnimatorComponent/AnimatedSprite2D/FireParent")
+animatedSprite2D = NodePath("BuildingAnimatorComponent/AnimatedSprite2D")
 
 [node name="BulidingComponent" parent="." unique_id=1264297234 node_paths=PackedStringArray("buildingAnimatorComponent") instance=ExtResource("1_qwyqt")]
 buildingResourcePath = "uid://d4inkengtk4tn"
@@ -50,10 +215,70 @@ buildingAnimatorComponent = NodePath("../BuildingAnimatorComponent")
 [node name="BuildingAnimatorComponent" parent="." unique_id=1455991372 instance=ExtResource("2_tb53f")]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BuildingAnimatorComponent" unique_id=595019361]
+unique_name_in_owner = true
+modulate = Color(0.996875, 0.80684566, 0.80684566, 1)
+self_modulate = Color(1, 0.971875, 0.971875, 1)
 y_sort_enabled = true
 position = Vector2(64, 96)
 sprite_frames = SubResource("SpriteFrames_mufk0")
+animation = &"destroyed"
 autoplay = "default"
-frame_progress = 0.4913304
+frame_progress = 0.018640738
 centered = false
 offset = Vector2(-128, -160)
+
+[node name="FireParent" type="Node2D" parent="BuildingAnimatorComponent/AnimatedSprite2D" unique_id=821445303]
+unique_name_in_owner = true
+z_index = 1
+y_sort_enabled = true
+
+[node name="FireAnimatedSprite2D" type="AnimatedSprite2D" parent="BuildingAnimatorComponent/AnimatedSprite2D/FireParent" unique_id=51575746]
+modulate = Color(1, 0.46875, 0, 1)
+self_modulate = Color(1, 0.44687498, 0.44687498, 1)
+z_index = 1
+position = Vector2(0, -72.88)
+scale = Vector2(1.739, 1.7389998)
+skew = 0.0069812536
+sprite_frames = SubResource("SpriteFrames_ppngj")
+autoplay = "default"
+frame_progress = 0.004223451
+speed_scale = 0.8
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="BuildingAnimatorComponent/AnimatedSprite2D/FireParent" unique_id=994401791]
+modulate = Color(1, 0.46875, 0, 1)
+self_modulate = Color(1, 0.44687498, 0.44687498, 1)
+z_index = 1
+position = Vector2(0, -49.075)
+rotation = -0.05585054
+scale = Vector2(1.5849999, 1.585)
+skew = -0.13264503
+sprite_frames = SubResource("SpriteFrames_ppngj")
+autoplay = "default"
+frame_progress = 0.38224784
+speed_scale = 0.8
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="BuildingAnimatorComponent/AnimatedSprite2D/FireParent" unique_id=1771500169]
+modulate = Color(1, 0.46875, 0, 1)
+self_modulate = Color(1, 0.44687498, 0.44687498, 1)
+z_index = -1
+position = Vector2(39, -36)
+rotation = 0.02094395
+scale = Vector2(1.0839999, 1.084)
+skew = -0.13264501
+sprite_frames = SubResource("SpriteFrames_7rqlq")
+autoplay = "default"
+frame_progress = 0.31425095
+speed_scale = 0.8
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="BuildingAnimatorComponent/AnimatedSprite2D/FireParent" unique_id=713812075]
+modulate = Color(1, 0.46875, 0, 1)
+self_modulate = Color(1, 0.44687498, 0.44687498, 1)
+z_index = -1
+position = Vector2(-28.45, -37)
+rotation = 0.02094395
+scale = Vector2(1.0839999, 1.084)
+skew = 0.12042761
+sprite_frames = SubResource("SpriteFrames_7rqlq")
+autoplay = "default"
+frame_progress = 0.39903146
+speed_scale = 0.8

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://by8vt7flxpo8v"
+path="res://.godot/imported/Dancing at the Inn.mp3-7a9942ca59320624ed392b2761bac59e.mp3str"
+
+[deps]
+
+source_file="res://Assets/audio/Dancing at the Inn.mp3"
+dest_files=["res://.godot/imported/Dancing at the Inn.mp3-7a9942ca59320624ed392b2761bac59e.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
