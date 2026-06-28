@@ -66,13 +66,13 @@ public partial class ResourceIndicatorManager : Node
 
         var removedResourceTile = indicatedTile.Except(currentResourceTile);
 
-        indicatedTile = currentResourceTile;
+        indicatedTile = currentResourceTile.ToHashSet();
 
         UpdateIndicatorTiles(newResourceTile, removedResourceTile);
     }
 
 
-    private void OnResourceTileUpdated(int _) 
+    private void OnResourceTileUpdated(int _)
     {
         Callable.From(() => HandleResourceTilesUpdated()).CallDeferred();
     }

@@ -6,6 +6,8 @@ using Game.UI;
 using Godot;
 using Game.Feature.Buildings.Services;
 using Game.Feature.FloatingTexts;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Game.Feature.Buildings;
 
@@ -24,16 +26,21 @@ public partial class BuildingManager : Node
     public readonly StringName ACTION_CANCEL = Constants.CANCEL;
 
     private int currentResourceCount;
-    private int currentUsedResourceCount;
     private int statingResourceCount;
-
-    private int AvailableResourceCount =>
-        statingResourceCount + currentResourceCount - currentUsedResourceCount;
 
     private IBuildingRemove _removeService;
     private IBuildingPlacement _placementService;
 
     private StateEnum currentState = StateEnum.Normal;
+
+
+
+    private readonly Dictionary<int, int> _buildingSpend = new();
+
+    private int CurrentSpend => _buildingSpend.Values.Sum();
+
+    private int AvailableResourceCount =>
+        Mathf.Max(0, statingResourceCount + currentResourceCount - CurrentSpend);
 
     private float _lastGridUpdateTime = 0;
 
@@ -90,12 +97,15 @@ public partial class BuildingManager : Node
                     GD.Print($"Available: {AvailableResourceCount}");
                     GD.Print($"Cost: {_placementService.GetPlacementCost()}");
 
-                    currentUsedResourceCount += cost;
+
                     GD.Print($"After Build Available: {AvailableResourceCount}");
 
-                    _placementService.ConfrimPlacement();
+                    var instanceId = _placementService.ConfrimPlacement();
+                    if (instanceId != -1)
+                        _buildingSpend[instanceId] = cost;
+
                     ChangeState(StateEnum.Normal);
-                    EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
+                    //EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
                 }
                 break;
         }
@@ -123,11 +133,9 @@ public partial class BuildingManager : Node
     {
         var rootCell = gridManager.GetMouseGridCellPosition();
 
-        if (!_removeService.IsRemove(rootCell, out int refund)) return;
-
-        currentUsedResourceCount -= refund;
-
-        EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
+        if (!_removeService.IsRemove(rootCell, out int refund, out int instanceId)) return;
+        _buildingSpend.Remove(instanceId);
+        //EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
     }
 
     private void ChangeState(StateEnum toState)
@@ -145,7 +153,10 @@ public partial class BuildingManager : Node
 
     private void OnResourceTileUpdated(int resourceCount)
     {
-        currentResourceCount = resourceCount;
-        EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
+        Callable.From(() =>
+        {
+            currentResourceCount = resourceCount;
+            EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
+        }).CallDeferred();
     }
 }

@@ -75,7 +75,11 @@ public class GridStateServices : IGridStateService
     {
         if (component is null || !GodotObject.IsInstanceValid(component)) return;
 
-        GD.Print($"UpdateForPlacement called for {component.BuildingResource.DisplayName}");
+
+        GD.Print($"UpdateForPlacement: {component.BuildingResource.DisplayName}");
+        GD.Print($"  ResourceRadius: {component.BuildingResource.ResourceRadius}");
+        GD.Print($"  BuildingRadius: {component.BuildingResource.BuildingRadius}");
+        GD.Print($"  IsBase: {component.BuildingResource.IsBase}");
 
         Stats.PlacementOrder.Add(component);
 

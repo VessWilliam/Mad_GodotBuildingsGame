@@ -22,9 +22,10 @@ public class BuildingRemoveService : IBuildingRemove
         _rootScene = rootScene;
     }
 
-    public bool IsRemove(Vector2I rootCell, out int refundCost)
+    public bool IsRemove(Vector2I rootCell, out int refundCost, out int instanceId)
     {
         refundCost = 0;
+        instanceId = -1;
 
         var building = BuildingComponent
         .GetValidBuildingComponents(_rootScene)
@@ -42,7 +43,7 @@ public class BuildingRemoveService : IBuildingRemove
         }
 
         refundCost = building.BuildingResource.ResourceCost;
-
+        instanceId = (int)building.Owner.GetInstanceId();
         _gridManager.DestroyBuilding(building);
 
         return true;

@@ -51,9 +51,9 @@ public class BuildingPlacementService : IBuildingPlacement
         ClearCursor();
     }
 
-    public void ConfrimPlacement()
+    public int ConfrimPlacement()
     {
-        if (!IsConfirmPlacement()) return;
+        if (!IsConfirmPlacement()) return -1;
 
         GD.Print("=== PLACE BUILDING ===");
         GD.Print($"Resource: {_resource.DisplayName}");
@@ -64,8 +64,10 @@ public class BuildingPlacementService : IBuildingPlacement
         building.GlobalPosition = _hoverGridArea.Position * 64;
         _ysortRoot.AddChild(building);
         building.GetFirstNodeOfType<BuildingAnimatorComponent>()?.PlayPlaceAnimation();
-
+        
+        var instanceId = building.GetInstanceId();
         CancelPlacement();
+        return (int)instanceId;
     }
 
     public void UpdateMousePosition(Vector2I position)

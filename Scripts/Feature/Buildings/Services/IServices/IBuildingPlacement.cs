@@ -13,7 +13,7 @@ public interface IBuildingPlacement
 
     void CancelPlacement();
 
-    void ConfrimPlacement();
+    int ConfrimPlacement();
 
     int GetPlacementCost();
 
