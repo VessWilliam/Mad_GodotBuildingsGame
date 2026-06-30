@@ -11,6 +11,8 @@ public partial class LevelCompleteScreen : CanvasLayer
     {
         nextLevelButton = GetNode<Button>("%NextLevelBtn");
 
+        AudioEvents.PlayVictory();
+
         nextLevelButton.Pressed += () => LevelEvents.Instance.NextLevel();
     }
 }

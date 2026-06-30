@@ -44,6 +44,7 @@ public partial class BuildingAnimatorComponent : Node2D
             .SetEase(Tween.EaseType.In)
             .From(Vector2.Up * 128);
 
+        impactAudioStreamPlayer.Play();
         InitParticlesTween(placeParticlesScene);
 
         activeTween.TweenProperty(animationRootNode, "position", Vector2.Up * 16, .1)
@@ -69,6 +70,7 @@ public partial class BuildingAnimatorComponent : Node2D
         maskNode.ClipChildren = ClipChildrenMode.Only;
         maskNode.Texture = maskTexture;
 
+        AudioEvents.PlayBuildingDestruction();
         InitParticlesTween(destroyParticlesScene);
 
         activeTween.TweenProperty(animationRootNode, "rotation_degrees", -5, .1);
@@ -153,8 +155,6 @@ public partial class BuildingAnimatorComponent : Node2D
         var particles = particlesScene.Instantiate<Node2D>();
         particleParent.AddChild(particles);
         particles.GlobalPosition = GlobalPosition;
-        impactAudioStreamPlayer.Play();
-        AutoEvents.PlayBuildingDestruction();
         GameCamera.Shake();
     }
 }

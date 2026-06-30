@@ -26,7 +26,7 @@ LevelEvents="*uid://b1rtrha5lw4e3"
 SaveEvents="*uid://bc24ojq136xwf"
 SettingsEvents="*uid://blqo0h275igkr"
 CursorEvents="*uid://b86ot4sxcn8st"
-AutoEvents="*uid://ddiw2byo6ow6q"
+AudioEvents="*uid://ddiw2byo6ow6q"
 
 [display]
 
