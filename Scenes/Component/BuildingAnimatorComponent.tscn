@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://xs81caqpxya1" path="res://Scenes/Effect/BuildingPlaceParticles.tscn" id="2_315qt"]
 [ext_resource type="Texture2D" uid="uid://5hqr8dft6c8a" path="res://Assets/tiles/building_mask.png" id="2_dk5ua"]
 [ext_resource type="PackedScene" uid="uid://bvxad53yrwexv" path="res://Scenes/Effect/BuildingDestroyParticles.tscn" id="3_kvxn5"]
+[ext_resource type="AudioStream" uid="uid://stsv407u2py5" path="res://Assets/audio/thud.wav" id="5_57mvh"]
 
 [node name="BuildingAnimatorComponent" type="Node2D" unique_id=1455991372]
 y_sort_enabled = true
@@ -11,3 +12,8 @@ script = ExtResource("1_rt76q")
 placeParticlesScene = ExtResource("2_315qt")
 destroyParticlesScene = ExtResource("3_kvxn5")
 maskTexture = ExtResource("2_dk5ua")
+
+[node name="ImpactAudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=604433222]
+unique_name_in_owner = true
+stream = ExtResource("5_57mvh")
+bus = &"SFX"

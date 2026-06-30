@@ -19,8 +19,12 @@ public partial class ResourceIndicatorManager : Node
 
     private Dictionary<Vector2I, ResourceIndicator> tileToResourceIndicator = new();
 
+    private AudioStreamPlayer audioStreamPlayer;
+
     public override void _Ready()
     {
+        audioStreamPlayer = GetNode<AudioStreamPlayer>("%AudioStreamPlayer");
+        
         gridManager.ResourceTilesUpdated += OnResourceTileUpdated;
     }
 
@@ -28,6 +32,9 @@ public partial class ResourceIndicatorManager : Node
         IEnumerable<Vector2I> newTiles,
         IEnumerable<Vector2I> removedTiles)
     {
+       
+        if(newTiles.Any()) audioStreamPlayer.Play();   
+        
         foreach (var item in newTiles)
         {
 

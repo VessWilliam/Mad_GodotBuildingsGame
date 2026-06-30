@@ -15,6 +15,10 @@ run/main_scene="uid://b00ukhnao4ib6"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 config/icon="uid://cfolohjl81087"
 
+[audio]
+
+buses/default_bus_layout="uid://xewfi8mp7box"
+
 [autoload]
 
 GameEvents="*uid://y8hnfb3a65eg"
@@ -22,6 +26,7 @@ LevelEvents="*uid://b1rtrha5lw4e3"
 SaveEvents="*uid://bc24ojq136xwf"
 SettingsEvents="*uid://blqo0h275igkr"
 CursorEvents="*uid://b86ot4sxcn8st"
+AutoEvents="*uid://ddiw2byo6ow6q"
 
 [display]
 

@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cl8fclajmmwtt" path="res://Scenes/Component/BuildingComponent.tscn" id="1_qwyqt"]
 [ext_resource type="Script" uid="uid://dd3ernuvvevc4" path="res://Scripts/GlobinCamp/GoblinCamp.cs" id="1_v016h"]
+[ext_resource type="AudioStream" uid="uid://b844hhy7bnyop" path="res://Assets/audio/poof.wav" id="2_la17m"]
 [ext_resource type="PackedScene" uid="uid://cmmjhk2q7g67t" path="res://Scenes/Component/BuildingAnimatorComponent.tscn" id="2_tb53f"]
 [ext_resource type="Texture2D" uid="uid://j34u7pou8hya" path="res://Assets/buildings/wood_tower_red.png" id="3_awnvg"]
 [ext_resource type="Texture2D" uid="uid://cx1mvu57vmrvi" path="res://Assets/buildings/wood_tower_destroyed.png" id="5_la17m"]
@@ -208,6 +209,11 @@ buildingComponent = NodePath("BulidingComponent")
 FireParent = NodePath("BuildingAnimatorComponent/AnimatedSprite2D/FireParent")
 animatedSprite2D = NodePath("BuildingAnimatorComponent/AnimatedSprite2D")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1645361992]
+unique_name_in_owner = true
+stream = ExtResource("2_la17m")
+bus = &"SFX"
+
 [node name="BulidingComponent" parent="." unique_id=1264297234 node_paths=PackedStringArray("buildingAnimatorComponent") instance=ExtResource("1_qwyqt")]
 buildingResourcePath = "uid://d4inkengtk4tn"
 buildingAnimatorComponent = NodePath("../BuildingAnimatorComponent")
@@ -232,7 +238,7 @@ unique_name_in_owner = true
 z_index = 1
 y_sort_enabled = true
 
-[node name="FireAnimatedSprite2D" type="AnimatedSprite2D" parent="BuildingAnimatorComponent/AnimatedSprite2D/FireParent" unique_id=51575746]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BuildingAnimatorComponent/AnimatedSprite2D/FireParent" unique_id=51575746]
 modulate = Color(1, 0.46875, 0, 1)
 self_modulate = Color(1, 0.44687498, 0.44687498, 1)
 z_index = 1

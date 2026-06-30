@@ -1,3 +1,4 @@
+using Game.Autoload;
 using Game.Camera;
 using Game.Extentions;
 using Godot;
@@ -24,10 +25,12 @@ public partial class BuildingAnimatorComponent : Node2D
 
     private Sprite2D maskNode;
 
+    private AudioStreamPlayer impactAudioStreamPlayer;
+
     public override void _Ready()
     {
         SetUpNode();
-        //PlayPlaceAnimation();
+        impactAudioStreamPlayer = GetNode<AudioStreamPlayer>("%ImpactAudioStreamPlayer");
     }
 
     public void PlayPlaceAnimation()
@@ -150,6 +153,8 @@ public partial class BuildingAnimatorComponent : Node2D
         var particles = particlesScene.Instantiate<Node2D>();
         particleParent.AddChild(particles);
         particles.GlobalPosition = GlobalPosition;
+        impactAudioStreamPlayer.Play();
+        AutoEvents.PlayBuildingDestruction();
         GameCamera.Shake();
     }
 }
