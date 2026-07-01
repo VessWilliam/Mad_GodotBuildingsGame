@@ -23,37 +23,18 @@ public class GridTileServices : IGridTile
         _tilemapLayer = tilemapLayer;
         _tilemapElevationLayer = tilemapElevationLayer;
     }
+    public void SetGoldMinePosition(Vector2I position) => goldMinePosition = position;
 
-    public bool IsTileAreaBuildable(Rect2I tileArea, HashSet<Vector2I> buildableTiles, HashSet<Vector2I> occupiedTiles, bool isAttackTiles = false)
-    {
-        var tiles = tileArea.ToTiles();
-
-        if (tiles.Count is 0) return false;
-
-        var (firstLayer, _) = GetBuildableData(tiles[0]);
-
-        var elevationTile = firstLayer is not null ? _tilemapElevationLayer[firstLayer] : null;
-
-        if (isAttackTiles) buildableTiles = buildableTiles.Except(occupiedTiles).ToHashSet();
-
-        return tiles.All(tpos =>
-        {
-            var (tileMapLayer, isBuildable) = GetBuildableData(tpos);
-            var elevationLayer = tileMapLayer is null ? null : _tilemapElevationLayer[tileMapLayer];
-            return isBuildable && buildableTiles.Contains(tpos) && elevationLayer == elevationTile;
-        });
-    }
 
     public List<Vector2I> GetPlacementTilesInRadiusList(Rect2I tileArea, int radius) =>
         GetTileInRadius(tileArea, radius, (tilePosition) =>
-            GetBuildableData(tilePosition).Item2 || 
+            GetBuildableData(tilePosition).Item2 ||
             tilePosition.Equals(goldMinePosition));
 
     public List<Vector2I> GetResourceTilesInRadiusList(Rect2I tileArea, int radius) =>
         GetTileInRadius(tileArea, radius, (tilePosition) =>
             GetWoodData(tilePosition).Item2);
 
-    public void SetGoldMinePosition(Vector2I position) => goldMinePosition = position;
 
     public List<Vector2I> GetTileInRadius(Rect2I tileArea, int radius, Func<Vector2I, bool> filter)
     {
@@ -76,6 +57,26 @@ public class GridTileServices : IGridTile
             }
         }
         return result;
+    }
+
+    public bool IsTileAreaBuildable(Rect2I tileArea, HashSet<Vector2I> buildableTiles, HashSet<Vector2I> occupiedTiles, bool isAttackTiles = false)
+    {
+        var tiles = tileArea.ToTiles();
+
+        if (tiles.Count is 0) return false;
+
+        var (firstLayer, _) = GetBuildableData(tiles[0]);
+
+        var elevationTile = firstLayer is not null ? _tilemapElevationLayer[firstLayer] : null;
+
+        if (isAttackTiles) buildableTiles = buildableTiles.Except(occupiedTiles).ToHashSet();
+
+        return tiles.All(tpos =>
+        {
+            var (tileMapLayer, isBuildable) = GetBuildableData(tpos);
+            var elevationLayer = tileMapLayer is null ? null : _tilemapElevationLayer[tileMapLayer];
+            return isBuildable && buildableTiles.Contains(tpos) && elevationLayer == elevationTile;
+        });
     }
 
     private bool IsTileInsideCircle(Vector2 centerPosition, Vector2 tilePosition, float radius)
