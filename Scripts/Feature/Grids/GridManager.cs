@@ -60,6 +60,8 @@ public partial class GridManager : Node
         _mouseControlService = new GridMouseControlService(highlightTilemapLayer);
     }
 
+
+
     private bool IsInitialized() => _gridState != null && _tileService != null;
 
     public bool IsTilePositionInAnyBuildingRadius(Vector2I tilePosition)
@@ -225,6 +227,13 @@ public partial class GridManager : Node
     public void DisplayAttackTiles(Rect2I tileArea, int radius) => _highlightService?.HighlightAttackTiles(tileArea, radius);
     public void DisplayResourceTiles(Rect2I tileArea, int radius) => _highlightService?.HighlightResourceTiles(tileArea, radius);
     public void ClearHighlightedTiles() => _highlightService?.ClearHighlightTile();
+
+    public void SetGoldMinePosition(Vector2I position)
+    {
+        if (!IsInitialized()) return;
+
+        _tileService.SetGoldMinePosition(position);
+    }
 
     public Vector2I GetMouseGridCellPositionWithDimensionOffset(Vector2 dimensions) =>
         _mouseControlService?.MouseGridCellPositionWithDimensionOffset(dimensions) ?? Vector2I.Zero;

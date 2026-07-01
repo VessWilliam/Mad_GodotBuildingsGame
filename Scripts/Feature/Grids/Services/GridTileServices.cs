@@ -15,6 +15,8 @@ public class GridTileServices : IGridTile
     private readonly Dictionary<Vector2I, (TileMapLayer, bool)> _buildableCache = new();
     private readonly Dictionary<Vector2I, (TileMapLayer, bool)> _woodCache = new();
 
+    private Vector2I goldMinePosition;
+
     public GridTileServices(List<TileMapLayer> tilemapLayer,
          Dictionary<TileMapLayer, ElevationLayer> tilemapElevationLayer)
     {
@@ -29,7 +31,7 @@ public class GridTileServices : IGridTile
         if (tiles.Count is 0) return false;
 
         var (firstLayer, _) = GetBuildableData(tiles[0]);
-        
+
         var elevationTile = firstLayer is not null ? _tilemapElevationLayer[firstLayer] : null;
 
         if (isAttackTiles) buildableTiles = buildableTiles.Except(occupiedTiles).ToHashSet();
@@ -44,11 +46,14 @@ public class GridTileServices : IGridTile
 
     public List<Vector2I> GetPlacementTilesInRadiusList(Rect2I tileArea, int radius) =>
         GetTileInRadius(tileArea, radius, (tilePosition) =>
-            GetBuildableData(tilePosition).Item2);
+            GetBuildableData(tilePosition).Item2 || 
+            tilePosition.Equals(goldMinePosition));
 
     public List<Vector2I> GetResourceTilesInRadiusList(Rect2I tileArea, int radius) =>
         GetTileInRadius(tileArea, radius, (tilePosition) =>
             GetWoodData(tilePosition).Item2);
+
+    public void SetGoldMinePosition(Vector2I position) => goldMinePosition = position;
 
     public List<Vector2I> GetTileInRadius(Rect2I tileArea, int radius, Func<Vector2I, bool> filter)
     {
@@ -102,6 +107,7 @@ public class GridTileServices : IGridTile
             return value;
 
         value = TileCustomData(tilePosition, Constants.IS_BUILDABLE);
+
         _buildableCache[tilePosition] = value;
         return value;
     }
@@ -115,4 +121,5 @@ public class GridTileServices : IGridTile
         _woodCache[tilePosition] = value;
         return value;
     }
+
 }

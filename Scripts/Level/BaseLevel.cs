@@ -19,7 +19,7 @@ public partial class BaseLevel : Node
 
     private GridManager gridManager;
 
-    private GoldMine goldMine; 
+    private GoldMine goldMine;
 
     private GameCamera gameCamera;
 
@@ -69,6 +69,8 @@ public partial class BaseLevel : Node
         if (IslevelComplete) return;
 
         var goldMinePos = gridManager.ConvertWorldPositionToTilePosition(goldMine.GlobalPosition);
+
+        gridManager.SetGoldMinePosition(goldMinePos);
 
         if (gridManager.IsTilePositionInAnyBuildingRadius(goldMinePos))
             ShowLevelComplete();

@@ -10,4 +10,6 @@ public interface IGridTile
     List<Vector2I> GetPlacementTilesInRadiusList(Rect2I tileArea, int radius);
     List<Vector2I> GetResourceTilesInRadiusList(Rect2I tileArea, int radius);
     List<Vector2I> GetTileInRadius(Rect2I tileArea, int radius, Func<Vector2I, bool> filter);
+    void SetGoldMinePosition(Vector2I position);
+
 }
