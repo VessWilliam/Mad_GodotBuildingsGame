@@ -10,6 +10,12 @@ public partial class OptionsMenu : CanvasLayer
 {
     private const string SFX_BUS_NAME = "SFX";
     private const string MUSIC_BUS_NAME = "Music";
+    private const string WINDOW_BUTTON_TEXT_FULLSCREEN = "Fullscreen";
+    private const string WINDOW_BUTTON_TEXT_WINDOWED = "Windowed";
+
+    [Signal]
+    public delegate void DonePressedEventHandler();
+
 
     private Button sfxUpButton;
 
@@ -59,9 +65,13 @@ public partial class OptionsMenu : CanvasLayer
         sfxDownButton.Pressed += () => ChnageBusVolume(SFX_BUS_NAME, 0.1f);
         musicDownButton.Pressed += () => ChnageBusVolume(MUSIC_BUS_NAME, 0.1f);
         musicUpButton.Pressed += () => ChnageBusVolume(MUSIC_BUS_NAME, -0.1f);
+        windowButton.Pressed += OnWindowButtonPressed;
+
+        doneButton.Pressed += OnDoneButtonPressed;
     }
-     
-     private void ChnageBusVolume(string busName, float change)
+
+
+    private void ChnageBusVolume(string busName, float change)
      { 
          var busVolumePercent = OptionEvents.GetBusVolumePercent(busName);
          busVolumePercent = Mathf.Clamp(busVolumePercent + change, 0, 1);
@@ -72,6 +82,16 @@ public partial class OptionsMenu : CanvasLayer
     private void UpdateDisplay()
     {
         sfxLabel.Text = Mathf.Round(OptionEvents.GetBusVolumePercent(SFX_BUS_NAME) * 10).ToString();  
-        musicLabel.Text = Mathf.Round(OptionEvents.GetBusVolumePercent(MUSIC_BUS_NAME) * 10).ToString();  
+        musicLabel.Text = Mathf.Round(OptionEvents.GetBusVolumePercent(MUSIC_BUS_NAME) * 10).ToString(); 
+
+        windowButton.Text = OptionEvents.IsFullScreen() ?  WINDOW_BUTTON_TEXT_WINDOWED : WINDOW_BUTTON_TEXT_FULLSCREEN;
     }
+
+    private void OnWindowButtonPressed()
+    {
+        OptionEvents.ToggleWindowMode();
+        UpdateDisplay();
+    }
+
+    private void OnDoneButtonPressed() => EmitSignal(SignalName.DonePressed);
 }

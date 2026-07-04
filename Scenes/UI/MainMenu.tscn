@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bn1hsk8ux7ykr" path="res://Scripts/UI/MainMenu.cs" id="1_jex3y"]
 [ext_resource type="TileSet" uid="uid://wu8i71278jye" path="res://Resources/tiles.tres" id="1_k8um8"]
 [ext_resource type="PackedScene" uid="uid://bvw2tkmts54om" path="res://Scenes/Utils/ElevationLayer.tscn" id="2_jex3y"]
+[ext_resource type="PackedScene" uid="uid://brldd6vl8mc2a" path="res://Scenes/UI/OptionsMenu.tscn" id="2_m48tj"]
 [ext_resource type="PackedScene" uid="uid://b6xm4qlo2namq" path="res://Scenes/Buildings/Village.tscn" id="3_744d7"]
 [ext_resource type="PackedScene" uid="uid://dbtx8ccudg732" path="res://Scenes/Buildings/Base.tscn" id="4_kl3t2"]
 [ext_resource type="PackedScene" uid="uid://5ui0maqtwn5g" path="res://Scenes/GoldMines/GoldMine.tscn" id="5_ynupv"]
@@ -12,6 +13,7 @@
 
 [node name="MainMenu" type="Node" unique_id=1052397780]
 script = ExtResource("1_jex3y")
+optionsMenuScene = ExtResource("2_m48tj")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=477457996]
 position = Vector2(704.00006, 192.00002)
@@ -109,6 +111,7 @@ layout_mode = 2
 text = "Play"
 
 [node name="OptionsButton" type="Button" parent="CanvasLayer/MainMenuContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=712153344]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Options"
 

@@ -17,4 +17,19 @@ public partial class OptionEvents : Node
         return Mathf.DbToLinear(AudioServer.GetBusVolumeDb(busIndex));
     }
 
+    public static void ToggleWindowMode()
+    {
+        if (!IsFullScreen())
+        {
+            DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
+            GD.Print("Fullscreen");
+            return;
+        }
+
+        DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+        GD.Print("Windowed");
+    }
+
+    public static bool IsFullScreen() => DisplayServer.WindowGetMode() == DisplayServer.WindowMode.ExclusiveFullscreen;
+
 }
