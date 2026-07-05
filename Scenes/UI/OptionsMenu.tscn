@@ -5,6 +5,7 @@
 [ext_resource type="FontFile" uid="uid://drrlwwoie27gu" path="res://Assets/Font/Bitfantasy.ttf" id="2_s4qwj"]
 
 [node name="OptionsMenu" type="CanvasLayer" unique_id=528867576]
+layer = 3
 script = ExtResource("1_i4rs6")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=274195723]

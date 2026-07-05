@@ -66,13 +66,17 @@ public partial class BuildingManager : Node
         {
             case StateEnum.Normal:
                 if (evt.IsActionPressed(ACTION_LEFT_CLICK))
+                {
                     RemoveBuildingAtHovered();
+                    GetViewport().SetInputAsHandled();
+                }
                 break;
 
             case StateEnum.PlacingBuilding:
                 if (evt.IsActionPressed(ACTION_CANCEL))
                 {
                     ChangeState(StateEnum.Normal);
+                    GetViewport().SetInputAsHandled();
                     return;
                 }
 
@@ -105,6 +109,7 @@ public partial class BuildingManager : Node
                         _buildingSpend[instanceId] = cost;
 
                     ChangeState(StateEnum.Normal);
+                    GetViewport().SetInputAsHandled();
                     //EmitSignal(SignalName.AvailableResourceCountChanged, AvailableResourceCount);
                 }
                 break;

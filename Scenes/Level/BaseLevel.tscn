@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dfp1302rsooyi" path="res://Scripts/Level/BaseLevel.cs" id="1_2ve4c"]
 [ext_resource type="PackedScene" uid="uid://7lenyltnli2n" path="res://Scenes/UI/LevelCompleteScreen.tscn" id="2_toevt"]
 [ext_resource type="PackedScene" uid="uid://cta1e2xvo3t8" path="res://Scenes/Manager/GridManager.tscn" id="2_xerb2"]
+[ext_resource type="PackedScene" uid="uid://1f0faiwb7tfd" path="res://Scenes/UI/EscapeMenu.tscn" id="3_6f0v8"]
 [ext_resource type="PackedScene" uid="uid://c5lbwqxdkc6jc" path="res://Scenes/Manager/BuildingManager.tscn" id="3_toevt"]
 [ext_resource type="PackedScene" uid="uid://dq7osa665ufuo" path="res://Scenes/Camera/GameCamera.tscn" id="3_xerb2"]
 [ext_resource type="PackedScene" uid="uid://del8yud3h8ywd" path="res://Scenes/Buildings/BuildingCursor.tscn" id="4_jsyjl"]
@@ -18,6 +19,7 @@
 [node name="BaseLevel" type="Node" unique_id=547361296]
 script = ExtResource("1_2ve4c")
 levelCompleteScene = ExtResource("2_toevt")
+escapeMenuScene = ExtResource("3_6f0v8")
 
 [node name="GridManager" parent="." unique_id=1117861085 node_paths=PackedStringArray("highlightTilemapLayer", "baseTerrainTilemapLayer") instance=ExtResource("2_xerb2")]
 highlightTilemapLayer = NodePath("../YSortRoot/HighlightTileMapLayer")

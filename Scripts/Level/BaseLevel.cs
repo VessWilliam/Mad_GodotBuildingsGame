@@ -6,6 +6,7 @@ using Game.Camera;
 using Game.UI;
 using Game.Resources;
 using Game.Autoload;
+using Game.Utils;
 
 namespace Game.Level;
 
@@ -13,6 +14,9 @@ public partial class BaseLevel : Node
 {
     [Export]
     private PackedScene levelCompleteScene;
+
+    [Export]
+    private PackedScene escapeMenuScene;
 
     [Export]
     private LevelResource levelResource;
@@ -50,6 +54,15 @@ public partial class BaseLevel : Node
         gridManager.GridStateUpdated += OnGridStateUpdated;
     }
 
+    public override void _UnhandledInput(InputEvent evt)
+    {
+        if (evt.IsActionPressed(Constants.ESCAPE))
+        {
+            var escapeMenu = escapeMenuScene.Instantiate<EscapeMenu>();
+            AddChild(escapeMenu);
+            GetViewport().SetInputAsHandled();
+        }
+    }
 
     private void ShowLevelComplete()
     {

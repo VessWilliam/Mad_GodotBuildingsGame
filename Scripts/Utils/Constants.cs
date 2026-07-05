@@ -13,4 +13,6 @@ public class Constants
     public const string IS_IGNORE ="is_ignore";
 
     public const string CANCEL = "cancel";
+
+    public const string ESCAPE = "escape";
 }
