@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://b47wni214iufc" path="res://Scripts/Autoload/LevelEvents.cs" id="1_1fkf5"]
 [ext_resource type="Resource" uid="uid://bta3g6orcftn5" path="res://Resources/LevelResources/level_01.tres" id="2_klqqs"]
 [ext_resource type="Resource" uid="uid://vwhld5c6qe4s" path="res://Resources/LevelResources/level_02.tres" id="3_58w8t"]
+[ext_resource type="Resource" uid="uid://b75ml46c1dy7y" path="res://Resources/LevelResources/level_03.tres" id="4_58w8t"]
 
 [node name="LevelEvents" type="Node" unique_id=1221574024]
 script = ExtResource("1_1fkf5")
-levelResources = Array[Object]([ExtResource("2_klqqs"), ExtResource("3_58w8t")])
+levelResources = Array[Object]([ExtResource("2_klqqs"), ExtResource("3_58w8t"), ExtResource("4_58w8t")])

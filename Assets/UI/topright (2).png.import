@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ck75o8dxggre8"
-path="res://.godot/imported/topright.png-d84a85eee771de5846f525cba6db41b8.ctex"
+path="res://.godot/imported/topright (2).png-51a0abc6bc19d87bb929bfb2bac32ada.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Level/topright.png"
-dest_files=["res://.godot/imported/topright.png-d84a85eee771de5846f525cba6db41b8.ctex"]
+source_file="res://Assets/UI/topright (2).png"
+dest_files=["res://.godot/imported/topright (2).png-51a0abc6bc19d87bb929bfb2bac32ada.ctex"]
 
 [params]
 

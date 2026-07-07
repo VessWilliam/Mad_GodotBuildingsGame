@@ -80,7 +80,7 @@ public partial class LevelSelectScreen : MarginContainer
 
     private void OnHomeButtonPressed() => EmitSignal(SignalName.HomePressed);
 
-    private void OnLevelSelected(int index) => LevelEvents.Instance.ChangeLevel(index);
+    private void OnLevelSelected(int index) => LevelEvents.ChangeLevel(index);
 
     private void OnPageChanged(int change)
     {

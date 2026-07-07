@@ -10,6 +10,7 @@ script = ExtResource("1_slpk4")
 activeTexture = ExtResource("2_pvgb0")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1599899120]
+modulate = Color(1.0662901, 1.05485, 0.96332806, 1)
 position = Vector2(32, 32)
 texture = ExtResource("1_7rxp2")
 centered = false

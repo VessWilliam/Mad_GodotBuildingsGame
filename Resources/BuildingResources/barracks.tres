@@ -10,6 +10,7 @@ DisplayName = "Barracks"
 Description = "Destroys Goblin Camps"
 Dimensions = Vector2i(5, 2)
 ResourceCost = 8
+BuildingRadius = 2
 AttackRadius = 5
 BuildingScene = ExtResource("1_j3hsu")
 SpriteScene = ExtResource("2_4r3ax")

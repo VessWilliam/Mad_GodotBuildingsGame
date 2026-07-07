@@ -9,27 +9,30 @@ public partial class LevelEvents : Node
     [Export]
     private LevelResource[] levelResources;
 
-    private int currentLevelIndex = default;
+    private static int currentLevelIndex = default;
 
-    public static LevelEvents Instance { get; private set; }
+    private static LevelEvents instance;
 
     public override void _Notification(int what)
     {
         if (what == NotificationSceneInstantiated)
-            Instance = this;
+            instance = this;
     }
 
-    public void ChangeLevel(int index)
+    public static void ChangeLevel(int index)
     {
-        if (index >= levelResources.Length || index < 0) return;
+        if (index >= instance.levelResources.Length || index < 0) return;
 
         currentLevelIndex = index;
 
-        var levelResource = levelResources[currentLevelIndex];
-        GetTree().ChangeSceneToFile(levelResource.LevelScenePath);
+        var levelResource = instance.levelResources[currentLevelIndex];
+        instance.GetTree().ChangeSceneToFile(levelResource.LevelScenePath);
     }
 
-    public void NextLevel() => ChangeLevel(currentLevelIndex + 1);
+    public static void NextLevel() => ChangeLevel(currentLevelIndex + 1);
 
-    public static LevelResource[] GetLevelResources() => Instance.levelResources.ToArray();
+    public static LevelResource[] GetLevelResources() => instance.levelResources.ToArray();
+    
+    public static bool IsLastLevel() => currentLevelIndex == instance.levelResources.Length - 1;
+
 }

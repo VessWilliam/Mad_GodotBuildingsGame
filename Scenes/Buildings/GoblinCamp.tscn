@@ -227,9 +227,8 @@ self_modulate = Color(1, 0.971875, 0.971875, 1)
 y_sort_enabled = true
 position = Vector2(64, 96)
 sprite_frames = SubResource("SpriteFrames_mufk0")
-animation = &"destroyed"
 autoplay = "default"
-frame_progress = 0.018640738
+frame_progress = 0.81714803
 centered = false
 offset = Vector2(-128, -160)
 
