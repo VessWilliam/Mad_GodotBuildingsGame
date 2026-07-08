@@ -24,7 +24,7 @@ public class GridStateServices : IGridStateService
 
     public void Recalculate()
     {
-        GD.Print("Recalculate called");
+        //GD.Print("Recalculate called");
 
         Stats.Clear();
         _cache.ClearCache();
@@ -37,7 +37,7 @@ public class GridStateServices : IGridStateService
             .Where(c => c != null && GodotObject.IsInstanceValid(c))
             .ToList();
 
-        GD.Print($"  Found {validComponents.Count} valid components");
+        //GD.Print($"  Found {validComponents.Count} valid components");
 
         foreach (var component in validComponents)
         {
@@ -56,7 +56,7 @@ public class GridStateServices : IGridStateService
             UpdateBuildingComponentGridState(component);
         }
 
-        GD.Print($"Recalculate complete. ResourceTiles: {Stats.ResourceTiles.Count}, Towers: {Stats.PlacementOrder.Count(b => !b.BuildingResource.IsAttackBuilding() && !b.BuildingResource.IsBase && b.BuildingResource.ResourceRadius == 0)}");
+        //GD.Print($"Recalculate complete. ResourceTiles: {Stats.ResourceTiles.Count}, Towers: {Stats.PlacementOrder.Count(b => !b.BuildingResource.IsAttackBuilding() && !b.BuildingResource.IsBase && b.BuildingResource.ResourceRadius == 0)}");
     }
 
     public void UpdateForDisabled(BuildingComponent component)
@@ -76,10 +76,10 @@ public class GridStateServices : IGridStateService
         if (component is null || !GodotObject.IsInstanceValid(component)) return;
 
 
-        GD.Print($"UpdateForPlacement: {component.BuildingResource.DisplayName}");
-        GD.Print($"  ResourceRadius: {component.BuildingResource.ResourceRadius}");
-        GD.Print($"  BuildingRadius: {component.BuildingResource.BuildingRadius}");
-        GD.Print($"  IsBase: {component.BuildingResource.IsBase}");
+        // GD.Print($"UpdateForPlacement: {component.BuildingResource.DisplayName}");
+        // GD.Print($"  ResourceRadius: {component.BuildingResource.ResourceRadius}");
+        // GD.Print($"  BuildingRadius: {component.BuildingResource.BuildingRadius}");
+        // GD.Print($"  IsBase: {component.BuildingResource.IsBase}");
 
         Stats.PlacementOrder.Add(component);
 
@@ -87,12 +87,12 @@ public class GridStateServices : IGridStateService
             component.BuildingResource.ResourceRadius > 0)
         {
             Stats.OwnerBuildings.Add(component);
-            GD.Print($"  Added to OwnerBuildings. Count: {Stats.OwnerBuildings.Count}");
+           // GD.Print($"  Added to OwnerBuildings. Count: {Stats.OwnerBuildings.Count}");
         }
 
         UpdateBuildingComponentGridState(component);
 
-        GD.Print($"  After UpdateBuildingComponentGridState - ResourceTiles count: {Stats.ResourceTiles.Count}");
+        //GD.Print($"  After UpdateBuildingComponentGridState - ResourceTiles count: {Stats.ResourceTiles.Count}");
     }
 
     public void UpdateForDestruction(BuildingComponent component)
@@ -100,7 +100,7 @@ public class GridStateServices : IGridStateService
         if (component == null || !GodotObject.IsInstanceValid(component))
             return;
 
-        GD.Print($"UpdateForDestruction called for {component.BuildingResource.DisplayName}");
+       // GD.Print($"UpdateForDestruction called for {component.BuildingResource.DisplayName}");
 
         // Remove from collections
         Stats.PlacementOrder.Remove(component);
@@ -118,7 +118,7 @@ public class GridStateServices : IGridStateService
         foreach (var key in keysToRemove)
         {
             Stats.BuildingRadiusTiles.Remove(key);
-            GD.Print($"  Removed stale BuildingRadiusTiles entry");
+            //GD.Print($"  Removed stale BuildingRadiusTiles entry");
         }
 
         // Remove from cache
@@ -216,9 +216,9 @@ public class GridStateServices : IGridStateService
 
         var tileArea = component.GetTileArea();
 
-        GD.Print($"UpdateResourceTiles called for {component.BuildingResource.DisplayName}");
-        GD.Print($"  ResourceRadius: {component.BuildingResource.ResourceRadius}");
-        GD.Print($"  TileArea: {tileArea}");
+        // GD.Print($"UpdateResourceTiles called for {component.BuildingResource.DisplayName}");
+        // GD.Print($"  ResourceRadius: {component.BuildingResource.ResourceRadius}");
+        // GD.Print($"  TileArea: {tileArea}");
 
         var resourceTiles = _cache.GetCacheRadius(
             component,
@@ -226,10 +226,10 @@ public class GridStateServices : IGridStateService
             component.BuildingResource.ResourceRadius,
             RadiusType.Resource);
 
-        GD.Print($"  Found {resourceTiles.Count} resource tiles");
+        //GD.Print($"  Found {resourceTiles.Count} resource tiles");
 
         var oldCount = Stats.ResourceTiles.Count;
         Stats.ResourceTiles.UnionWith(resourceTiles);
-        GD.Print($"  ResourceTiles count: {oldCount} -> {Stats.ResourceTiles.Count}");
+        //GD.Print($"  ResourceTiles count: {oldCount} -> {Stats.ResourceTiles.Count}");
     }
 }

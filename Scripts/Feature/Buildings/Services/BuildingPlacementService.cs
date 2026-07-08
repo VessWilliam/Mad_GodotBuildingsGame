@@ -55,9 +55,9 @@ public class BuildingPlacementService : IBuildingPlacement
     {
         if (!IsConfirmPlacement()) return -1;
 
-        GD.Print("=== PLACE BUILDING ===");
-        GD.Print($"Resource: {_resource.DisplayName}");
-        GD.Print($"Tile: {_hoverGridArea.Position}");
+        // GD.Print("=== PLACE BUILDING ===");
+        // GD.Print($"Resource: {_resource.DisplayName}");
+        // GD.Print($"Tile: {_hoverGridArea.Position}");
 
 
         var building = _resource.BuildingScene.Instantiate<Node2D>();
