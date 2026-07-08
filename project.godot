@@ -17,7 +17,7 @@ config/icon="uid://cfolohjl81087"
 
 [audio]
 
-buses/default_bus_layout="uid://xewfi8mp7box"
+buses/default_bus_layout="uid://t5ffw5muqqfw"
 
 [autoload]
 
@@ -27,7 +27,6 @@ SaveEvents="*uid://bc24ojq136xwf"
 SettingsEvents="*uid://blqo0h275igkr"
 CursorEvents="*uid://b86ot4sxcn8st"
 AudioEvents="*uid://ddiw2byo6ow6q"
-OptionEvents="*uid://ctutln2b6i5a"
 
 [display]
 

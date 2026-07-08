@@ -45,7 +45,7 @@ public partial class BuildingComponent : Node2D
 
     public override void _Ready()
     {
-        GD.Print($"Building Ready: {BuildingResource?.DisplayName}");
+        //GD.Print($"Building Ready: {BuildingResource?.DisplayName}");
 
         if (buildingResourcePath != null)
         {
@@ -106,9 +106,9 @@ public partial class BuildingComponent : Node2D
     public void Destroy()
     {
 
-        GD.Print($"Destroy called: {GetPath()}");
-        GD.Print($"Destroy called: {BuildingResource.DisplayName}");
-        GD.Print($"Position: {GlobalPosition}");
+        // GD.Print($"Destroy called: {GetPath()}");
+        // GD.Print($"Destroy called: {BuildingResource.DisplayName}");
+        // GD.Print($"Position: {GlobalPosition}");
 
         IsDestroying = true;
 

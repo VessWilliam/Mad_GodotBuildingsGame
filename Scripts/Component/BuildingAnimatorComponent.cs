@@ -59,8 +59,8 @@ public partial class BuildingAnimatorComponent : Node2D
 
     public void PlayDestroyAnimation()
     {
-        GD.Print($"In tree: {IsInsideTree()}");
-        GD.Print($"Process: {ProcessMode}");
+        // GD.Print($"In tree: {IsInsideTree()}");
+        // GD.Print($"Process: {ProcessMode}");
 
         if (!InitTween())
             return;
@@ -127,11 +127,11 @@ public partial class BuildingAnimatorComponent : Node2D
 
     private bool InitTween()
     {
-        GD.Print($"animationRootNode: {animationRootNode}");
+        //GD.Print($"animationRootNode: {animationRootNode}");
 
         if (animationRootNode is null)
         {
-            GD.Print("InitTween failed - animationRootNode is null");
+            //GD.Print("InitTween failed - animationRootNode is null");
             return false;
         }
 

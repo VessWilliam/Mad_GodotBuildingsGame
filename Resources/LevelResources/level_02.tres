@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_fxb5t")
 Id = "00112"
-StaringResourcesCount = 10
+StaringResourcesCount = 12
 LevelScenePath = "uid://dw4i4xhefa5ct"
 metadata/_custom_type_script = "uid://chv88srwjpfko"

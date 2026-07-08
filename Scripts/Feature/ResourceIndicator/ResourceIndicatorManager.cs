@@ -65,7 +65,7 @@ public partial class ResourceIndicatorManager : Node
     private void HandleResourceTilesUpdated()
     {
 
-        GD.Print("Updated");
+        // GD.Print("Updated");
 
         var currentResourceTile = gridManager.GetResourceTile();
 

@@ -119,8 +119,8 @@ public partial class GridManager : Node
                 b.GetOccupiedCellPositions().Any(attackArea.Contains)
             ).ToList();
 
-            foreach (var b in buildingsInRadius)
-                GD.Print($"  Barracks blocked by: {b.BuildingResource.DisplayName} at {b.GetGridCellPosition()}");
+            // foreach (var b in buildingsInRadius)
+            //     GD.Print($"  Barracks blocked by: {b.BuildingResource.DisplayName} at {b.GetGridCellPosition()}");
 
             return buildingsInRadius.Count == 0;
         }
@@ -129,7 +129,7 @@ public partial class GridManager : Node
         // Check if tower has BuildingRadiusTiles entry
         if (!_gridState.Stats.BuildingRadiusTiles.TryGetValue(component, out var towerRadius))
         {
-            GD.Print($"  Tower has no BuildingRadiusTiles entry - Can delete");
+           // GD.Print($"  Tower has no BuildingRadiusTiles entry - Can delete");
             return true;
         }
 
@@ -141,7 +141,7 @@ public partial class GridManager : Node
             b.GetOccupiedCellPositions().Any(towerRadius.Contains)
         );
 
-        GD.Print($"  hasBarrackInRadius: {hasBarrackInRadius}");
+        //GD.Print($"  hasBarrackInRadius: {hasBarrackInRadius}");
 
         if (hasBarrackInRadius)
         {
@@ -157,7 +157,7 @@ public partial class GridManager : Node
 
             int orphanIndex = orphanTowers.IndexOf(component);
             bool canDelete = orphanIndex == orphanTowers.Count - 1;
-            GD.Print($"  Barracks exist - Tower LIFO: {canDelete} (index {orphanIndex} of {orphanTowers.Count})");
+            //GD.Print($"  Barracks exist - Tower LIFO: {canDelete} (index {orphanIndex} of {orphanTowers.Count})");
             return canDelete;
         }
 
@@ -171,16 +171,16 @@ public partial class GridManager : Node
             var towerReachesVillage = v.GetOccupiedCellPositions().Any(towerRadius.Contains);
             var villageRadius = _tileService.GetTileInRadius(villageArea, v.BuildingResource.ResourceRadius, (_) => true).ToHashSet();
             var villageReachesTower = component.GetOccupiedCellPositions().Any(villageRadius.Contains);
-            GD.Print($"  village: {v.GetGridCellPosition()} | towerReachesVillage: {towerReachesVillage} | villageReachesTower: {villageReachesTower}");
+            //GD.Print($"  village: {v.GetGridCellPosition()} | towerReachesVillage: {towerReachesVillage} | villageReachesTower: {villageReachesTower}");
             return towerReachesVillage && villageReachesTower;
         });
 
-        GD.Print($"  isGroupedToVillage: {isGroupedToVillage} | villages count: {_gridState.Stats.OwnerBuildings.Count}");
+        //GD.Print($"  isGroupedToVillage: {isGroupedToVillage} | villages count: {_gridState.Stats.OwnerBuildings.Count}");
 
         // Towers locked while any village exists
         if (isGroupedToVillage)
         {
-            GD.Print("  Tower is grouped to village - Cannot delete");
+            //GD.Print("  Tower is grouped to village - Cannot delete");
             return false;
         }
 
@@ -197,7 +197,7 @@ public partial class GridManager : Node
         int towerIndex = allTowers.IndexOf(component);
         bool canDeleteTower = towerIndex == allTowers.Count - 1;
 
-        GD.Print($"  No villages - Tower LIFO: {canDeleteTower} (tower {towerIndex + 1} of {allTowers.Count})");
+        //GD.Print($"  No villages - Tower LIFO: {canDeleteTower} (tower {towerIndex + 1} of {allTowers.Count})");
 
         return canDeleteTower;
     }
@@ -205,16 +205,16 @@ public partial class GridManager : Node
     {
         if (component == null || !GodotObject.IsInstanceValid(component))
         {
-            GD.Print("DestroyBuilding: Invalid component");
+           // GD.Print("DestroyBuilding: Invalid component");
             return;
         }
 
-        GD.Print($"DestroyBuilding called for {component.BuildingResource.DisplayName} at {component.GetGridCellPosition()}");
+        //GD.Print($"DestroyBuilding called for {component.BuildingResource.DisplayName} at {component.GetGridCellPosition()}");
 
         // Check if we can destroy it first
         if (!CanDestroyBuilding(component))
         {
-            GD.Print($"Cannot destroy {component.BuildingResource.DisplayName} - not allowed");
+            //GD.Print($"Cannot destroy {component.BuildingResource.DisplayName} - not allowed");
             return;
         }
 
@@ -306,14 +306,14 @@ public partial class GridManager : Node
         EmitSignal(SignalName.ResourceTilesUpdated, _gridState.Stats.ResourceTiles.Count);
         EmitSignal(SignalName.GridStateUpdated);
 
-        GD.Print($"OnBuildingPlaced: ResourceTiles count = {_gridState.Stats.ResourceTiles.Count}");
+        //GD.Print($"OnBuildingPlaced: ResourceTiles count = {_gridState.Stats.ResourceTiles.Count}");
     }
 
     private void OnBuildingDestroyed(BuildingComponent component)
     {
         if (!IsInitialized()) return;
 
-        GD.Print($"BuildingDestroyed signal: {component?.BuildingResource?.DisplayName ?? "Unknown"}");
+        //GD.Print($"BuildingDestroyed signal: {component?.BuildingResource?.DisplayName ?? "Unknown"}");
 
         _gridState.UpdateForDestruction(component);
         CheckEnemyBuildingDestruction();
@@ -321,7 +321,7 @@ public partial class GridManager : Node
         EmitSignal(SignalName.ResourceTilesUpdated, _gridState.Stats.ResourceTiles.Count);
         EmitSignal(SignalName.GridStateUpdated);
 
-        GD.Print($"Buildings in dictionary: {_gridState.Stats.BuildingRadiusTiles.Count}");
+        //GD.Print($"Buildings in dictionary: {_gridState.Stats.BuildingRadiusTiles.Count}");
     }
 
     private void OnBuildingEnable(BuildingComponent component)

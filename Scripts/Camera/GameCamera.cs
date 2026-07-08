@@ -23,7 +23,7 @@ public partial class GameCamera : Camera2D
     private readonly StringName actionPanUp = "pan_up";
     private readonly StringName actionPanDown = "pan_down";
 
-    public static void Shake() => instance.currentShakePercentage = 1f;
+    public static void Shake() => instance.currentShakePercentage = 1.2f;
 
     public override void _Notification(int what)
     {

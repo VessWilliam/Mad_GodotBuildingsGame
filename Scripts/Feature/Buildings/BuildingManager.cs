@@ -97,12 +97,12 @@ public partial class BuildingManager : Node
                         return;
                     }
 
-                    GD.Print("=== RESOURCE CHECK ===");
-                    GD.Print($"Available: {AvailableResourceCount}");
-                    GD.Print($"Cost: {_placementService.GetPlacementCost()}");
+                    // GD.Print("=== RESOURCE CHECK ===");
+                    // GD.Print($"Available: {AvailableResourceCount}");
+                    // GD.Print($"Cost: {_placementService.GetPlacementCost()}");
 
 
-                    GD.Print($"After Build Available: {AvailableResourceCount}");
+                    //GD.Print($"After Build Available: {AvailableResourceCount}");
 
                     var instanceId = _placementService.ConfrimPlacement();
                     if (instanceId != -1)

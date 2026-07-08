@@ -64,6 +64,5 @@ position = Vector2(0, -256)
 [node name="GoblinCamp2" parent="YSortRoot" parent_id_path=PackedInt32Array(902121781) index="5" unique_id=1283248563 instance=ExtResource("5_11lrj")]
 position = Vector2(-256, 128)
 
-[editable path="ParrallaxRootBackground"]
 [editable path="YSortRoot/TerrianTileMapLayer/ElevationLayer"]
 [editable path="YSortRoot/TerrianTileMapLayer/ElevationLayer2"]
